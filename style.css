@@ -1,0 +1,48 @@
+
+:root{
+  --bg:#0b0d10; --panel:#151a1f; --ink:#e9eef5; --muted:#98a5b3; --accent:#4aa3ff; --ok:#2ecc71; --bad:#ff6b6b;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial}
+header{padding:12px 16px;border-bottom:1px solid #1f2630;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+h1{font-size:18px;margin:0}
+h2{margin:0 0 8px 0;font-size:18px}
+h3{margin:8px 0 6px 0;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+small{color:var(--muted)}
+.muted{color:var(--muted)}
+.mt{margin-top:10px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.spacer{flex:1}
+main{display:flex;min-height:calc(100vh - 64px)}
+aside.nav{width:260px;border-right:1px solid #1f2630;padding:10px;background:#0f1318}
+aside.nav nav{display:flex;flex-direction:column;gap:6px}
+.navbtn{padding:8px 10px;background:#1a212b;color:#d8e2ef;border:1px solid #263041;border-radius:6px;text-align:left;cursor:pointer}
+.navbtn:hover{border-color:#3a4a60}
+section.content{flex:1;overflow:auto}
+.panel{padding:16px 18px;display:none}
+.panel.active{display:block}
+input,select,textarea,button{background:#0f1318;color:var(--ink);border:1px solid #2a3545;border-radius:6px;padding:8px 10px}
+button{cursor:pointer}
+button.small{padding:6px 8px;font-size:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.grid3.tight input{padding:6px}
+.list{display:grid;gap:6px}
+.item{display:flex;gap:8px;align-items:center;justify-content:space-between;border:1px solid #243044;padding:8px;border-radius:6px;background:#121820}
+.item .name{font-weight:600}
+.item .muted{font-size:12px}
+.totals{margin-top:10px;border-top:1px dashed #2c3a4d;padding-top:10px;display:grid;gap:6px;max-width:340px}
+.totals div{display:flex;justify-content:space-between}
+.totals .grand{border-top:1px solid #2c3a4d;padding-top:6px}
+.copybox{width:100%;min-height:130px;white-space:pre-wrap}
+.mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', monospace}
+.smallpre{max-height:220px;overflow:auto;background:#0f1318;padding:8px;border:1px solid #2a3545;border-radius:6px}
+chips, .chips{display:flex;flex-wrap:wrap;gap:6px}
+chip{display:inline-flex;align-items:center;gap:6px;background:#1a212b;border:1px solid #2a3545;border-radius:999px;padding:6px 8px}
+chip button{border:none;background:transparent}
+footer{border-top:1px solid #1f2630;padding:10px 16px;color:var(--muted)}
+.ok{color:var(--ok)} .bad{color:var(--bad)}
+details{background:#121820;border:1px solid #223044;border-radius:8px;padding:8px 10px}
+summary{cursor:pointer}
+label{display:block;margin-bottom:4px;color:var(--muted)}

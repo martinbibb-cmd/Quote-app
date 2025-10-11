@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quote Tool – Map to App (MVP)</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>Quote Tool – MVP</h1>
+  <div class="row">
+    <button id="btn-export">Export JSON</button>
+    <input type="file" id="import-json" accept="application/json" title="Import saved JSON">
+    <button id="btn-clear">Reset</button>
+    <span class="spacer"></span>
+    <button id="btn-summary">Generate Customer Summary</button>
+  </div>
+</header>
+
+<main>
+  <aside class="nav">
+    <h3>Modules</h3>
+    <nav>
+      <button class="navbtn" data-target="#mod-quote">Quote Hub</button>
+      <button class="navbtn" data-target="#mod-parts">Parts</button>
+      <button class="navbtn" data-target="#mod-price">Price</button>
+      <button class="navbtn" data-target="#mod-skill">Skill Hours</button>
+      <button class="navbtn" data-target="#mod-notes">Installation Notes</button>
+      <button class="navbtn" data-target="#mod-spec">Spec</button>
+      <hr>
+      <h3>System Categories</h3>
+      <button class="navbtn" data-target="#cat-boiler">Boiler</button>
+      <button class="navbtn" data-target="#cat-flue">Flue</button>
+      <button class="navbtn" data-target="#cat-pipe">Pipework</button>
+      <button class="navbtn" data-target="#cat-cylinder">Cylinder</button>
+      <button class="navbtn" data-target="#cat-controls">Controls</button>
+      <button class="navbtn" data-target="#cat-additional">Additional Products</button>
+      <hr>
+      <button class="navbtn" data-target="#tools">Tools</button>
+    </nav>
+  </aside>
+
+  <section class="content">
+
+    <!-- Quote Hub -->
+    <section id="mod-quote" class="panel active">
+      <h2>Quote Hub</h2>
+      <div class="grid2">
+        <div>
+          <label>Lead Number</label>
+          <input id="lead" placeholder="e.g., 50425374">
+        </div>
+        <div>
+          <label>System Type</label>
+          <select id="system_type">
+            <option value="">Select…</option>
+            <option>Combi</option>
+            <option>System</option>
+            <option>Regular (Heat-Only)</option>
+          </select>
+        </div>
+        <div>
+          <label>Available Space (H×W×D, mm)</label>
+          <input id="space_hwD" placeholder="e.g., 1100x410x910">
+        </div>
+        <div>
+          <label>Customer Needs</label>
+          <input id="needs" placeholder="e.g., Faster hot water, quieter, lower bills">
+        </div>
+      </div>
+      <details class="mt">
+        <summary>Customer Summary (auto-generated)</summary>
+        <textarea id="customer_summary" rows="8" class="copybox"></textarea>
+        <div class="row">
+          <button class="small" data-copy="#customer_summary">Copy Summary</button>
+        </div>
+      </details>
+      <details>
+        <summary>Quote JSON (for saving/sharing)</summary>
+        <textarea id="quote_json" rows="8" class="mono"></textarea>
+        <div class="row">
+          <button class="small" id="btn-copy-quote">Copy JSON</button>
+        </div>
+      </details>
+    </section>
+
+    <!-- Parts -->
+    <section id="mod-parts" class="panel">
+      <h2>Parts</h2>
+      <p>Select parts to include; you can add custom lines too.</p>
+      <div id="parts-list" class="list"></div>
+      <div class="row">
+        <input id="part-name" placeholder="Custom part name">
+        <input id="part-cost" type="number" placeholder="Cost (£)">
+        <button id="add-part">Add Part</button>
+      </div>
+      <details class="mt">
+        <summary>Selected Parts</summary>
+        <textarea id="parts-output" class="copybox" rows="8"></textarea>
+        <div class="row">
+          <label><input type="checkbox" class="fmt" data-for="#parts-output" data-mode="arrows"> ↘️ prefix</label>
+          <label><input type="checkbox" class="fmt" data-for="#parts-output" data-mode="semicolons"> ; line breaks</label>
+          <span class="spacer"></span>
+          <button class="small" data-copy="#parts-output">Copy</button>
+        </div>
+      </details>
+    </section>
+
+    <!-- Price -->
+    <section id="mod-price" class="panel">
+      <h2>Price</h2>
+      <div class="grid3">
+        <div>
+          <label>Labour Rate (£/hr)</label>
+          <input id="labour-rate" type="number" value="65">
+        </div>
+        <div>
+          <label>Skill Hours (from module)</label>
+          <input id="skill-hours" type="number" value="8">
+        </div>
+        <div>
+          <label>Misc (permits, waste, etc.)</label>
+          <input id="misc" type="number" value="0">
+        </div>
+      </div>
+      <div class="row mt">
+        <button id="recalc">Recalculate</button>
+        <span id="price-breakdown" class="muted"></span>
+      </div>
+      <div class="totals">
+        <div><span>Parts:</span><b id="price-parts">£0</b></div>
+        <div><span>Labour:</span><b id="price-labour">£0</b></div>
+        <div><span>Misc:</span><b id="price-misc">£0</b></div>
+        <div class="grand"><span>Total:</span><b id="price-total">£0</b></div>
+      </div>
+    </section>
+
+    <!-- Skill Hours -->
+    <section id="mod-skill" class="panel">
+      <h2>Skill Hours</h2>
+      <p>Estimate install time. This feeds the Price module.</p>
+      <div id="skill-items" class="list"></div>
+      <div class="row">
+        <input id="skill-name" placeholder="Task (e.g., Boiler swap)">
+        <input id="skill-hrs" type="number" placeholder="Hours">
+        <button id="add-skill">Add Task</button>
+      </div>
+      <div class="row mt">
+        <b>Total Hours: <span id="skill-total">0</span></b>
+      </div>
+    </section>
+
+    <!-- Installation Notes -->
+    <section id="mod-notes" class="panel">
+      <h2>Installation Notes</h2>
+      <div class="grid2">
+        <textarea id="notes-free" rows="6" placeholder="Free-typed notes…"></textarea>
+        <div>
+          <label>Quick Picks</label>
+          <div id="notes-quick" class="chips"></div>
+        </div>
+      </div>
+      <details class="mt">
+        <summary>Depot Copy Box (engineer-facing)</summary>
+        <textarea id="notes-output" rows="10" class="copybox"></textarea>
+        <div class="row">
+          <label><input type="checkbox" class="fmt" data-for="#notes-output" data-mode="arrows"> ↘️ prefix</label>
+          <label><input type="checkbox" class="fmt" data-for="#notes-output" data-mode="semicolons"> ; line breaks</label>
+          <label><input type="checkbox" id="include-headers"> Include section headers</label>
+          <span class="spacer"></span>
+          <button class="small" data-copy="#notes-output">Copy</button>
+        </div>
+      </details>
+    </section>
+
+    <!-- Spec -->
+    <section id="mod-spec" class="panel">
+      <h2>Spec</h2>
+      <div class="grid2">
+        <div>
+          <label>Selected Boiler Model</label>
+          <select id="boiler-model"></select>
+          <small class="muted">Models read from data/rules/boiler_clearances.models.json</small>
+          <div class="row mt">
+            <button id="validate-clearances">Validate Clearances</button>
+          </div>
+          <div id="clearance-result" class="muted mt"></div>
+        </div>
+        <div>
+          <label>Measured Space (mm)</label>
+          <div class="grid3 tight">
+            <input id="m-height" type="number" placeholder="H">
+            <input id="m-width" type="number" placeholder="W">
+            <input id="m-depth" type="number" placeholder="D">
+          </div>
+          <label class="mt">Notes</label>
+          <textarea id="spec-notes" rows="5" placeholder="E.g., cupboard, unventilated, internal fix flue required…"></textarea>
+        </div>
+      </div>
+      <details class="mt">
+        <summary>Spec Output</summary>
+        <textarea id="spec-output" rows="8" class="copybox"></textarea>
+        <div class="row">
+          <button class="small" data-copy="#spec-output">Copy</button>
+        </div>
+      </details>
+    </section>
+
+    <!-- Categories -->
+    <section id="cat-boiler" class="panel">
+      <h2>Boiler</h2>
+      <div class="chips" id="boiler-snips"></div>
+      <textarea id="boiler-out" rows="8" class="copybox"></textarea>
+      <div class="row">
+        <label><input type="checkbox" class="fmt" data-for="#boiler-out" data-mode="arrows"> ↘️ prefix</label>
+        <label><input type="checkbox" class="fmt" data-for="#boiler-out" data-mode="semicolons"> ; line breaks</label>
+        <span class="spacer"></span>
+        <button class="small" data-copy="#boiler-out">Copy</button>
+      </div>
+    </section>
+
+    <section id="cat-flue" class="panel">
+      <h2>Flue</h2>
+      <div class="chips" id="flue-snips"></div>
+      <textarea id="flue-out" rows="8" class="copybox"></textarea>
+      <div class="row">
+        <label><input type="checkbox" class="fmt" data-for="#flue-out" data-mode="arrows"> ↘️ prefix</label>
+        <label><input type="checkbox" class="fmt" data-for="#flue-out" data-mode="semicolons"> ; line breaks</label>
+        <span class="spacer"></span>
+        <button class="small" data-copy="#flue-out">Copy</button>
+      </div>
+    </section>
+
+    <section id="cat-pipe" class="panel">
+      <h2>Pipework</h2>
+      <div class="chips" id="pipe-snips"></div>
+      <textarea id="pipe-out" rows="8" class="copybox"></textarea>
+      <div class="row">
+        <label><input type="checkbox" class="fmt" data-for="#pipe-out" data-mode="arrows"> ↘️ prefix</label>
+        <label><input type="checkbox" class="fmt" data-for="#pipe-out" data-mode="semicolons"> ; line breaks</label>
+        <span class="spacer"></span>
+        <button class="small" data-copy="#pipe-out">Copy</button>
+      </div>
+    </section>
+
+    <section id="cat-cylinder" class="panel">
+      <h2>Cylinder</h2>
+      <div class="chips" id="cyl-snips"></div>
+      <textarea id="cyl-out" rows="8" class="copybox"></textarea>
+      <div class="row">
+        <label><input type="checkbox" class="fmt" data-for="#cyl-out" data-mode="arrows"> ↘️ prefix</label>
+        <label><input type="checkbox" class="fmt" data-for="#cyl-out" data-mode="semicolons"> ; line breaks</label>
+        <span class="spacer"></span>
+        <button class="small" data-copy="#cyl-out">Copy</button>
+      </div>
+    </section>
+
+    <section id="cat-controls" class="panel">
+      <h2>Controls</h2>
+      <div class="chips" id="ctrl-snips"></div>
+      <textarea id="ctrl-out" rows="8" class="copybox"></textarea>
+      <div class="row">
+        <label><input type="checkbox" class="fmt" data-for="#ctrl-out" data-mode="arrows"> ↘️ prefix</label>
+        <label><input type="checkbox" class="fmt" data-for="#ctrl-out" data-mode="semicolons"> ; line breaks</label>
+        <span class="spacer"></span>
+        <button class="small" data-copy="#ctrl-out">Copy</button>
+      </div>
+    </section>
+
+    <section id="cat-additional" class="panel">
+      <h2>Additional Products</h2>
+      <div class="chips" id="add-snips"></div>
+      <textarea id="add-out" rows="8" class="copybox"></textarea>
+      <div class="row">
+        <label><input type="checkbox" class="fmt" data-for="#add-out" data-mode="arrows"> ↘️ prefix</label>
+        <label><input type="checkbox" class="fmt" data-for="#add-out" data-mode="semicolons"> ; line breaks</label>
+        <span class="spacer"></span>
+        <button class="small" data-copy="#add-out">Copy</button>
+      </div>
+    </section>
+
+    <!-- Tools -->
+    <section id="tools" class="panel">
+      <h2>Tools</h2>
+      <details>
+        <summary>Clearance Rules (loaded)</summary>
+        <pre id="rules-view" class="mono smallpre"></pre>
+      </details>
+      <details>
+        <summary>Import Options JSON (snippets)</summary>
+        <input type="file" id="import-options" accept="application/json">
+      </details>
+      <details>
+        <summary>Export All (as JSON)</summary>
+        <button id="btn-export-2">Export</button>
+      </details>
+    </section>
+
+  </section>
+</main>
+
+<footer>
+  <small>MVP – local only. Data persists in your browser (localStorage). You can customise snippets and rules JSON.</small>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
