@@ -1,0 +1,100 @@
+{
+  "schema": {
+    "brand": "string",
+    "range": "string",
+    "model": "string",
+    "type": "Combi|System|Regular",
+    "case": {
+      "height": "mm",
+      "width": "mm",
+      "depth": "mm"
+    },
+    "clearances": {
+      "above": "mm",
+      "below": "mm",
+      "left": "mm",
+      "right": "mm",
+      "front_fixed": "mm",
+      "front_removable": "mm",
+      "min_install_height": "mm",
+      "min_install_depth": "mm"
+    },
+    "compartment_vent_required": "boolean",
+    "internal_fix_flue": "boolean",
+    "notes": "string"
+  },
+  "models": [
+    {
+      "brand": "Ideal",
+      "range": "Logic",
+      "model": "Combi 30",
+      "type": "Combi",
+      "case": {
+        "height": 700,
+        "width": 395,
+        "depth": 278
+      },
+      "clearances": {
+        "above": 165,
+        "below": 100,
+        "left": 2.5,
+        "right": 2.5,
+        "front_fixed": 450,
+        "front_removable": 5,
+        "min_install_height": 965,
+        "min_install_depth": 728
+      },
+      "compartment_vent_required": false,
+      "internal_fix_flue": true,
+      "notes": "Sizing to water performance advised. For new combi installs, 10 lpm @ 1 bar recommended."
+    },
+    {
+      "brand": "Worcester Bosch",
+      "range": "Greenstar 4000",
+      "model": "System 15",
+      "type": "System",
+      "case": {
+        "height": 724,
+        "width": 400,
+        "depth": 310
+      },
+      "clearances": {
+        "above": 170,
+        "below": 186,
+        "left": 5,
+        "right": 5,
+        "front_fixed": 600,
+        "front_removable": 20,
+        "min_install_height": 1080,
+        "min_install_depth": 910
+      },
+      "compartment_vent_required": false,
+      "internal_fix_flue": true,
+      "notes": "Front clearance can be reduced to 450mm if reduced-clearance rules are met."
+    },
+    {
+      "brand": "Vaillant",
+      "range": "ecoFIT pure",
+      "model": "System 615",
+      "type": "System",
+      "case": {
+        "height": 700,
+        "width": 390,
+        "depth": 295
+      },
+      "clearances": {
+        "above": 150,
+        "below": 150,
+        "left": 5,
+        "right": 5,
+        "front_fixed": 500,
+        "front_removable": 5,
+        "min_install_height": 870,
+        "min_install_depth": 795
+      },
+      "compartment_vent_required": false,
+      "internal_fix_flue": true,
+      "notes": "Service clearance can reduce with rear flue per manufacturer guidance."
+    }
+  ]
+}
