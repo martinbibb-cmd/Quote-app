@@ -1,0 +1,41 @@
+{
+  "boiler": [
+    "Replace boiler like-for-like in same location",
+    "Raise boiler slightly to gain clearance below",
+    "Seal system with expansion vessel (if appropriate)",
+    "Magnetic filter on return near boiler"
+  ],
+  "flue": [
+    "Existing flue decommissioned and made good",
+    "New rear flue with plume kit to clear openings",
+    "Horizontal terminal to meet boundary/window clearances"
+  ],
+  "pipe": [
+    "Primary pipework to manufacturer minimum sizes",
+    "Gas run sized to maintain \u22641 mbar drop",
+    "Condensate to external soil, correctly trapped and insulated where external"
+  ],
+  "cylinder": [
+    "Remove F&E tank; convert to sealed system",
+    "New unvented cylinder sized to demand",
+    "Discharge pipework to G3 requirements"
+  ],
+  "controls": [
+    "Hive single channel (Boiler Plus compliant)",
+    "Hive dual channel for stored hot water",
+    "Existing controls retained and recommissioned"
+  ],
+  "additional": [
+    "Powerflush recommended due to sludge risk",
+    "Fernox TF1 Omega filter supplied and fitted"
+  ],
+  "notesQuick": [
+    "No safety observations",
+    "All areas accessible from ground \u2013 no ladders required",
+    "Customer to clear working areas prior to install",
+    "Loft works require fixed ladder, lighting, boarded access",
+    "One pipe system \u2013 performance limitations explained",
+    "Sealing old system \u2013 leak risk discussed and noted",
+    "Combi not instantaneous \u2013 draw-off/flow explained"
+  ]
+}
