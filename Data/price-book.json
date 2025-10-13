@@ -301,6 +301,34 @@
       "notes": "Integrated magnetic filter supplied"
     },
     {
+      "id": "baxi-800-33",
+      "name": "Baxi 800 Platinum+ 33",
+      "type": "combi",
+      "output": "33 kW",
+      "cost": 1095,
+      "hours": 3.25,
+      "case": {"height": 700, "width": 390, "depth": 285},
+      "requiredClearance": {"top": 178, "bottom": 200, "left": 5, "right": 5, "front": 450},
+      "minSpace": {"height": 1078, "width": 400, "depth": 735},
+      "heatLossRange": "Medium homes with two bathrooms",
+      "flues": ["flue-hz-60", "flue-plume-kit", "flue-vertical-kit"],
+      "notes": "10-year warranty with Adey filter"
+    },
+    {
+      "id": "vaillant-ecotec-plus-832",
+      "name": "Vaillant ecoTEC Plus 832",
+      "type": "combi",
+      "output": "32 kW",
+      "cost": 1180,
+      "hours": 3.5,
+      "case": {"height": 720, "width": 440, "depth": 338},
+      "requiredClearance": {"top": 200, "bottom": 200, "left": 25, "right": 25, "front": 500},
+      "minSpace": {"height": 1120, "width": 490, "depth": 838},
+      "heatLossRange": "Larger dwellings with higher DHW demand",
+      "flues": ["flue-hz-80", "flue-plume-kit", "flue-vertical-kit"],
+      "notes": "Stainless steel heat exchanger"
+    },
+    {
       "id": "wb-4000-system-18",
       "name": "Worcester Bosch 4000 System 18",
       "type": "system",
@@ -315,7 +343,35 @@
       "notes": "Greenstar Comfort+ controls compatible"
     },
     {
-      "id": "vaillant-ecoTec-plus-415",
+      "id": "ideal-logic-max-s24",
+      "name": "Ideal Logic Max S24",
+      "type": "system",
+      "output": "24 kW",
+      "cost": 1035,
+      "hours": 2.75,
+      "case": {"height": 700, "width": 395, "depth": 278},
+      "requiredClearance": {"top": 165, "bottom": 200, "left": 5, "right": 5, "front": 450},
+      "minSpace": {"height": 1065, "width": 405, "depth": 728},
+      "heatLossRange": "High demand with stored hot water",
+      "flues": ["flue-hz-60", "flue-vertical-kit"],
+      "notes": "Pre-wired pump and filling loop"
+    },
+    {
+      "id": "vaillant-ecotec-plus-618",
+      "name": "Vaillant ecoTEC Plus 618",
+      "type": "system",
+      "output": "18 kW",
+      "cost": 1140,
+      "hours": 2.9,
+      "case": {"height": 720, "width": 440, "depth": 338},
+      "requiredClearance": {"top": 200, "bottom": 200, "left": 25, "right": 25, "front": 500},
+      "minSpace": {"height": 1120, "width": 490, "depth": 838},
+      "heatLossRange": "Ideal for S-plan with unvented cylinder",
+      "flues": ["flue-hz-80", "flue-vertical-kit"],
+      "notes": "Modulating pump with eBUS"
+    },
+    {
+      "id": "vaillant-ecotec-plus-415",
       "name": "Vaillant ecoTEC plus 415",
       "type": "regular",
       "output": "15 kW",
@@ -327,6 +383,34 @@
       "heatLossRange": "Gravity or pumped systems",
       "flues": ["flue-hz-80", "flue-plume-kit"],
       "notes": "Open-vented compatible"
+    },
+    {
+      "id": "wb-ri-18",
+      "name": "Worcester Bosch Ri 18",
+      "type": "regular",
+      "output": "18 kW",
+      "cost": 910,
+      "hours": 2.9,
+      "case": {"height": 600, "width": 390, "depth": 270},
+      "requiredClearance": {"top": 200, "bottom": 200, "left": 5, "right": 5, "front": 500},
+      "minSpace": {"height": 1000, "width": 400, "depth": 770},
+      "heatLossRange": "Suitable for Y-plan upgrades",
+      "flues": ["flue-hz-80", "flue-plume-kit"],
+      "notes": "Front access for servicing"
+    },
+    {
+      "id": "ideal-mexico-he-30",
+      "name": "Ideal Mexico HE30",
+      "type": "regular",
+      "output": "30 kW",
+      "cost": 1220,
+      "hours": 3.25,
+      "case": {"height": 850, "width": 450, "depth": 600},
+      "requiredClearance": {"top": 150, "bottom": 0, "left": 10, "right": 10, "front": 600},
+      "minSpace": {"height": 1000, "width": 470, "depth": 1200},
+      "heatLossRange": "Large properties retaining open vent systems",
+      "flues": ["flue-hz-80"],
+      "notes": "Floor standing footprint"
     }
   ],
   "flues": [
@@ -336,7 +420,12 @@
       "type": "horizontal",
       "cost": 155,
       "hours": 0.75,
-      "compatible": ["ideal-logic-max-30", "wb-4000-system-18"],
+      "compatible": [
+        "ideal-logic-max-30",
+        "baxi-800-33",
+        "wb-4000-system-18",
+        "ideal-logic-max-s24"
+      ],
       "heatZones": ["rear-wall", "side-wall", "corner"],
       "images": {
         "horizontal": "Horizontal clearance bands",
@@ -354,7 +443,13 @@
       "type": "horizontal",
       "cost": 210,
       "hours": 0.9,
-      "compatible": ["vaillant-ecoTec-plus-415"],
+      "compatible": [
+        "vaillant-ecoTec-plus-832",
+        "vaillant-ecotec-plus-618",
+        "vaillant-ecoTec-plus-415",
+        "wb-ri-18",
+        "ideal-mexico-he-30"
+      ],
       "heatZones": ["rear-wall", "side-wall"],
       "images": {
         "horizontal": "See Vaillant spec for 80/125",
@@ -372,7 +467,14 @@
       "type": "vertical",
       "cost": 260,
       "hours": 1.25,
-      "compatible": ["ideal-logic-max-30", "wb-4000-system-18"],
+      "compatible": [
+        "ideal-logic-max-30",
+        "baxi-800-33",
+        "vaillant-ecotec-plus-832",
+        "wb-4000-system-18",
+        "ideal-logic-max-s24",
+        "vaillant-ecotec-plus-618"
+      ],
       "heatZones": ["roof-near-ridge", "roof-valley", "flat-roof"],
       "images": {
         "horizontal": "Check horizontal clearances prior to offset",
@@ -390,7 +492,13 @@
       "type": "plume",
       "cost": 95,
       "hours": 0.5,
-      "compatible": ["ideal-logic-max-30", "vaillant-ecoTec-plus-415"],
+      "compatible": [
+        "ideal-logic-max-30",
+        "baxi-800-33",
+        "vaillant-ecotec-plus-832",
+        "vaillant-ecoTec-plus-415",
+        "wb-ri-18"
+      ],
       "heatZones": ["front-elevation", "adjacent-path", "boundary"],
       "images": {
         "horizontal": "Attach to horizontal terminals",
