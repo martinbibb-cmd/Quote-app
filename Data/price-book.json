@@ -1,0 +1,431 @@
+{
+  "customers": [
+    {
+      "id": "cust-nha",
+      "name": "North Housing Association",
+      "accountRef": "NHA-44320",
+      "address": "45 River Street, Leeds, LS7 8DL",
+      "contact": "Julia Barton",
+      "email": "julia.barton@nha.org.uk",
+      "phone": "0113 200 7755"
+    },
+    {
+      "id": "cust-green",
+      "name": "Greenfield Estates",
+      "accountRef": "GF-12891",
+      "address": "118 Meadow View, Derby, DE1 9SX",
+      "contact": "Samuel Price",
+      "email": "samuel.price@greenfieldestates.co.uk",
+      "phone": "0133 963 4470"
+    },
+    {
+      "id": "cust-city",
+      "name": "City Build Services",
+      "accountRef": "CBS-55210",
+      "address": "1 Merchant Court, Birmingham, B3 1HL",
+      "contact": "Aisha Khan",
+      "email": "aisha.khan@citybuild.co.uk",
+      "phone": "0121 311 8844"
+    }
+  ],
+  "boilerTypes": [
+    {
+      "id": "regular",
+      "name": "Regular",
+      "description": "Conventional heat-only boiler with F&E tanks",
+      "imageTint": "#D97706",
+      "basePack": "packA-regular",
+      "photos": [
+        "Full boiler front including data badge",
+        "Full airing cupboard including valves",
+        "F&E tanks in loft (if present)",
+        "Flue termination with surrounding wall"
+      ],
+      "observations": [
+        "Ventilation or combustion air issues",
+        "Electrical isolation and bonding",
+        "System water quality",
+        "Access considerations for loft or roof"
+      ]
+    },
+    {
+      "id": "system",
+      "name": "System",
+      "description": "Sealed system boiler with unvented cylinder",
+      "imageTint": "#2563EB",
+      "basePack": "packA-system",
+      "photos": [
+        "Boiler front and pipework",
+        "Cylinder cupboard pipework",
+        "Discharge termination",
+        "Controls position"
+      ],
+      "observations": [
+        "Cylinder cupboard ventilation",
+        "Discharge route and tundish",
+        "Primary pump condition",
+        "Existing controls condition"
+      ]
+    },
+    {
+      "id": "combi",
+      "name": "Combi",
+      "description": "Combination boiler providing heating and hot water",
+      "imageTint": "#059669",
+      "basePack": "packA-combi",
+      "photos": [
+        "Boiler front and pipework",
+        "Gas meter with bonding",
+        "Condensate termination",
+        "System filter or dirt separator"
+      ],
+      "observations": [
+        "Water flow rate and pressure",
+        "Condensate run freeze risk",
+        "Flue terminal obstructions",
+        "Scale protection provisions"
+      ]
+    },
+    {
+      "id": "warm-air",
+      "name": "Warm Air",
+      "description": "Warm air or ducted heating system",
+      "imageTint": "#EC4899",
+      "basePack": "packA-warmair",
+      "photos": [
+        "Existing warm air unit",
+        "Duct runs and vents",
+        "Electrical controls",
+        "Plant room overview"
+      ],
+      "observations": [
+        "Ducting condition",
+        "Combustion air provision",
+        "Return air path",
+        "Asbestos concerns"
+      ]
+    },
+    {
+      "id": "storage-combi",
+      "name": "Storage Combi",
+      "description": "High output combi with integral store",
+      "imageTint": "#7C3AED",
+      "basePack": "packA-storage",
+      "photos": [
+        "Boiler front",
+        "Store connections",
+        "Flue route",
+        "Service valves"
+      ],
+      "observations": [
+        "Structural support",
+        "Discharge routing",
+        "Scale risk",
+        "Noise/ventilation"
+      ]
+    },
+    {
+      "id": "none",
+      "name": "No Existing",
+      "description": "New installation with no existing boiler",
+      "imageTint": "#6B7280",
+      "basePack": "packA-empty",
+      "photos": [
+        "Proposed plant location",
+        "External elevations",
+        "Incoming services",
+        "Consumer unit"
+      ],
+      "observations": [
+        "Incoming gas/electric availability",
+        "Fabric penetrations",
+        "Access equipment requirements",
+        "Neighbours or party wall consent"
+      ]
+    }
+  ],
+  "systemOptions": [
+    {
+      "id": "sys-combi",
+      "name": "Combi",
+      "boilerType": "combi",
+      "pack": "packB-combi",
+      "description": "Combi providing instantaneous DHW"
+    },
+    {
+      "id": "sys-system",
+      "name": "System",
+      "boilerType": "system",
+      "pack": "packB-system",
+      "description": "System boiler with unvented cylinder"
+    },
+    {
+      "id": "sys-regular",
+      "name": "Regular",
+      "boilerType": "regular",
+      "pack": "packB-regular",
+      "description": "Regular boiler feeding stored hot water"
+    }
+  ],
+  "packs": [
+    {
+      "id": "packA-regular",
+      "group": "A",
+      "name": "Base Pack A – Regular Boiler",
+      "summary": "Isolate, strip and dispose of regular boiler, cold tanks and controls",
+      "hours": 5.5,
+      "parts": [
+        {"sku": "A-R-01", "name": "Isolate and drain existing system", "cost": 85, "hours": 1.5},
+        {"sku": "A-R-02", "name": "Strip out boiler and F&E tanks", "cost": 120, "hours": 2},
+        {"sku": "A-R-03", "name": "Cap redundant services", "cost": 45, "hours": 1},
+        {"sku": "A-R-04", "name": "Disposal and making good", "cost": 65, "hours": 1}
+      ]
+    },
+    {
+      "id": "packA-system",
+      "group": "A",
+      "name": "Base Pack A – System Boiler",
+      "summary": "Isolate and remove sealed system boiler and associated controls",
+      "hours": 4,
+      "parts": [
+        {"sku": "A-S-01", "name": "Isolate services", "cost": 60, "hours": 1},
+        {"sku": "A-S-02", "name": "Remove boiler", "cost": 95, "hours": 1.5},
+        {"sku": "A-S-03", "name": "Disconnect controls", "cost": 45, "hours": 0.75},
+        {"sku": "A-S-04", "name": "Waste handling", "cost": 40, "hours": 0.75}
+      ]
+    },
+    {
+      "id": "packA-combi",
+      "group": "A",
+      "name": "Base Pack A – Combi Boiler",
+      "summary": "Isolate and remove existing combi boiler installation",
+      "hours": 3.5,
+      "parts": [
+        {"sku": "A-C-01", "name": "Drain down system", "cost": 55, "hours": 1},
+        {"sku": "A-C-02", "name": "Strip boiler and flue", "cost": 95, "hours": 1.5},
+        {"sku": "A-C-03", "name": "Disconnect controls", "cost": 30, "hours": 0.5},
+        {"sku": "A-C-04", "name": "Waste removal", "cost": 35, "hours": 0.5}
+      ]
+    },
+    {
+      "id": "packA-warmair",
+      "group": "A",
+      "name": "Base Pack A – Warm Air",
+      "summary": "Remove warm air unit and ducts as required",
+      "hours": 6.5,
+      "parts": [
+        {"sku": "A-WA-01", "name": "Isolate warm air unit", "cost": 75, "hours": 1},
+        {"sku": "A-WA-02", "name": "Remove ductwork", "cost": 130, "hours": 2.5},
+        {"sku": "A-WA-03", "name": "Make good penetrations", "cost": 90, "hours": 1.5},
+        {"sku": "A-WA-04", "name": "Disposal", "cost": 70, "hours": 1.5}
+      ]
+    },
+    {
+      "id": "packA-storage",
+      "group": "A",
+      "name": "Base Pack A – Storage Combi",
+      "summary": "Remove existing storage combi and associated services",
+      "hours": 4.5,
+      "parts": [
+        {"sku": "A-SC-01", "name": "Drain and isolate", "cost": 70, "hours": 1},
+        {"sku": "A-SC-02", "name": "Strip storage combi", "cost": 140, "hours": 2},
+        {"sku": "A-SC-03", "name": "Remove flue", "cost": 50, "hours": 0.75},
+        {"sku": "A-SC-04", "name": "Waste handling", "cost": 45, "hours": 0.75}
+      ]
+    },
+    {
+      "id": "packA-empty",
+      "group": "A",
+      "name": "Base Pack A – New Build",
+      "summary": "Prepare location for new plant including services survey",
+      "hours": 2.5,
+      "parts": [
+        {"sku": "A-NB-01", "name": "Site survey and marking", "cost": 45, "hours": 0.75},
+        {"sku": "A-NB-02", "name": "Set out connections", "cost": 65, "hours": 1},
+        {"sku": "A-NB-03", "name": "Temporary supplies", "cost": 35, "hours": 0.75}
+      ]
+    },
+    {
+      "id": "packB-combi",
+      "group": "B",
+      "name": "Pack B – New Combi System",
+      "summary": "Pipework and accessories for new combi system",
+      "hours": 6,
+      "parts": [
+        {"sku": "B-C-01", "name": "New flow/return pipework", "cost": 180, "hours": 2},
+        {"sku": "B-C-02", "name": "Domestic hot/cold alterations", "cost": 120, "hours": 1.5},
+        {"sku": "B-C-03", "name": "Condensate provision", "cost": 55, "hours": 0.75},
+        {"sku": "B-C-04", "name": "Controls and wiring", "cost": 95, "hours": 1.75}
+      ]
+    },
+    {
+      "id": "packB-system",
+      "group": "B",
+      "name": "Pack B – New System Boiler",
+      "summary": "Pipework and controls for system boiler with cylinder",
+      "hours": 7,
+      "parts": [
+        {"sku": "B-S-01", "name": "Primary pipework", "cost": 210, "hours": 2.5},
+        {"sku": "B-S-02", "name": "Cylinder connections", "cost": 140, "hours": 2},
+        {"sku": "B-S-03", "name": "System wiring centre", "cost": 90, "hours": 1.5},
+        {"sku": "B-S-04", "name": "Commissioning", "cost": 65, "hours": 1}
+      ]
+    },
+    {
+      "id": "packB-regular",
+      "group": "B",
+      "name": "Pack B – New Regular Boiler",
+      "summary": "Pipework and F&E tank provision for regular boiler",
+      "hours": 6.5,
+      "parts": [
+        {"sku": "B-R-01", "name": "Connect feed and expansion", "cost": 110, "hours": 1.5},
+        {"sku": "B-R-02", "name": "Cylinder alterations", "cost": 135, "hours": 2},
+        {"sku": "B-R-03", "name": "Pump and valve wiring", "cost": 85, "hours": 1.5},
+        {"sku": "B-R-04", "name": "System balancing", "cost": 55, "hours": 1.5}
+      ]
+    }
+  ],
+  "boilers": [
+    {
+      "id": "ideal-logic-max-30",
+      "name": "Ideal Logic Max C30",
+      "type": "combi",
+      "output": "30 kW",
+      "cost": 1025,
+      "hours": 3,
+      "case": {"height": 700, "width": 395, "depth": 278},
+      "requiredClearance": {"top": 165, "bottom": 100, "left": 5, "right": 5, "front": 450},
+      "minSpace": {"height": 965, "width": 405, "depth": 728},
+      "heatLossRange": "Up to 12 radiators",
+      "flues": ["flue-hz-60", "flue-plume-kit", "flue-vertical-kit"],
+      "notes": "Integrated magnetic filter supplied"
+    },
+    {
+      "id": "wb-4000-system-18",
+      "name": "Worcester Bosch 4000 System 18",
+      "type": "system",
+      "output": "18 kW",
+      "cost": 980,
+      "hours": 2.5,
+      "case": {"height": 724, "width": 400, "depth": 310},
+      "requiredClearance": {"top": 170, "bottom": 200, "left": 5, "right": 5, "front": 600},
+      "minSpace": {"height": 1094, "width": 410, "depth": 910},
+      "heatLossRange": "Properties up to 4 bedrooms",
+      "flues": ["flue-hz-60", "flue-vertical-kit"],
+      "notes": "Greenstar Comfort+ controls compatible"
+    },
+    {
+      "id": "vaillant-ecoTec-plus-415",
+      "name": "Vaillant ecoTEC plus 415",
+      "type": "regular",
+      "output": "15 kW",
+      "cost": 875,
+      "hours": 2.75,
+      "case": {"height": 600, "width": 375, "depth": 320},
+      "requiredClearance": {"top": 150, "bottom": 150, "left": 5, "right": 5, "front": 500},
+      "minSpace": {"height": 900, "width": 385, "depth": 820},
+      "heatLossRange": "Gravity or pumped systems",
+      "flues": ["flue-hz-80", "flue-plume-kit"],
+      "notes": "Open-vented compatible"
+    }
+  ],
+  "flues": [
+    {
+      "id": "flue-hz-60",
+      "name": "Horizontal 60/100 kit",
+      "type": "horizontal",
+      "cost": 155,
+      "hours": 0.75,
+      "compatible": ["ideal-logic-max-30", "wb-4000-system-18"],
+      "heatZones": ["rear-wall", "side-wall", "corner"],
+      "images": {
+        "horizontal": "Horizontal clearance bands",
+        "vertical": "Use with vertical adapter",
+        "plume": "Add plume kit if recirculation risk"
+      },
+      "variants": [
+        {"id": "hz-short", "label": "Short (0.5m)", "cost": 0, "hours": 0},
+        {"id": "hz-long", "label": "Extended (1.5m)", "cost": 45, "hours": 0.25}
+      ]
+    },
+    {
+      "id": "flue-hz-80",
+      "name": "Horizontal 80/125 kit",
+      "type": "horizontal",
+      "cost": 210,
+      "hours": 0.9,
+      "compatible": ["vaillant-ecoTec-plus-415"],
+      "heatZones": ["rear-wall", "side-wall"],
+      "images": {
+        "horizontal": "See Vaillant spec for 80/125",
+        "vertical": "Requires 125mm core",
+        "plume": "Plume diverter option"
+      },
+      "variants": [
+        {"id": "hz125-standard", "label": "Standard (1m)", "cost": 0, "hours": 0},
+        {"id": "hz125-adapter", "label": "With terminal guard", "cost": 35, "hours": 0.1}
+      ]
+    },
+    {
+      "id": "flue-vertical-kit",
+      "name": "Vertical roof kit",
+      "type": "vertical",
+      "cost": 260,
+      "hours": 1.25,
+      "compatible": ["ideal-logic-max-30", "wb-4000-system-18"],
+      "heatZones": ["roof-near-ridge", "roof-valley", "flat-roof"],
+      "images": {
+        "horizontal": "Check horizontal clearances prior to offset",
+        "vertical": "Vertical clearance cones",
+        "plume": "Consider plume deflection"
+      },
+      "variants": [
+        {"id": "vert-tiled", "label": "Pitched roof (tiled)", "cost": 0, "hours": 0},
+        {"id": "vert-flat", "label": "Flat roof", "cost": 55, "hours": 0.4}
+      ]
+    },
+    {
+      "id": "flue-plume-kit",
+      "name": "Plume management kit",
+      "type": "plume",
+      "cost": 95,
+      "hours": 0.5,
+      "compatible": ["ideal-logic-max-30", "vaillant-ecoTec-plus-415"],
+      "heatZones": ["front-elevation", "adjacent-path", "boundary"],
+      "images": {
+        "horizontal": "Attach to horizontal terminals",
+        "vertical": "Convert plume to vertical rise",
+        "plume": "Plume heat map"
+      },
+      "variants": [
+        {"id": "plume-straight", "label": "Straight 1m", "cost": 0, "hours": 0},
+        {"id": "plume-angled", "label": "Angled kit", "cost": 25, "hours": 0.2}
+      ]
+    }
+  ],
+  "gasOptions": [
+    {"id": "gas-upsize", "name": "Upsize gas run", "description": "Upgrade pipework to maintain ≤1mbar", "cost": 185, "hours": 1.25},
+    {"id": "gas-test", "name": "Tightness test & rectify", "description": "Extended test on existing installation", "cost": 65, "hours": 0.5},
+    {"id": "gas-meter-move", "name": "Relocate internal meter", "description": "Move meter within 1m", "cost": 140, "hours": 1}
+  ],
+  "condensateOptions": [
+    {"id": "cond-pump", "name": "Install condensate pump", "description": "Use pump where gravity run unavailable", "cost": 120, "hours": 0.75},
+    {"id": "cond-freeze", "name": "External run frost protection", "description": "Trace heat and insulation", "cost": 85, "hours": 0.6},
+    {"id": "cond-soil", "name": "Terminate to soil stack", "description": "Core and connect to soil", "cost": 95, "hours": 0.8}
+  ],
+  "components": [
+    {"id": "comp-cylinder-180", "category": "cylinders", "name": "180L unvented cylinder", "cost": 625, "hours": 2.5},
+    {"id": "comp-cylinder-210", "category": "cylinders", "name": "210L unvented cylinder", "cost": 690, "hours": 2.75},
+    {"id": "comp-controls-smart", "category": "controls", "name": "Smart control (Hive)", "cost": 210, "hours": 0.75},
+    {"id": "comp-controls-wired", "category": "controls", "name": "Wired 2-channel programmer", "cost": 95, "hours": 0.5},
+    {"id": "comp-user-wc", "category": "user-controls", "name": "Wireless room stat", "cost": 85, "hours": 0.35},
+    {"id": "comp-rads-five", "category": "rads", "name": "5x compact radiators pack", "cost": 450, "hours": 6},
+    {"id": "comp-rads-flush", "category": "services", "name": "Powerflush", "cost": 390, "hours": 5},
+    {"id": "comp-valves", "category": "valves", "name": "TRV upgrade pack (8)", "cost": 180, "hours": 2},
+    {"id": "comp-tanks", "category": "tanks", "name": "F&E tank kit", "cost": 140, "hours": 1.5},
+    {"id": "comp-addons-filter", "category": "add-ons", "name": "Magnetic filter", "cost": 115, "hours": 0.4},
+    {"id": "comp-services-lagging", "category": "services", "name": "Pipe lagging and insulation", "cost": 75, "hours": 1.25}
+  ],
+  "houseRooms": ["Kitchen", "Utility", "Garage", "Loft", "Cupboard", "Basement", "Bedroom", "Airing Cupboard"],
+  "labourRate": 65
+}
