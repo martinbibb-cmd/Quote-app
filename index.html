@@ -1,309 +1,236 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Quote Tool – Map to App (MVP)</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hydronic Quote Builder</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <h1>Quote Tool – MVP</h1>
-  <div class="row">
-    <button id="btn-export">Export JSON</button>
-    <input type="file" id="import-json" accept="application/json" title="Import saved JSON">
-    <button id="btn-clear">Reset</button>
-    <span class="spacer"></span>
-    <button id="btn-summary">Generate Customer Summary</button>
-  </div>
-</header>
-
-<main>
-  <aside class="nav">
-    <h3>Modules</h3>
-    <nav>
-      <button class="navbtn" data-target="#mod-quote">Quote Hub</button>
-      <button class="navbtn" data-target="#mod-parts">Parts</button>
-      <button class="navbtn" data-target="#mod-price">Price</button>
-      <button class="navbtn" data-target="#mod-skill">Skill Hours</button>
-      <button class="navbtn" data-target="#mod-notes">Installation Notes</button>
-      <button class="navbtn" data-target="#mod-spec">Spec</button>
-      <hr>
-      <h3>System Categories</h3>
-      <button class="navbtn" data-target="#cat-boiler">Boiler</button>
-      <button class="navbtn" data-target="#cat-flue">Flue</button>
-      <button class="navbtn" data-target="#cat-pipe">Pipework</button>
-      <button class="navbtn" data-target="#cat-cylinder">Cylinder</button>
-      <button class="navbtn" data-target="#cat-controls">Controls</button>
-      <button class="navbtn" data-target="#cat-additional">Additional Products</button>
-      <hr>
-      <button class="navbtn" data-target="#tools">Tools</button>
+  <header class="app-header">
+    <div>
+      <h1>Hydronic Quote Builder</h1>
+      <p class="subtitle">Guided survey and quote assembly using the live price book</p>
+    </div>
+    <nav class="step-nav" aria-label="Quote steps">
+      <button class="step-link active" data-step="project">1. Project</button>
+      <button class="step-link" data-step="layout">2. Locations</button>
+      <button class="step-link" data-step="systems">3. Systems</button>
+      <button class="step-link" data-step="components">4. Components</button>
+      <button class="step-link" data-step="summary">5. Summary</button>
     </nav>
-  </aside>
+  </header>
 
-  <section class="content">
+  <main>
+    <section id="step-project" class="step-panel active" aria-labelledby="step-project-title">
+      <h2 id="step-project-title">Project briefing</h2>
+      <div class="grid grid-3">
+        <article class="card">
+          <h3>Customer</h3>
+          <label class="stack">
+            <span>Select customer <span class="required">(required)</span></span>
+            <select id="customer-select" required></select>
+          </label>
+          <dl id="customer-details" class="meta"></dl>
+        </article>
 
-    <!-- Quote Hub -->
-    <section id="mod-quote" class="panel active">
-      <h2>Quote Hub</h2>
-      <div class="grid2">
-        <div>
-          <label>Lead Number</label>
-          <input id="lead" placeholder="e.g., 50425374">
-        </div>
-        <div>
-          <label>System Type</label>
-          <select id="system_type">
-            <option value="">Select…</option>
-            <option>Combi</option>
-            <option>System</option>
-            <option>Regular (Heat-Only)</option>
-          </select>
-        </div>
-        <div>
-          <label>Available Space (H×W×D, mm)</label>
-          <input id="space_hwD" placeholder="e.g., 1100x410x910">
-        </div>
-        <div>
-          <label>Customer Needs</label>
-          <input id="needs" placeholder="e.g., Faster hot water, quieter, lower bills">
-        </div>
-      </div>
-      <details class="mt">
-        <summary>Customer Summary (auto-generated)</summary>
-        <textarea id="customer_summary" rows="8" class="copybox"></textarea>
-        <div class="row">
-          <button class="small" data-copy="#customer_summary">Copy Summary</button>
-        </div>
-      </details>
-      <details>
-        <summary>Quote JSON (for saving/sharing)</summary>
-        <textarea id="quote_json" rows="8" class="mono"></textarea>
-        <div class="row">
-          <button class="small" id="btn-copy-quote">Copy JSON</button>
-        </div>
-      </details>
-    </section>
+        <article class="card" id="existing-boiler-card">
+          <h3>Present system <span class="required">(required)</span></h3>
+          <p class="muted">Choose the boiler type currently installed. This selects Base Pack A.</p>
+          <div id="boiler-type-grid" class="type-grid" role="list"></div>
+        </article>
 
-    <!-- Parts -->
-    <section id="mod-parts" class="panel">
-      <h2>Parts</h2>
-      <p>Select parts to include; you can add custom lines too.</p>
-      <div id="parts-list" class="list"></div>
-      <div class="row">
-        <input id="part-name" placeholder="Custom part name">
-        <input id="part-cost" type="number" placeholder="Cost (£)">
-        <button id="add-part">Add Part</button>
-      </div>
-      <details class="mt">
-        <summary>Selected Parts</summary>
-        <textarea id="parts-output" class="copybox" rows="8"></textarea>
-        <div class="row">
-          <label><input type="checkbox" class="fmt" data-for="#parts-output" data-mode="arrows"> ↘️ prefix</label>
-          <label><input type="checkbox" class="fmt" data-for="#parts-output" data-mode="semicolons"> ; line breaks</label>
-          <span class="spacer"></span>
-          <button class="small" data-copy="#parts-output">Copy</button>
-        </div>
-      </details>
-    </section>
-
-    <!-- Price -->
-    <section id="mod-price" class="panel">
-      <h2>Price</h2>
-      <div class="grid3">
-        <div>
-          <label>Labour Rate (£/hr)</label>
-          <input id="labour-rate" type="number" value="65">
-        </div>
-        <div>
-          <label>Skill Hours (from module)</label>
-          <input id="skill-hours" type="number" value="8">
-        </div>
-        <div>
-          <label>Misc (permits, waste, etc.)</label>
-          <input id="misc" type="number" value="0">
-        </div>
-      </div>
-      <div class="row mt">
-        <button id="recalc">Recalculate</button>
-        <span id="price-breakdown" class="muted"></span>
-      </div>
-      <div class="totals">
-        <div><span>Parts:</span><b id="price-parts">£0</b></div>
-        <div><span>Labour:</span><b id="price-labour">£0</b></div>
-        <div><span>Misc:</span><b id="price-misc">£0</b></div>
-        <div class="grand"><span>Total:</span><b id="price-total">£0</b></div>
-      </div>
-    </section>
-
-    <!-- Skill Hours -->
-    <section id="mod-skill" class="panel">
-      <h2>Skill Hours</h2>
-      <p>Estimate install time. This feeds the Price module.</p>
-      <div id="skill-items" class="list"></div>
-      <div class="row">
-        <input id="skill-name" placeholder="Task (e.g., Boiler swap)">
-        <input id="skill-hrs" type="number" placeholder="Hours">
-        <button id="add-skill">Add Task</button>
-      </div>
-      <div class="row mt">
-        <b>Total Hours: <span id="skill-total">0</span></b>
-      </div>
-    </section>
-
-    <!-- Installation Notes -->
-    <section id="mod-notes" class="panel">
-      <h2>Installation Notes</h2>
-      <div class="grid2">
-        <textarea id="notes-free" rows="6" placeholder="Free-typed notes…"></textarea>
-        <div>
-          <label>Quick Picks</label>
-          <div id="notes-quick" class="chips"></div>
-        </div>
-      </div>
-      <details class="mt">
-        <summary>Depot Copy Box (engineer-facing)</summary>
-        <textarea id="notes-output" rows="10" class="copybox"></textarea>
-        <div class="row">
-          <label><input type="checkbox" class="fmt" data-for="#notes-output" data-mode="arrows"> ↘️ prefix</label>
-          <label><input type="checkbox" class="fmt" data-for="#notes-output" data-mode="semicolons"> ; line breaks</label>
-          <label><input type="checkbox" id="include-headers"> Include section headers</label>
-          <span class="spacer"></span>
-          <button class="small" data-copy="#notes-output">Copy</button>
-        </div>
-      </details>
-    </section>
-
-    <!-- Spec -->
-    <section id="mod-spec" class="panel">
-      <h2>Spec</h2>
-      <div class="grid2">
-        <div>
-          <label>Selected Boiler Model</label>
-          <select id="boiler-model"></select>
-          <small class="muted">Models read from data/rules/boiler_clearances.models.json</small>
-          <div class="row mt">
-            <button id="validate-clearances">Validate Clearances</button>
+        <article class="card">
+          <h3>Site measurements</h3>
+          <p class="muted">Enter available space for the new appliance (mm).</p>
+          <div class="grid grid-3 tight">
+            <label class="stack"><span>Height</span><input type="number" id="measure-height" min="0" placeholder="H"></label>
+            <label class="stack"><span>Width</span><input type="number" id="measure-width" min="0" placeholder="W"></label>
+            <label class="stack"><span>Depth</span><input type="number" id="measure-depth" min="0" placeholder="D"></label>
           </div>
-          <div id="clearance-result" class="muted mt"></div>
-        </div>
-        <div>
-          <label>Measured Space (mm)</label>
-          <div class="grid3 tight">
-            <input id="m-height" type="number" placeholder="H">
-            <input id="m-width" type="number" placeholder="W">
-            <input id="m-depth" type="number" placeholder="D">
+          <label class="stack mt">
+            <span>Other measurement notes</span>
+            <textarea id="measure-notes" rows="3" placeholder="E.g., restricted cupboard access"></textarea>
+          </label>
+        </article>
+      </div>
+
+      <div class="grid grid-2 mt">
+        <article class="card">
+          <div class="section-heading">
+            <h3>Photos</h3>
+            <button id="add-photo" class="ghost small">Add photo prompt</button>
           </div>
-          <label class="mt">Notes</label>
-          <textarea id="spec-notes" rows="5" placeholder="E.g., cupboard, unventilated, internal fix flue required…"></textarea>
-        </div>
+          <ul id="photo-list" class="checklist" aria-live="polite"></ul>
+        </article>
+        <article class="card">
+          <div class="section-heading">
+            <h3>Observations</h3>
+            <button id="add-observation" class="ghost small">Add observation</button>
+          </div>
+          <ul id="observation-list" class="checklist" aria-live="polite"></ul>
+        </article>
       </div>
-      <details class="mt">
-        <summary>Spec Output</summary>
-        <textarea id="spec-output" rows="8" class="copybox"></textarea>
-        <div class="row">
-          <button class="small" data-copy="#spec-output">Copy</button>
-        </div>
-      </details>
+
+      <article class="card mt" id="new-system-card">
+        <h3>New system selection <span class="required">(required)</span></h3>
+        <p class="muted">This selects Pack B and drives boiler and controls availability.</p>
+        <div id="system-options" class="system-options"></div>
+      </article>
     </section>
 
-    <!-- Categories -->
-    <section id="cat-boiler" class="panel">
-      <h2>Boiler</h2>
-      <div class="chips" id="boiler-snips"></div>
-      <textarea id="boiler-out" rows="8" class="copybox"></textarea>
-      <div class="row">
-        <label><input type="checkbox" class="fmt" data-for="#boiler-out" data-mode="arrows"> ↘️ prefix</label>
-        <label><input type="checkbox" class="fmt" data-for="#boiler-out" data-mode="semicolons"> ; line breaks</label>
-        <span class="spacer"></span>
-        <button class="small" data-copy="#boiler-out">Copy</button>
+    <section id="step-layout" class="step-panel" aria-labelledby="step-layout-title">
+      <h2 id="step-layout-title">House layout</h2>
+      <div class="grid grid-2">
+        <article class="card house-panel">
+          <h3>Current boiler location</h3>
+          <p class="muted">Tap a room to map the existing system.</p>
+          <div id="current-rooms" class="house-grid" role="radiogroup"></div>
+        </article>
+        <article class="card house-panel">
+          <h3>New plant location</h3>
+          <p class="muted">Tap a room to map the proposed install. Adds to base pack.</p>
+          <div id="new-rooms" class="house-grid" role="radiogroup"></div>
+        </article>
       </div>
+      <article class="card mt">
+        <h3>Location notes</h3>
+        <textarea id="location-notes" rows="4" placeholder="Record access routes, lifting requirements, scaffolding, earthing, pressures, WAH, safety notes"></textarea>
+      </article>
     </section>
 
-    <section id="cat-flue" class="panel">
-      <h2>Flue</h2>
-      <div class="chips" id="flue-snips"></div>
-      <textarea id="flue-out" rows="8" class="copybox"></textarea>
-      <div class="row">
-        <label><input type="checkbox" class="fmt" data-for="#flue-out" data-mode="arrows"> ↘️ prefix</label>
-        <label><input type="checkbox" class="fmt" data-for="#flue-out" data-mode="semicolons"> ; line breaks</label>
-        <span class="spacer"></span>
-        <button class="small" data-copy="#flue-out">Copy</button>
+    <section id="step-systems" class="step-panel" aria-labelledby="step-systems-title">
+      <h2 id="step-systems-title">Boiler, flue, gas &amp; condensate</h2>
+      <div class="grid grid-3">
+        <article class="card">
+          <h3>Boiler selection <span class="required">(required)</span></h3>
+          <div id="boiler-options" class="option-stack" aria-live="polite"></div>
+        </article>
+        <article class="card">
+          <h3>Clearance check</h3>
+          <p class="muted">Validate measured space against the chosen boiler and manufacturer clearance guidance.</p>
+          <button id="check-clearances" class="primary full">Validate measurements</button>
+          <div id="clearance-report" class="report"></div>
+          <div class="clearance-image" id="clearance-image" aria-hidden="true"></div>
+        </article>
+        <article class="card">
+          <h3>Boiler working memory</h3>
+          <ul id="working-memory" class="memory-list"></ul>
+        </article>
       </div>
-    </section>
 
-    <section id="cat-pipe" class="panel">
-      <h2>Pipework</h2>
-      <div class="chips" id="pipe-snips"></div>
-      <textarea id="pipe-out" rows="8" class="copybox"></textarea>
-      <div class="row">
-        <label><input type="checkbox" class="fmt" data-for="#pipe-out" data-mode="arrows"> ↘️ prefix</label>
-        <label><input type="checkbox" class="fmt" data-for="#pipe-out" data-mode="semicolons"> ; line breaks</label>
-        <span class="spacer"></span>
-        <button class="small" data-copy="#pipe-out">Copy</button>
-      </div>
-    </section>
-
-    <section id="cat-cylinder" class="panel">
-      <h2>Cylinder</h2>
-      <div class="chips" id="cyl-snips"></div>
-      <textarea id="cyl-out" rows="8" class="copybox"></textarea>
-      <div class="row">
-        <label><input type="checkbox" class="fmt" data-for="#cyl-out" data-mode="arrows"> ↘️ prefix</label>
-        <label><input type="checkbox" class="fmt" data-for="#cyl-out" data-mode="semicolons"> ; line breaks</label>
-        <span class="spacer"></span>
-        <button class="small" data-copy="#cyl-out">Copy</button>
-      </div>
-    </section>
-
-    <section id="cat-controls" class="panel">
-      <h2>Controls</h2>
-      <div class="chips" id="ctrl-snips"></div>
-      <textarea id="ctrl-out" rows="8" class="copybox"></textarea>
-      <div class="row">
-        <label><input type="checkbox" class="fmt" data-for="#ctrl-out" data-mode="arrows"> ↘️ prefix</label>
-        <label><input type="checkbox" class="fmt" data-for="#ctrl-out" data-mode="semicolons"> ; line breaks</label>
-        <span class="spacer"></span>
-        <button class="small" data-copy="#ctrl-out">Copy</button>
-      </div>
-    </section>
-
-    <section id="cat-additional" class="panel">
-      <h2>Additional Products</h2>
-      <div class="chips" id="add-snips"></div>
-      <textarea id="add-out" rows="8" class="copybox"></textarea>
-      <div class="row">
-        <label><input type="checkbox" class="fmt" data-for="#add-out" data-mode="arrows"> ↘️ prefix</label>
-        <label><input type="checkbox" class="fmt" data-for="#add-out" data-mode="semicolons"> ; line breaks</label>
-        <span class="spacer"></span>
-        <button class="small" data-copy="#add-out">Copy</button>
+      <div class="grid grid-2 mt">
+        <article class="card">
+          <h3>Flue configuration <span class="required">(required)</span></h3>
+          <div id="flue-tabs" class="tabs"></div>
+          <div id="flue-variants" class="option-stack"></div>
+          <div class="heatmap" id="flue-heatmap"></div>
+        </article>
+        <article class="card">
+          <h3>Gas &amp; condensate</h3>
+          <div>
+            <h4>Gas options</h4>
+            <div id="gas-options" class="option-stack"></div>
+          </div>
+          <div class="mt">
+            <h4>Condensate options</h4>
+            <div id="condensate-options" class="option-stack"></div>
+          </div>
+        </article>
       </div>
     </section>
 
-    <!-- Tools -->
-    <section id="tools" class="panel">
-      <h2>Tools</h2>
-      <details>
-        <summary>Clearance Rules (loaded)</summary>
-        <pre id="rules-view" class="mono smallpre"></pre>
-      </details>
-      <details>
-        <summary>Import Options JSON (snippets)</summary>
-        <input type="file" id="import-options" accept="application/json">
-      </details>
-      <details>
-        <summary>Export All (as JSON)</summary>
-        <button id="btn-export-2">Export</button>
-      </details>
+    <section id="step-components" class="step-panel" aria-labelledby="step-components-title">
+      <h2 id="step-components-title">System components &amp; services</h2>
+      <div class="grid grid-2">
+        <article class="card">
+          <h3>House system map</h3>
+          <p class="muted">Select the hotspots to add cylinders, controls, user interfaces, radiators, valves, tanks, add-ons and services. Drill down to tweak quantities.</p>
+          <div id="component-map" class="component-map" role="list"></div>
+        </article>
+        <article class="card">
+          <h3 id="component-detail-title">Component detail</h3>
+          <div id="component-detail" class="option-stack"></div>
+        </article>
+      </div>
     </section>
 
-  </section>
-</main>
+    <section id="step-summary" class="step-panel" aria-labelledby="step-summary-title">
+      <h2 id="step-summary-title">Quote summary</h2>
+      <div class="grid grid-3">
+        <article class="card">
+          <h3>Packs &amp; products</h3>
+          <ul id="quote-lines" class="memory-list"></ul>
+        </article>
+        <article class="card">
+          <h3>Skill hours</h3>
+          <p class="muted">Built automatically from packs and selected products.</p>
+          <dl id="hours-breakdown" class="meta"></dl>
+          <div class="total">
+            <span>Total hours</span>
+            <strong id="total-hours">0</strong>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Costing</h3>
+          <dl id="cost-breakdown" class="meta"></dl>
+          <div class="total">
+            <span>Total (parts only)</span>
+            <strong id="total-parts">£0.00</strong>
+          </div>
+          <div class="total">
+            <span>Labour @ £<span id="labour-rate">0</span>/hr</span>
+            <strong id="total-labour">£0.00</strong>
+          </div>
+          <div class="grand-total">
+            <span>Grand total</span>
+            <strong id="grand-total">£0.00</strong>
+          </div>
+        </article>
+      </div>
 
-<footer>
-  <small>MVP – local only. Data persists in your browser (localStorage). You can customise snippets and rules JSON.</small>
-</footer>
+      <div class="grid grid-2 mt">
+        <article class="card">
+          <h3>Customer presentation</h3>
+          <textarea id="customer-presentation" rows="10" class="mono"></textarea>
+          <button id="copy-presentation" class="ghost small">Copy presentation</button>
+        </article>
+        <article class="card">
+          <h3>Installation notes</h3>
+          <textarea id="installation-notes" rows="10" class="mono"></textarea>
+          <button id="copy-notes" class="ghost small">Copy notes</button>
+        </article>
+      </div>
 
-<script src="app.js"></script>
+      <div class="actions">
+        <button id="submit-quote" class="primary">Submit to quote</button>
+        <span id="submit-status" role="status" class="muted"></span>
+      </div>
+      <article class="card mt">
+        <h3>Quote JSON</h3>
+        <textarea id="quote-json" rows="8" class="mono"></textarea>
+      </article>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <small>All data sourced from Data/price-book.json. Selections are stored in browser memory only.</small>
+  </footer>
+
+  <template id="component-template">
+    <div class="component-item">
+      <div class="component-info">
+        <h4></h4>
+        <p class="muted"></p>
+      </div>
+      <div class="component-actions">
+        <label>Qty
+          <input type="number" min="0" step="1" value="0">
+        </label>
+      </div>
+    </div>
+  </template>
+
+  <script src="app.js"></script>
 </body>
 </html>
