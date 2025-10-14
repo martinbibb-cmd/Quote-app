@@ -71,7 +71,7 @@ async function init() {
     return;
   }
 
-  $('#pricebook-version').textContent = `Price book v${priceBook.version} · ${formatDate(priceBook.generatedAt)}`;
+  $('#pricebook-version').textContent = formatPricebookVersion(priceBook);
 
   loadDraft();
 
@@ -116,6 +116,15 @@ function formatDate(value) {
   if (!value) return '';
   const date = dayjs(value);
   return date.isValid() ? date.format('D MMM YYYY') : value;
+}
+
+function formatPricebookVersion(book) {
+  if (!book) return '';
+  const parts = [];
+  if (book.version) parts.push(`v${book.version}`);
+  const generated = formatDate(book.generatedAt);
+  if (generated) parts.push(generated);
+  return parts.length ? `Price book ${parts.join(' · ')}` : '';
 }
 
 function applyStoredTheme() {
