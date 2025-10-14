@@ -727,7 +727,22 @@ function getCategoryInfo(category) {
     'water-treatment': { label: 'Water treatment', icon: '💧' },
     'plant-room': { label: 'Plant room', icon: '🏭' },
     electrical: { label: 'Electrical', icon: '⚡' },
-    civils: { label: 'Civils', icon: '🚧' }
+    civils: { label: 'Civils', icon: '🚧' },
+    'core-packs-full-system': { label: 'Core packs · full system', icon: '📦' },
+    'core-packs-part-system': { label: 'Core packs · part system', icon: '📦' },
+    'electrics-waste-filling-loops-gda-remote-prvs': { label: 'Electrics, waste & filling loops', icon: '🔌' },
+    'controls-and-timers': { label: 'Controls & timers', icon: '⏱️' },
+    hive: { label: 'Hive smart controls', icon: '🐝' },
+    'boilers-combi-ng': { label: 'Boilers · combi NG', icon: '🔥' },
+    'boilers-combi-lpg': { label: 'Boilers · combi LPG', icon: '🔥' },
+    'boilers-regular-system-example': { label: 'Boilers · regular/system', icon: '🔥' },
+    'ashp-accessories': { label: 'ASHP accessories', icon: '🧊' },
+    'heat-pumps': { label: 'Heat pumps', icon: '❄️' },
+    'radiators-example': { label: 'Radiators', icon: '♨️' },
+    'convert-reconfigure-bypass': { label: 'Convert & reconfigure', icon: '🔁' },
+    'additional-mech-labour-and-misc': { label: 'Mechanical labour & misc.', icon: '🛠️' },
+    'electrical-installs-misc': { label: 'Electrical installs', icon: '⚡' },
+    'terminal-guards': { label: 'Terminal guards', icon: '🛡️' }
   };
   return info[category] || { label: category, icon: '⚙️' };
 }
@@ -745,7 +760,19 @@ function showComponentCategory(category) {
   components.forEach((comp) => {
     const frag = template.content.cloneNode(true);
     frag.querySelector('h4').textContent = comp.name;
-    frag.querySelector('p').textContent = `${fmtGBP(comp.cost)} · ${comp.hours} hrs`;
+    const detailBits = [];
+    if (comp.code) detailBits.push(`Code ${comp.code}`);
+    detailBits.push(fmtGBP(comp.cost));
+    if (typeof comp.hours === 'number') {
+      const hours = Number(comp.hours) || 0;
+      if (hours > 0) detailBits.push(`${hours.toFixed(2)} hrs`);
+    }
+    if (typeof comp.leadTimeDays === 'number') {
+      const days = Number(comp.leadTimeDays) || 0;
+      const label = days === 1 ? 'day' : 'days';
+      detailBits.push(`${days} ${label} lead`);
+    }
+    frag.querySelector('p').textContent = detailBits.join(' · ');
     const input = frag.querySelector('input');
     input.value = state.components[comp.id] || 0;
     input.addEventListener('input', () => {
