@@ -3,6 +3,8 @@ const state = {
   currencyFormatter: new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }),
   selected: new Map(),
   itemElements: new Map(),
+  boilers: [],
+  boilerKeys: new Set(),
   totalItems: 0,
 };
 
@@ -17,6 +19,11 @@ const selectionCount = document.getElementById('selection-count');
 const selectionTotal = document.getElementById('selection-total');
 const selectionVat = document.getElementById('selection-vat');
 const clearButton = document.getElementById('clear-selection');
+const boilerResults = document.getElementById('boiler-results');
+const boilerEmpty = document.getElementById('boiler-empty');
+const fuelFilter = document.getElementById('filter-fuel');
+const typeFilter = document.getElementById('filter-type');
+const brandFilter = document.getElementById('filter-brand');
 
 init();
 
@@ -40,6 +47,8 @@ async function init() {
   }
 
   renderMeta(metadata);
+  state.itemElements.clear();
+  setupBoilerSelector(state.pricebook.categories || {});
   renderCategories(state.pricebook.categories || {});
   updateSelectionSummary();
 
@@ -74,13 +83,13 @@ function renderMeta(metadata = {}) {
 
 function renderCategories(categories) {
   if (!categoryContainer) return;
-  state.itemElements.clear();
   state.totalItems = 0;
   categoryContainer.innerHTML = '';
 
   const keys = Object.keys(categories).sort((a, b) => a.localeCompare(b));
 
   for (const key of keys) {
+    if (key.startsWith('boilers')) continue;
     const items = categories[key] || [];
     if (!items.length) continue;
     state.totalItems += items.length;
@@ -147,6 +156,14 @@ function toggleSelection(key, item, categoryKey) {
   if (state.selected.has(key)) {
     state.selected.delete(key);
   } else {
+    if (categoryKey.startsWith('boilers')) {
+      const otherBoilers = Array.from(state.selected.keys()).filter((selectedKey) => selectedKey.startsWith('boilers'));
+      for (const existing of otherBoilers) {
+        state.selected.delete(existing);
+        const otherCard = state.itemElements.get(existing);
+        if (otherCard) updateCardSelectionState(otherCard);
+      }
+    }
     state.selected.set(key, {
       key,
       categoryKey,
@@ -237,6 +254,7 @@ function handleSearch() {
   let visible = 0;
 
   for (const card of state.itemElements.values()) {
+    if (card.closest('#boiler-results')) continue;
     const matches = !term ||
       card.dataset.code.includes(term) ||
       card.dataset.description.includes(term);
@@ -291,4 +309,138 @@ function formatDate(value) {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return value;
   return date.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+function setupBoilerSelector(categories) {
+  if (!boilerResults) return;
+
+  state.boilers = extractBoilers(categories);
+  populateFilterOptions();
+  renderBoilerResults();
+
+  fuelFilter?.addEventListener('change', renderBoilerResults);
+  typeFilter?.addEventListener('change', renderBoilerResults);
+  brandFilter?.addEventListener('change', renderBoilerResults);
+}
+
+function extractBoilers(categories) {
+  const boilers = [];
+  for (const [categoryKey, items] of Object.entries(categories)) {
+    if (!categoryKey.startsWith('boilers') || !Array.isArray(items)) continue;
+    for (const item of items) {
+      const description = item.description || item.code;
+      boilers.push({
+        ...item,
+        key: `${categoryKey}|${item.code}`,
+        categoryKey,
+        fuel: detectFuel(categoryKey, description),
+        type: detectType(categoryKey, description),
+        brand: detectBrand(description),
+      });
+    }
+  }
+  return boilers;
+}
+
+function detectFuel(categoryKey, description = '') {
+  const lowerCategory = categoryKey.toLowerCase();
+  const lowerDesc = description.toLowerCase();
+  if (lowerCategory.includes('lpg') && !lowerCategory.includes('ng')) return 'lpg';
+  if (lowerCategory.includes('ng') && !lowerCategory.includes('lpg')) return 'ng';
+  if (lowerDesc.includes('lpg')) return 'lpg';
+  return 'ng';
+}
+
+function detectType(categoryKey, description = '') {
+  const lowerCategory = categoryKey.toLowerCase();
+  const lowerDesc = description.toLowerCase();
+  if (lowerCategory.includes('combi') || lowerDesc.includes('combi')) return 'combi';
+  if (lowerCategory.includes('system') || lowerDesc.includes('system')) return 'system';
+  if (lowerCategory.includes('regular') || lowerDesc.includes('regular') || lowerDesc.includes('heat')) return 'regular';
+  return 'other';
+}
+
+function detectBrand(description = '') {
+  if (!description) return 'Unknown';
+  const [brand] = description.split(/\s+/);
+  return brand?.replace(/[^\w+-]/g, '') || 'Unknown';
+}
+
+function populateFilterOptions() {
+  if (!fuelFilter || !typeFilter || !brandFilter) return;
+
+  const fuels = new Set();
+  const types = new Set();
+  const brands = new Set();
+
+  for (const boiler of state.boilers) {
+    if (boiler.fuel) fuels.add(boiler.fuel);
+    if (boiler.type && boiler.type !== 'other') types.add(boiler.type);
+    if (boiler.brand && boiler.brand !== 'Unknown') brands.add(boiler.brand);
+  }
+
+  fillSelect(fuelFilter, fuels);
+  fillSelect(typeFilter, types);
+  fillSelect(brandFilter, brands, { sortCaseInsensitive: true, preserveCase: true });
+}
+
+function fillSelect(selectEl, values, options = {}) {
+  if (!selectEl) return;
+  const { sortCaseInsensitive = false, preserveCase = false } = options;
+  const current = selectEl.value;
+  selectEl.innerHTML = '<option value="all">All</option>';
+  const entries = Array.from(values).filter(Boolean);
+  if (sortCaseInsensitive) {
+    entries.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+  } else {
+    entries.sort();
+  }
+  for (const value of entries) {
+    const option = document.createElement('option');
+    option.value = value;
+    option.textContent = preserveCase ? value : capitalise(value);
+    selectEl.appendChild(option);
+  }
+  if (current && Array.from(selectEl.options).some((opt) => opt.value === current)) {
+    selectEl.value = current;
+  }
+}
+
+function renderBoilerResults() {
+  if (!boilerResults) return;
+
+  for (const key of state.boilerKeys) {
+    state.itemElements.delete(key);
+  }
+  state.boilerKeys.clear();
+
+  const fuel = fuelFilter?.value || 'all';
+  const type = typeFilter?.value || 'all';
+  const brand = brandFilter?.value || 'all';
+
+  const matches = state.boilers.filter((boiler) => {
+    if (fuel !== 'all' && boiler.fuel !== fuel) return false;
+    if (type !== 'all' && boiler.type !== type) return false;
+    if (brand !== 'all' && boiler.brand !== brand) return false;
+    return true;
+  });
+
+  boilerResults.innerHTML = '';
+
+  for (const boiler of matches) {
+    const card = createItemCard(boiler.categoryKey, boiler);
+    boilerResults.appendChild(card);
+    state.itemElements.set(card.dataset.itemKey, card);
+    state.boilerKeys.add(card.dataset.itemKey);
+  }
+
+  if (boilerEmpty) boilerEmpty.hidden = matches.length > 0;
+}
+
+function capitalise(value) {
+  if (!value) return '';
+  const trimmed = value.trim();
+  if (!trimmed) return '';
+  if (trimmed.length <= 3) return trimmed.toUpperCase();
+  return trimmed.replace(/(^|\s)([a-z])/g, (_, prefix, letter) => `${prefix}${letter.toUpperCase()}`);
 }
