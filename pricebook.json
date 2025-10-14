@@ -163,35 +163,55 @@
       "name": "Combi",
       "boilerType": "combi",
       "pack": "packB-combi",
-      "description": "Combi providing instantaneous DHW"
+      "description": "Combi providing instantaneous DHW",
+      "boilerIds": [
+        "wb-greenstar-4000-25c",
+        "wb-greenstar-4000-30c",
+        "ideal-logic-combi2-c30"
+      ]
     },
     {
       "id": "sys-system",
       "name": "System",
       "boilerType": "system",
       "pack": "packB-system",
-      "description": "System boiler with unvented cylinder"
+      "description": "System boiler with unvented cylinder",
+      "boilerIds": [
+        "wb-greenstar-4000-24s",
+        "vaillant-ecofit-pure-625",
+        "ideal-logic-system2-s24"
+      ]
     },
     {
       "id": "sys-regular",
       "name": "Regular",
       "boilerType": "regular",
       "pack": "packB-regular",
-      "description": "Regular boiler feeding stored hot water"
+      "description": "Regular boiler feeding stored hot water",
+      "boilerIds": [
+        "wb-greenstar-ri-24",
+        "vaillant-ecofit-pure-412"
+      ]
     },
     {
       "id": "sys-storage-combi",
       "name": "Storage combi",
       "boilerType": "storage-combi",
       "pack": "packB-storage",
-      "description": "High demand combi with integrated store"
+      "description": "High demand combi with integrated store",
+      "boilerIds": [
+        "viessmann-111w-26"
+      ]
     },
     {
       "id": "sys-hybrid-ready",
       "name": "Hybrid ready system",
       "boilerType": "system",
       "pack": "packB-hybrid",
-      "description": "System boiler prepared for future heat pump integration"
+      "description": "System boiler prepared for future heat pump integration",
+      "boilerIds": [
+        "navien-lcb700-28s"
+      ]
     }
   ],
   "packs": [

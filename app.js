@@ -324,7 +324,7 @@ function renderSystemOptions() {
         state.proposed.systemId = sys.id;
         state.proposed.conversionPackId = sys.pack || null;
         const boiler = getBoiler(state.proposed.boilerId);
-        if (boiler && boiler.type !== sys.boilerType) {
+        if (boiler && !isBoilerCompatibleWithSystem(boiler, sys)) {
           state.proposed.boilerId = null;
           state.proposed.flueSelection = null;
         }
@@ -346,9 +346,9 @@ function renderBoilerOptions() {
     container.innerHTML = '<p class="muted">Select a system to view compatible boilers.</p>';
     return;
   }
-  const options = (priceBook.boilers || []).filter((boiler) => boiler.type === system.boilerType);
+  const options = getBoilersForSystem(system);
   if (!options.length) {
-    container.innerHTML = '<p class="muted">No boilers listed for this system type.</p>';
+    container.innerHTML = '<p class="muted">No boilers listed in the price book for this system option.</p>';
     return;
   }
   options.forEach((boiler) => {
@@ -1497,6 +1497,37 @@ function getSystemOption() {
 function getBoiler(id) {
   if (!id) return null;
   return (priceBook.boilers || []).find((boiler) => boiler.id === id) || null;
+}
+
+function getBoilersForSystem(system) {
+  if (!system) return [];
+  const all = priceBook.boilers || [];
+  if (Array.isArray(system.boilerIds) && system.boilerIds.length) {
+    const order = new Map(system.boilerIds.map((id, index) => [id, index]));
+    const filtered = all.filter((boiler) => order.has(boiler.id));
+    if (filtered.length !== order.size) {
+      const missing = system.boilerIds.filter((id) => !filtered.some((boiler) => boiler.id === id));
+      if (missing.length) {
+        console.warn(`Boilers missing from price book for system ${system.id}: ${missing.join(', ')}`);
+      }
+    }
+    return filtered.sort((a, b) => order.get(a.id) - order.get(b.id));
+  }
+  if (system.boilerType) {
+    return all.filter((boiler) => boiler.type === system.boilerType);
+  }
+  return all;
+}
+
+function isBoilerCompatibleWithSystem(boiler, system) {
+  if (!boiler || !system) return false;
+  if (Array.isArray(system.boilerIds) && system.boilerIds.length) {
+    return system.boilerIds.includes(boiler.id);
+  }
+  if (system.boilerType) {
+    return boiler.type === system.boilerType;
+  }
+  return true;
 }
 
 function getFlue(id) {
