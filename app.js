@@ -1502,28 +1502,12 @@ function getBoiler(id) {
 function getBoilersForSystem(system) {
   if (!system) return [];
   const all = priceBook.boilers || [];
-  if (Array.isArray(system.boilerIds) && system.boilerIds.length) {
-    const order = new Map(system.boilerIds.map((id, index) => [id, index]));
-    const filtered = all.filter((boiler) => order.has(boiler.id));
-    if (filtered.length !== order.size) {
-      const missing = system.boilerIds.filter((id) => !filtered.some((boiler) => boiler.id === id));
-      if (missing.length) {
-        console.warn(`Boilers missing from price book for system ${system.id}: ${missing.join(', ')}`);
-      }
-    }
-    return filtered.sort((a, b) => order.get(a.id) - order.get(b.id));
-  }
-  if (system.boilerType) {
-    return all.filter((boiler) => boiler.type === system.boilerType);
-  }
-  return all;
+  const filtered = system.boilerType ? all.filter((boiler) => boiler.type === system.boilerType) : all;
+  return filtered.slice().sort((a, b) => a.name.localeCompare(b.name));
 }
 
 function isBoilerCompatibleWithSystem(boiler, system) {
   if (!boiler || !system) return false;
-  if (Array.isArray(system.boilerIds) && system.boilerIds.length) {
-    return system.boilerIds.includes(boiler.id);
-  }
   if (system.boilerType) {
     return boiler.type === system.boilerType;
   }
