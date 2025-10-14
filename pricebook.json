@@ -178,6 +178,20 @@
       "boilerType": "regular",
       "pack": "packB-regular",
       "description": "Regular boiler feeding stored hot water"
+    },
+    {
+      "id": "sys-storage-combi",
+      "name": "Storage combi",
+      "boilerType": "storage-combi",
+      "pack": "packB-storage",
+      "description": "High demand combi with integrated store"
+    },
+    {
+      "id": "sys-hybrid-ready",
+      "name": "Hybrid ready system",
+      "boilerType": "system",
+      "pack": "packB-hybrid",
+      "description": "System boiler prepared for future heat pump integration"
     }
   ],
   "packs": [
@@ -296,6 +310,32 @@
         { "sku": "B-R-03", "name": "Pump and valve wiring", "cost": 85, "hours": 1.5 },
         { "sku": "B-R-04", "name": "System balancing", "cost": 55, "hours": 1.5 }
       ]
+    },
+    {
+      "id": "packB-storage",
+      "group": "B",
+      "name": "Pack B – Storage combi",
+      "summary": "Pipework and controls for storage combi appliances",
+      "hours": 7.5,
+      "parts": [
+        { "sku": "B-SC-01", "name": "Reconfigure primary pipework", "cost": 190, "hours": 2.25 },
+        { "sku": "B-SC-02", "name": "Cylinder charging connections", "cost": 155, "hours": 2 },
+        { "sku": "B-SC-03", "name": "DHW blending and valve set", "cost": 120, "hours": 1.5 },
+        { "sku": "B-SC-04", "name": "Commission storage combi", "cost": 95, "hours": 1.75 }
+      ]
+    },
+    {
+      "id": "packB-hybrid",
+      "group": "B",
+      "name": "Pack B – Hybrid ready system",
+      "summary": "Pre-plumb for hybrid interface and future heat pump",
+      "hours": 8,
+      "parts": [
+        { "sku": "B-HR-01", "name": "Install low loss header set", "cost": 210, "hours": 2 },
+        { "sku": "B-HR-02", "name": "Fit plate heat exchanger", "cost": 185, "hours": 2 },
+        { "sku": "B-HR-03", "name": "Wire hybrid controller", "cost": 145, "hours": 1.75 },
+        { "sku": "B-HR-04", "name": "Flush and dose system", "cost": 125, "hours": 2.25 }
+      ]
     }
   ],
   "boilers": [
@@ -404,6 +444,34 @@
       "heatLossRange": "Popular retrofit combi option",
       "flues": ["flue-hz-60", "flue-plume-kit", "flue-vertical-kit"],
       "notes": "Fuel NG · SKU CBLR1913. Clearances not listed in DHG quick-reference extract provided. Refer to Ideal guide if available."
+    },
+    {
+      "id": "viessmann-111w-26",
+      "name": "Viessmann Vitodens 111-W 26kW Storage Combi",
+      "type": "storage-combi",
+      "output": "26 kW",
+      "cost": 1965.4,
+      "hours": 3.6,
+      "case": { "height": 900, "width": 600, "depth": 500 },
+      "requiredClearance": { "top": 200, "bottom": 250, "left": 5, "right": 5, "front": 600 },
+      "minSpace": { "height": 1300, "width": 610, "depth": 1000 },
+      "heatLossRange": "Apartments and homes with simultaneous hot water demand",
+      "flues": ["flue-hz-60", "flue-plume-kit", "flue-vertical-kit"],
+      "notes": "Fuel NG · SKU CBLR5111. Integrated 46L store provides high peak flow capability."
+    },
+    {
+      "id": "navien-lcb700-28s",
+      "name": "Navien LCB700 28kW System (Hybrid Ready)",
+      "type": "system",
+      "output": "28 kW",
+      "cost": 1588.3,
+      "hours": 3,
+      "case": { "height": 695, "width": 440, "depth": 289 },
+      "requiredClearance": { "top": 150, "bottom": 200, "left": 5, "right": 5, "front": 600 },
+      "minSpace": { "height": 1050, "width": 450, "depth": 889 },
+      "heatLossRange": "Future-proof system with heat pump ready controls",
+      "flues": ["flue-hz-60", "flue-hybrid-concentric", "flue-vertical-kit"],
+      "notes": "Fuel NG · SKU CBLR5700. Supplied with hybrid-ready controller harness."
     }
   ],
   "flues": [
@@ -512,7 +580,8 @@
         "wb-greenstar-4000-30c",
         "wb-greenstar-ri-24",
         "vaillant-ecofit-pure-412",
-        "ideal-logic-combi2-c30"
+        "ideal-logic-combi2-c30",
+        "viessmann-111w-26"
       ],
       "heatZones": ["front-elevation", "adjacent-path", "boundary"],
       "headroom": {
@@ -530,17 +599,47 @@
         { "id": "plume-straight", "label": "Straight 1m", "cost": 0, "hours": 0 },
         { "id": "plume-angled", "label": "Angled kit", "cost": 25, "hours": 0.2 }
       ]
+    },
+    {
+      "id": "flue-hybrid-concentric",
+      "name": "Hybrid concentric flue kit",
+      "type": "horizontal",
+      "cost": 235,
+      "hours": 1,
+      "compatible": [
+        "navien-lcb700-28s"
+      ],
+      "heatZones": ["rear-wall", "side-wall", "roof-termination"],
+      "headroom": {
+        "base": 2300,
+        "reductions": [
+          { "id": "hybrid-elbow", "label": "Each hybrid elbow", "value": 70 },
+          { "id": "hybrid-extension", "label": "Each concentric extension", "value": 60 }
+        ]
+      },
+      "images": {
+        "horizontal": "Hybrid system concentric termination",
+        "vertical": "Use with hybrid vertical adapters",
+        "plume": "Requires plume kit when recirculation risk identified"
+      },
+      "variants": [
+        { "id": "hybrid-short", "label": "Standard (0.75m)", "cost": 0, "hours": 0 },
+        { "id": "hybrid-long", "label": "Extended (1.5m)", "cost": 65, "hours": 0.35 }
+      ]
     }
   ],
   "gasOptions": [
     { "id": "gas-upsize", "name": "Upsize gas run", "description": "Upgrade pipework to maintain ≤1mbar", "cost": 185, "hours": 1.25 },
     { "id": "gas-test", "name": "Tightness test & rectify", "description": "Extended test on existing installation", "cost": 65, "hours": 0.5 },
-    { "id": "gas-meter-move", "name": "Relocate internal meter", "description": "Move meter within 1m", "cost": 140, "hours": 1 }
+    { "id": "gas-meter-move", "name": "Relocate internal meter", "description": "Move meter within 1m", "cost": 140, "hours": 1 },
+    { "id": "gas-governor", "name": "Fit new governor", "description": "Replace low pressure governor at meter", "cost": 85, "hours": 0.4 },
+    { "id": "gas-sleeve", "name": "Sleeve wall penetration", "description": "Install new sleeving with firestop collar", "cost": 75, "hours": 0.6 }
   ],
   "condensateOptions": [
     { "id": "cond-pump", "name": "Install condensate pump", "description": "Use pump where gravity run unavailable", "cost": 120, "hours": 0.75 },
     { "id": "cond-freeze", "name": "External run frost protection", "description": "Trace heat and insulation", "cost": 85, "hours": 0.6 },
-    { "id": "cond-soil", "name": "Terminate to soil stack", "description": "Core and connect to soil", "cost": 95, "hours": 0.8 }
+    { "id": "cond-soil", "name": "Terminate to soil stack", "description": "Core and connect to soil", "cost": 95, "hours": 0.8 },
+    { "id": "cond-riser", "name": "Connect to internal riser", "description": "Link into shared riser with trap", "cost": 110, "hours": 0.9 }
   ],
   "components": [
     { "id": "comp-cylinder-180", "category": "cylinders", "name": "180L unvented cylinder", "cost": 625, "hours": 2.5 },
@@ -553,6 +652,11 @@
     { "id": "comp-valves", "category": "valves", "name": "TRV upgrade pack (8)", "cost": 180, "hours": 2 },
     { "id": "comp-tanks", "category": "tanks", "name": "F&E tank kit", "cost": 140, "hours": 1.5 },
     { "id": "comp-addons-filter", "category": "add-ons", "name": "Magnetic filter", "cost": 115, "hours": 0.4 },
-    { "id": "comp-services-lagging", "category": "services", "name": "Pipe lagging and insulation", "cost": 75, "hours": 1.25 }
+    { "id": "comp-services-lagging", "category": "services", "name": "Pipe lagging and insulation", "cost": 75, "hours": 1.25 },
+    { "id": "comp-water-softener", "category": "water-treatment", "name": "Compact water softener", "cost": 540, "hours": 2.5 },
+    { "id": "comp-dirt-separator", "category": "water-treatment", "name": "Low loss dirt separator", "cost": 220, "hours": 1.25 },
+    { "id": "comp-plant-llh", "category": "plant-room", "name": "Low loss header set", "cost": 285, "hours": 1.5 },
+    { "id": "comp-electrical-board", "category": "electrical", "name": "Dedicated boiler consumer unit", "cost": 165, "hours": 1.2 },
+    { "id": "comp-civils-plinth", "category": "civils", "name": "External plant plinth", "cost": 310, "hours": 2.75 }
   ]
 }
