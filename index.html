@@ -4,217 +4,282 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Hydronic Quote Builder</title>
+  <link rel="stylesheet" href="https://unpkg.com/filepond/dist/filepond.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="app-header">
     <div>
       <h1>Hydronic Quote Builder</h1>
-      <p class="subtitle">Guided survey and quote assembly using the live price book</p>
+      <p class="subtitle">Guided survey, basket build and export directly from the live price book.</p>
     </div>
-    <nav class="step-nav" aria-label="Quote steps">
-      <button class="step-link active" data-step="project">1. Project</button>
-      <button class="step-link" data-step="layout">2. Locations</button>
-      <button class="step-link" data-step="systems">3. Systems</button>
-      <button class="step-link" data-step="components">4. Components</button>
-      <button class="step-link" data-step="summary">5. Summary</button>
-    </nav>
+    <div class="header-meta">
+      <span id="pricebook-version" class="muted"></span>
+      <button id="toggle-theme" class="ghost small" type="button">Toggle theme</button>
+    </div>
   </header>
 
-  <main>
-    <section id="step-project" class="step-panel active" aria-labelledby="step-project-title">
-      <h2 id="step-project-title">Project briefing</h2>
-      <div class="grid grid-3">
-        <article class="card">
-          <h3>Customer</h3>
-          <label class="stack">
-            <span>Select customer <span class="required">(required)</span></span>
-            <select id="customer-select" required></select>
-          </label>
-          <dl id="customer-details" class="meta"></dl>
-        </article>
+  <div class="app-layout">
+    <aside class="stepper" aria-label="Workflow steps">
+      <ol>
+        <li class="step-link active" data-step="meta"><span class="step-index">1</span><span class="step-label">Job meta</span><span class="step-status" aria-hidden="true"></span></li>
+        <li class="step-link" data-step="current"><span class="step-index">2</span><span class="step-label">Current system</span><span class="step-status" aria-hidden="true"></span></li>
+        <li class="step-link" data-step="proposed"><span class="step-index">3</span><span class="step-label">Proposed system</span><span class="step-status" aria-hidden="true"></span></li>
+        <li class="step-link" data-step="addons"><span class="step-index">4</span><span class="step-label">Add-ons</span><span class="step-status" aria-hidden="true"></span></li>
+        <li class="step-link" data-step="photos"><span class="step-index">5</span><span class="step-label">Photos & notes</span><span class="step-status" aria-hidden="true"></span></li>
+        <li class="step-link" data-step="basket"><span class="step-index">6</span><span class="step-label">Basket</span><span class="step-status" aria-hidden="true"></span></li>
+        <li class="step-link" data-step="validate"><span class="step-index">7</span><span class="step-label">Validate & preview</span><span class="step-status" aria-hidden="true"></span></li>
+        <li class="step-link" data-step="export"><span class="step-index">8</span><span class="step-label">Export</span><span class="step-status" aria-hidden="true"></span></li>
+      </ol>
+    </aside>
 
-        <article class="card" id="existing-boiler-card">
-          <h3>Present system <span class="required">(required)</span></h3>
-          <p class="muted">Choose the boiler type currently installed. This selects Base Pack A.</p>
-          <div id="boiler-type-grid" class="type-grid" role="list"></div>
-        </article>
+    <main class="panels">
+      <section id="step-meta" class="step-panel active" aria-labelledby="heading-meta">
+        <div class="panel-header">
+          <h2 id="heading-meta">Job meta</h2>
+          <p class="muted">Select the customer, capture the visit details and set the labour rate.</p>
+        </div>
+        <div class="grid grid-2">
+          <article class="card">
+            <h3>Customer</h3>
+            <label class="stack">
+              <span>Customer <span class="required">required</span></span>
+              <select id="meta-customer" required></select>
+            </label>
+            <dl id="meta-customer-details" class="meta"></dl>
+            <button id="meta-use-address" type="button" class="ghost small">Use customer address for site</button>
+          </article>
+          <article class="card">
+            <h3>Visit information</h3>
+            <div class="grid grid-2 tight">
+              <label class="stack"><span>Job name <span class="required">required</span></span><input type="text" id="meta-job-name" placeholder="E.g., Block A upgrade"></label>
+              <label class="stack"><span>Reference</span><input type="text" id="meta-reference" placeholder="Internal ref"></label>
+              <label class="stack"><span>Adviser <span class="required">required</span></span><input type="text" id="meta-adviser" placeholder="Your name"></label>
+              <label class="stack"><span>Visit date</span><input type="date" id="meta-date"></label>
+            </div>
+            <label class="stack"><span>Labour rate (£/hr)</span><input type="number" id="meta-labour" min="0" step="1"></label>
+          </article>
+        </div>
+        <div class="grid grid-2">
+          <article class="card">
+            <h3>Site address</h3>
+            <textarea id="meta-site-address" rows="5" placeholder="Enter site address"></textarea>
+          </article>
+          <article class="card">
+            <h3>General notes</h3>
+            <textarea id="meta-notes" rows="5" placeholder="Log client expectations, access windows, parking etc."></textarea>
+          </article>
+        </div>
+      </section>
 
+      <section id="step-current" class="step-panel" aria-labelledby="heading-current">
+        <div class="panel-header">
+          <h2 id="heading-current">Current system</h2>
+          <p class="muted">Record the existing plant, location and clear space measurements.</p>
+        </div>
         <article class="card">
-          <h3>Site measurements</h3>
-          <p class="muted">Enter available space for the new appliance (mm).</p>
-          <div class="grid grid-3 tight">
-            <label class="stack"><span>Height</span><input type="number" id="measure-height" min="0" placeholder="H"></label>
-            <label class="stack"><span>Width</span><input type="number" id="measure-width" min="0" placeholder="W"></label>
-            <label class="stack"><span>Depth</span><input type="number" id="measure-depth" min="0" placeholder="D"></label>
-          </div>
-          <label class="stack mt">
-            <span>Other measurement notes</span>
-            <textarea id="measure-notes" rows="3" placeholder="E.g., restricted cupboard access"></textarea>
-          </label>
+          <h3>Existing boiler type <span class="required">required</span></h3>
+          <div id="current-type-grid" class="type-grid" role="list"></div>
         </article>
-      </div>
+        <div class="grid grid-2">
+          <article class="card">
+            <h3>Existing plant location</h3>
+            <div id="current-location" class="house-grid" role="radiogroup"></div>
+            <label class="stack mt"><span>Notes</span><textarea id="current-notes" rows="4" placeholder="Access route, isolation points, ceiling height, ventilation"></textarea></label>
+          </article>
+          <article class="card">
+            <h3>Measurements & flow</h3>
+            <div class="grid grid-3 tight">
+              <label class="stack"><span>Height (mm)</span><input type="number" id="measure-height" min="0" step="1"></label>
+              <label class="stack"><span>Width (mm)</span><input type="number" id="measure-width" min="0" step="1"></label>
+              <label class="stack"><span>Depth (mm)</span><input type="number" id="measure-depth" min="0" step="1"></label>
+            </div>
+            <label class="stack mt"><span>Measured flow @ 1 bar (lpm)</span><input type="number" id="current-flow" min="0" step="0.1"></label>
+            <label class="stack mt"><span>Additional measurement notes</span><textarea id="measure-notes" rows="3"></textarea></label>
+          </article>
+        </div>
+        <article class="card" id="base-pack-summary">
+          <h3>Base pack summary</h3>
+          <p class="muted">Select an existing boiler type to load the default strip-out pack.</p>
+          <ul class="memory-list" id="base-pack-lines"></ul>
+        </article>
+      </section>
 
-      <div class="grid grid-2 mt">
+      <section id="step-proposed" class="step-panel" aria-labelledby="heading-proposed">
+        <div class="panel-header">
+          <h2 id="heading-proposed">Proposed system</h2>
+          <p class="muted">Configure the target system, boiler, flue and associated services.</p>
+        </div>
+        <div class="grid grid-2">
+          <article class="card">
+            <h3>System option <span class="required">required</span></h3>
+            <div id="system-options" class="system-options"></div>
+            <div class="muted" id="conversion-pack-notes"></div>
+          </article>
+          <article class="card">
+            <h3>New plant location</h3>
+            <div id="proposed-location" class="house-grid" role="radiogroup"></div>
+            <label class="stack mt"><span>Location notes</span><textarea id="proposed-notes" rows="4" placeholder="Scaffolding, condensate termination, earthing, venting"></textarea></label>
+          </article>
+        </div>
         <article class="card">
-          <div class="section-heading">
-            <h3>Photos</h3>
-            <button id="add-photo" class="ghost small">Add photo prompt</button>
-          </div>
-          <ul id="photo-list" class="checklist" aria-live="polite"></ul>
-        </article>
-        <article class="card">
-          <div class="section-heading">
-            <h3>Observations</h3>
-            <button id="add-observation" class="ghost small">Add observation</button>
-          </div>
-          <ul id="observation-list" class="checklist" aria-live="polite"></ul>
-        </article>
-      </div>
-
-      <article class="card mt" id="new-system-card">
-        <h3>New system selection <span class="required">(required)</span></h3>
-        <p class="muted">This selects Pack B and drives boiler and controls availability.</p>
-        <div id="system-options" class="system-options"></div>
-      </article>
-    </section>
-
-    <section id="step-layout" class="step-panel" aria-labelledby="step-layout-title">
-      <h2 id="step-layout-title">House layout</h2>
-      <div class="grid grid-2">
-        <article class="card house-panel">
-          <h3>Current boiler location</h3>
-          <p class="muted">Tap a room to map the existing system.</p>
-          <div id="current-rooms" class="house-grid" role="radiogroup"></div>
-        </article>
-        <article class="card house-panel">
-          <h3>New plant location</h3>
-          <p class="muted">Tap a room to map the proposed install. Adds to base pack.</p>
-          <div id="new-rooms" class="house-grid" role="radiogroup"></div>
-        </article>
-      </div>
-      <article class="card mt">
-        <h3>Location notes</h3>
-        <textarea id="location-notes" rows="4" placeholder="Record access routes, lifting requirements, scaffolding, earthing, pressures, WAH, safety notes"></textarea>
-      </article>
-    </section>
-
-    <section id="step-systems" class="step-panel" aria-labelledby="step-systems-title">
-      <h2 id="step-systems-title">Boiler, flue, gas &amp; condensate</h2>
-      <div class="grid grid-3">
-        <article class="card">
-          <h3>Boiler selection <span class="required">(required)</span></h3>
-          <div id="boiler-options" class="option-stack" aria-live="polite"></div>
+          <h3>Boiler selection <span class="required">required</span></h3>
+          <div id="boiler-options" class="option-stack"></div>
+          <button id="validate-clearance" type="button" class="ghost small">Validate cabinet clearance</button>
+          <div id="clearance-report" class="report" role="status"></div>
         </article>
         <article class="card">
-          <h3>Clearance check</h3>
-          <p class="muted">Validate measured space against the chosen boiler and manufacturer clearance guidance.</p>
-          <button id="check-clearances" class="primary full">Validate measurements</button>
-          <div id="clearance-report" class="report"></div>
-          <div class="clearance-image" id="clearance-image" aria-hidden="true"></div>
-        </article>
-        <article class="card">
-          <h3>Boiler working memory</h3>
-          <ul id="working-memory" class="memory-list"></ul>
-        </article>
-      </div>
-
-      <div class="grid grid-2 mt">
-        <article class="card">
-          <h3>Flue configuration <span class="required">(required)</span></h3>
+          <h3>Flue configuration <span class="required">required</span></h3>
           <div id="flue-tabs" class="tabs"></div>
           <div id="flue-variants" class="option-stack"></div>
-          <div class="heatmap" id="flue-heatmap"></div>
+          <div class="grid grid-2 mt tight">
+            <div>
+              <label class="stack"><span>Available headroom (mm)</span><input type="number" id="headroom-available" min="0" step="1"></label>
+              <div id="headroom-result" class="report" role="status"></div>
+            </div>
+            <div>
+              <h4 class="muted">Reductions applied</h4>
+              <div id="headroom-reductions" class="checklist slim"></div>
+            </div>
+          </div>
+          <div id="flue-heatmap" class="heatmap"></div>
         </article>
-        <article class="card">
-          <h3>Gas &amp; condensate</h3>
-          <div>
-            <h4>Gas options</h4>
+        <div class="grid grid-2">
+          <article class="card">
+            <h3>Gas works</h3>
             <div id="gas-options" class="option-stack"></div>
-          </div>
-          <div class="mt">
-            <h4>Condensate options</h4>
+          </article>
+          <article class="card">
+            <h3>Condensate</h3>
             <div id="condensate-options" class="option-stack"></div>
-          </div>
-        </article>
-      </div>
-    </section>
+            <label class="stack mt"><span>Condensate route notes</span><textarea id="condensate-notes" rows="3"></textarea></label>
+          </article>
+        </div>
+      </section>
 
-    <section id="step-components" class="step-panel" aria-labelledby="step-components-title">
-      <h2 id="step-components-title">System components &amp; services</h2>
-      <div class="grid grid-2">
-        <article class="card">
-          <h3>House system map</h3>
-          <p class="muted">Select the hotspots to add cylinders, controls, user interfaces, radiators, valves, tanks, add-ons and services. Drill down to tweak quantities.</p>
-          <div id="component-map" class="component-map" role="list"></div>
-        </article>
-        <article class="card">
-          <h3 id="component-detail-title">Component detail</h3>
-          <div id="component-detail" class="option-stack"></div>
-        </article>
-      </div>
-    </section>
+      <section id="step-addons" class="step-panel" aria-labelledby="heading-addons">
+        <div class="panel-header">
+          <h2 id="heading-addons">Components & services</h2>
+          <p class="muted">Add cylinders, controls, radiators and services to the job.</p>
+        </div>
+        <div class="grid grid-2">
+          <article class="card">
+            <h3>System map</h3>
+            <div id="component-map" class="component-map" role="list"></div>
+          </article>
+          <article class="card">
+            <h3 id="component-detail-title">Component detail</h3>
+            <div id="component-detail" class="option-stack"></div>
+          </article>
+        </div>
+      </section>
 
-    <section id="step-summary" class="step-panel" aria-labelledby="step-summary-title">
-      <h2 id="step-summary-title">Quote summary</h2>
-      <div class="grid grid-3">
+      <section id="step-photos" class="step-panel" aria-labelledby="heading-photos">
+        <div class="panel-header">
+          <h2 id="heading-photos">Photos & observations</h2>
+          <p class="muted">Capture evidence and on-site observations. Photos are resized before export.</p>
+        </div>
+        <div class="grid grid-2">
+          <article class="card">
+            <div class="section-heading">
+              <h3>Photo prompts</h3>
+              <button id="add-photo-prompt" type="button" class="ghost small">Add prompt</button>
+            </div>
+            <ul id="photo-checklist" class="checklist" aria-live="polite"></ul>
+          </article>
+          <article class="card">
+            <div class="section-heading">
+              <h3>Observations</h3>
+              <button id="add-observation" type="button" class="ghost small">Add observation</button>
+            </div>
+            <ul id="observation-checklist" class="checklist" aria-live="polite"></ul>
+          </article>
+        </div>
         <article class="card">
-          <h3>Packs &amp; products</h3>
-          <ul id="quote-lines" class="memory-list"></ul>
+          <h3>Capture photos</h3>
+          <input type="file" id="photo-uploader" accept="image/*" multiple capture="environment">
+          <div id="photo-gallery" class="photo-gallery"></div>
         </article>
-        <article class="card">
-          <h3>Skill hours</h3>
-          <p class="muted">Built automatically from packs and selected products.</p>
-          <dl id="hours-breakdown" class="meta"></dl>
-          <div class="total">
-            <span>Total hours</span>
-            <strong id="total-hours">0</strong>
-          </div>
-        </article>
-        <article class="card">
-          <h3>Costing</h3>
-          <dl id="cost-breakdown" class="meta"></dl>
-          <div class="total">
-            <span>Total (parts only)</span>
-            <strong id="total-parts">£0.00</strong>
-          </div>
-          <div class="total">
-            <span>Labour @ £<span id="labour-rate">0</span>/hr</span>
-            <strong id="total-labour">£0.00</strong>
-          </div>
-          <div class="grand-total">
-            <span>Grand total</span>
-            <strong id="grand-total">£0.00</strong>
-          </div>
-        </article>
-      </div>
+      </section>
 
-      <div class="grid grid-2 mt">
-        <article class="card">
-          <h3>Customer presentation</h3>
-          <textarea id="customer-presentation" rows="10" class="mono"></textarea>
-          <button id="copy-presentation" class="ghost small">Copy presentation</button>
-        </article>
-        <article class="card">
-          <h3>Installation notes</h3>
-          <textarea id="installation-notes" rows="10" class="mono"></textarea>
-          <button id="copy-notes" class="ghost small">Copy notes</button>
-        </article>
-      </div>
+      <section id="step-basket" class="step-panel" aria-labelledby="heading-basket">
+        <div class="panel-header">
+          <h2 id="heading-basket">Basket & totals</h2>
+          <p class="muted">Live basket compiled from packs, boiler and selected components.</p>
+        </div>
+        <div class="grid grid-3">
+          <article class="card">
+            <h3>Lines</h3>
+            <ul id="basket-lines" class="memory-list"></ul>
+          </article>
+          <article class="card">
+            <h3>Hours</h3>
+            <dl id="basket-hours" class="meta"></dl>
+            <div class="total"><span>Total hours</span><strong id="basket-total-hours">0</strong></div>
+          </article>
+          <article class="card">
+            <h3>Costing</h3>
+            <dl id="basket-costs" class="meta"></dl>
+            <div class="total"><span>Total parts</span><strong id="basket-total-parts">£0.00</strong></div>
+            <div class="total"><span>Labour @ £<span id="basket-labour-rate">0</span></span><strong id="basket-total-labour">£0.00</strong></div>
+            <div class="grand-total"><span>Grand total</span><strong id="basket-grand-total">£0.00</strong></div>
+          </article>
+        </div>
+      </section>
 
-      <div class="actions">
-        <button id="submit-quote" class="primary">Submit to quote</button>
-        <span id="submit-status" role="status" class="muted"></span>
-      </div>
-      <article class="card mt">
-        <h3>Quote JSON</h3>
-        <textarea id="quote-json" rows="8" class="mono"></textarea>
-      </article>
-    </section>
-  </main>
+      <section id="step-validate" class="step-panel" aria-labelledby="heading-validate">
+        <div class="panel-header">
+          <h2 id="heading-validate">Validation & preview</h2>
+          <p class="muted">Resolve warnings, then copy summaries for CRM or follow-on actions.</p>
+        </div>
+        <article class="card">
+          <h3>Validation status</h3>
+          <ul id="validation-list" class="checklist slim" aria-live="polite"></ul>
+        </article>
+        <div class="grid grid-2">
+          <article class="card">
+            <div class="section-heading">
+              <h3>Customer summary</h3>
+              <button id="copy-customer-summary" type="button" class="ghost small">Copy</button>
+            </div>
+            <textarea id="customer-summary" rows="12" class="mono"></textarea>
+          </article>
+          <article class="card">
+            <div class="section-heading">
+              <h3>Installation notes</h3>
+              <button id="copy-installation" type="button" class="ghost small">Copy</button>
+            </div>
+            <textarea id="installation-summary" rows="12" class="mono"></textarea>
+          </article>
+        </div>
+      </section>
+
+      <section id="step-export" class="step-panel" aria-labelledby="heading-export">
+        <div class="panel-header">
+          <h2 id="heading-export">Export</h2>
+          <p class="muted">Generate PDFs, download the job pack and manage drafts.</p>
+        </div>
+        <article class="card actions">
+          <button id="export-generate" type="button" class="primary">Generate ZIP & PDFs</button>
+          <button id="export-save-draft" type="button" class="ghost">Download draft</button>
+          <button id="export-import-draft" type="button" class="ghost">Import draft</button>
+          <button id="export-clear-draft" type="button" class="ghost">Clear local draft</button>
+          <input type="file" id="import-draft-input" accept="application/json" hidden>
+        </article>
+        <article class="card">
+          <h3>Export status</h3>
+          <div id="export-status" class="muted" role="status"></div>
+        </article>
+        <article class="card">
+          <h3>Job JSON</h3>
+          <textarea id="job-json" rows="16" class="mono"></textarea>
+        </article>
+      </section>
+    </main>
+  </div>
 
   <footer class="app-footer">
-    <small>All data sourced from Data/price-book.json. Selections are stored in browser memory only.</small>
+    <small>Selections stay on this device until exported. Powered by pdf-lib, JSZip, FilePond and dayjs.</small>
   </footer>
 
   <template id="component-template">
@@ -224,13 +289,23 @@
         <p class="muted"></p>
       </div>
       <div class="component-actions">
-        <label>Qty
-          <input type="number" min="0" step="1" value="0">
-        </label>
+        <label>Qty<input type="number" min="0" step="1" value="0"></label>
       </div>
     </div>
   </template>
 
+  <template id="headroom-reduction-template">
+    <label class="check-row">
+      <input type="checkbox">
+      <span class="label"></span>
+      <span class="muted value"></span>
+    </label>
+  </template>
+
+  <script src="https://unpkg.com/dayjs@1.11.10/dayjs.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha512-A3VYk8dkUBaRdOy+nK8BPVKx/aRXefxWWEXUOYaL6VLdystD5nq2WEYLRh3SeDsICoZ6irMIXja+6JGZve56xg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+  <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
