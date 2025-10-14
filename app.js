@@ -356,6 +356,13 @@ function renderBoilerOptions() {
     card.type = 'button';
     card.className = 'option-card';
     if (state.proposed.boilerId === boiler.id) card.classList.add('active');
+    const hoursText = typeof boiler.hours === 'number' ? `${boiler.hours} hrs` : 'Hours tbc';
+    const detailBits = [];
+    if (boiler.case?.height && boiler.case?.width && boiler.case?.depth) {
+      detailBits.push(`Case ${boiler.case.height}×${boiler.case.width}×${boiler.case.depth}mm`);
+    }
+    if (boiler.heatLossRange) detailBits.push(boiler.heatLossRange);
+    const detailText = detailBits.join(' · ') || 'Specification to be confirmed';
     card.innerHTML = `
       <header>
         <div>
@@ -364,10 +371,10 @@ function renderBoilerOptions() {
         </div>
         <div>
           <div>${fmtGBP(boiler.cost)}</div>
-          <small class="muted">${boiler.hours} hrs</small>
+          <small class="muted">${hoursText}</small>
         </div>
       </header>
-      <div class="muted">Case ${boiler.case.height}×${boiler.case.width}×${boiler.case.depth}mm · ${boiler.heatLossRange || ''}</div>
+      <div class="muted">${detailText}</div>
       <footer>${boiler.notes || ''}</footer>
     `;
     card.addEventListener('click', () => {
