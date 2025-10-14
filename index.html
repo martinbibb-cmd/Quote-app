@@ -38,6 +38,35 @@
     </aside>
 
     <section class="catalogue" aria-live="polite">
+      <section class="boiler-section" aria-label="Boiler picker">
+        <header class="boiler-header">
+          <h2>Select a boiler</h2>
+          <p class="muted">Filter by fuel, type, and brand to narrow the options.</p>
+        </header>
+        <form class="boiler-filters" id="boiler-filters">
+          <label>
+            <span>Fuel</span>
+            <select id="filter-fuel">
+              <option value="all">All</option>
+            </select>
+          </label>
+          <label>
+            <span>Type</span>
+            <select id="filter-type">
+              <option value="all">All</option>
+            </select>
+          </label>
+          <label>
+            <span>Brand</span>
+            <select id="filter-brand">
+              <option value="all">All</option>
+            </select>
+          </label>
+        </form>
+        <div id="boiler-results" class="item-grid" aria-live="polite"></div>
+        <p id="boiler-empty" class="muted" hidden>No boilers match the selected filters.</p>
+      </section>
+
       <div class="toolbar">
         <label class="search">
           <span class="sr-only">Search pricebook</span>
