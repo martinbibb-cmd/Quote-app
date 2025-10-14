@@ -1,64 +1,73 @@
 {
-  "version": "2025.10",
-  "generatedAt": "2025-10-14T00:00:00Z",
-  "labourRate": 65,
+  "version": "2026.02",
+  "generatedAt": "2026-02-18T00:00:00Z",
+  "labourRate": 72,
   "customers": [
     {
-      "id": "cust-nha",
-      "name": "North Housing Association",
-      "accountRef": "NHA-44320",
-      "address": "45 River Street, Leeds, LS7 8DL",
-      "contact": "Julia Barton",
-      "email": "julia.barton@nha.org.uk",
-      "phone": "0113 200 7755"
+      "id": "cust-meridian",
+      "name": "Meridian Housing Cooperative",
+      "accountRef": "MHC-88210",
+      "address": "8 Crown Terrace, Sheffield, S1 4LP",
+      "contact": "Lydia Patel",
+      "email": "lydia.patel@meridianhc.org.uk",
+      "phone": "0114 210 8870"
     },
     {
-      "id": "cust-green",
-      "name": "Greenfield Estates",
-      "accountRef": "GF-12891",
-      "address": "118 Meadow View, Derby, DE1 9SX",
-      "contact": "Samuel Price",
-      "email": "samuel.price@greenfieldestates.co.uk",
-      "phone": "0133 963 4470"
+      "id": "cust-eastgate",
+      "name": "Eastgate Estates",
+      "accountRef": "EGE-55312",
+      "address": "19 Albion Way, Newcastle, NE1 6QL",
+      "contact": "Chris Norman",
+      "email": "chris.norman@eastgateestates.co.uk",
+      "phone": "0191 774 2280"
     },
     {
-      "id": "cust-city",
-      "name": "City Build Services",
-      "accountRef": "CBS-55210",
-      "address": "1 Merchant Court, Birmingham, B3 1HL",
-      "contact": "Aisha Khan",
-      "email": "aisha.khan@citybuild.co.uk",
-      "phone": "0121 311 8844"
+      "id": "cust-fenland",
+      "name": "Fenland Community Homes",
+      "accountRef": "FCH-33701",
+      "address": "114 Green Drove, March, PE15 8RL",
+      "contact": "Megan Hughes",
+      "email": "megan.hughes@fenlandhomes.org",
+      "phone": "01354 998 440"
+    },
+    {
+      "id": "cust-riverstone",
+      "name": "Riverstone Facilities",
+      "accountRef": "RSF-77190",
+      "address": "43 Harbour Lane, Bristol, BS1 5YD",
+      "contact": "Alex Romero",
+      "email": "alex.romero@riverstonefacilities.co.uk",
+      "phone": "0117 205 4490"
     }
   ],
   "houseRooms": [
     "Kitchen",
     "Utility",
     "Garage",
+    "Basement",
     "Loft",
     "Cupboard",
-    "Basement",
     "Bedroom",
-    "Airing Cupboard"
+    "External Cabinet"
   ],
   "boilerTypes": [
     {
       "id": "regular",
       "name": "Regular",
-      "description": "Conventional heat-only boiler with F&E tanks",
-      "imageTint": "#D97706",
-      "basePack": "packA-regular",
+      "description": "Heat-only boiler with F&E tanks",
+      "imageTint": "#EA580C",
+      "basePack": "pack-strip-regular",
       "photos": [
-        "Full boiler front including data badge",
-        "Full airing cupboard including valves",
-        "F&E tanks in loft (if present)",
-        "Flue termination with surrounding wall"
+        "Existing boiler front and data badge",
+        "Airing cupboard with cylinder and valves",
+        "Cold water storage and F&E tanks",
+        "Flue termination externally"
       ],
       "observations": [
-        "Ventilation or combustion air issues",
-        "Electrical isolation and bonding",
-        "System water quality",
-        "Access considerations for loft or roof"
+        "Check gravity to pumped conversion requirements",
+        "Confirm access to loft and lighting",
+        "Note asbestos or lagging condition",
+        "Verify electrical isolation and bonding"
       ]
     },
     {
@@ -66,617 +75,615 @@
       "name": "System",
       "description": "Sealed system boiler with unvented cylinder",
       "imageTint": "#2563EB",
-      "basePack": "packA-system",
+      "basePack": "pack-strip-system",
       "photos": [
-        "Boiler front and pipework",
-        "Cylinder cupboard pipework",
-        "Discharge termination",
-        "Controls position"
+        "Boiler front with pressure gauge",
+        "Cylinder cupboard including discharge pipe",
+        "System controls and wiring centre",
+        "External flue termination"
       ],
       "observations": [
-        "Cylinder cupboard ventilation",
-        "Discharge route and tundish",
-        "Primary pump condition",
-        "Existing controls condition"
+        "Confirm expansion vessel location",
+        "Check discharge termination meets G3",
+        "Assess existing zoning and controls",
+        "Identify condensate termination route"
       ]
     },
     {
       "id": "combi",
       "name": "Combi",
       "description": "Combination boiler providing heating and hot water",
-      "imageTint": "#059669",
-      "basePack": "packA-combi",
+      "imageTint": "#16A34A",
+      "basePack": "pack-strip-combi",
       "photos": [
-        "Boiler front and pipework",
-        "Gas meter with bonding",
+        "Boiler and surrounding pipework",
+        "Gas meter and bonding",
         "Condensate termination",
-        "System filter or dirt separator"
+        "Plume clearance"
       ],
       "observations": [
-        "Water flow rate and pressure",
-        "Condensate run freeze risk",
-        "Flue terminal obstructions",
-        "Scale protection provisions"
-      ]
-    },
-    {
-      "id": "warm-air",
-      "name": "Warm Air",
-      "description": "Warm air or ducted heating system",
-      "imageTint": "#EC4899",
-      "basePack": "packA-warmair",
-      "photos": [
-        "Existing warm air unit",
-        "Duct runs and vents",
-        "Electrical controls",
-        "Plant room overview"
-      ],
-      "observations": [
-        "Ducting condition",
-        "Combustion air provision",
-        "Return air path",
-        "Asbestos concerns"
+        "Measure dynamic flow rate",
+        "Check gas run size and route",
+        "Identify scale or filtration requirements",
+        "Confirm condensate and waste provision"
       ]
     },
     {
       "id": "storage-combi",
       "name": "Storage Combi",
-      "description": "High output combi with integral store",
+      "description": "High output combination with integrated store",
       "imageTint": "#7C3AED",
-      "basePack": "packA-storage",
+      "basePack": "pack-strip-storage-combi",
       "photos": [
-        "Boiler front",
-        "Store connections",
-        "Flue route",
-        "Service valves"
+        "Front elevation including controls",
+        "Primary storage connections",
+        "Service valves and pressure relief",
+        "Flue terminal and plume pathway"
       ],
       "observations": [
-        "Structural support",
-        "Discharge routing",
-        "Scale risk",
-        "Noise/ventilation"
-      ]
-    },
-    {
-      "id": "none",
-      "name": "No Existing",
-      "description": "New installation with no existing boiler",
-      "imageTint": "#6B7280",
-      "basePack": "packA-empty",
-      "photos": [
-        "Proposed plant location",
-        "External elevations",
-        "Incoming services",
-        "Consumer unit"
-      ],
-      "observations": [
-        "Incoming gas/electric availability",
-        "Fabric penetrations",
-        "Access equipment requirements",
-        "Neighbours or party wall consent"
-      ]
-    }
-  ],
-  "systemOptions": [
-    {
-      "id": "sys-combi",
-      "name": "Combi",
-      "boilerType": "combi",
-      "pack": "packB-combi",
-      "description": "Combi providing instantaneous DHW",
-      "boilerIds": [
-        "wb-greenstar-4000-25c",
-        "wb-greenstar-4000-30c",
-        "ideal-logic-combi2-c30"
-      ]
-    },
-    {
-      "id": "sys-system",
-      "name": "System",
-      "boilerType": "system",
-      "pack": "packB-system",
-      "description": "System boiler with unvented cylinder",
-      "boilerIds": [
-        "wb-greenstar-4000-24s",
-        "vaillant-ecofit-pure-625",
-        "ideal-logic-system2-s24"
-      ]
-    },
-    {
-      "id": "sys-regular",
-      "name": "Regular",
-      "boilerType": "regular",
-      "pack": "packB-regular",
-      "description": "Regular boiler feeding stored hot water",
-      "boilerIds": [
-        "wb-greenstar-ri-24",
-        "vaillant-ecofit-pure-412"
-      ]
-    },
-    {
-      "id": "sys-storage-combi",
-      "name": "Storage combi",
-      "boilerType": "storage-combi",
-      "pack": "packB-storage",
-      "description": "High demand combi with integrated store",
-      "boilerIds": [
-        "viessmann-111w-26"
-      ]
-    },
-    {
-      "id": "sys-hybrid-ready",
-      "name": "Hybrid ready system",
-      "boilerType": "system",
-      "pack": "packB-hybrid",
-      "description": "System boiler prepared for future heat pump integration",
-      "boilerIds": [
-        "navien-lcb700-28s"
+        "Verify incoming main size and pressure",
+        "Confirm structural support for weight",
+        "Assess hot water demand and priority zones",
+        "Check scale protection"
       ]
     }
   ],
   "packs": [
     {
-      "id": "packA-regular",
-      "group": "A",
-      "name": "Base Pack A – Regular Boiler",
-      "summary": "Isolate, strip and dispose of regular boiler, cold tanks and controls",
-      "hours": 5.5,
-      "parts": [
-        { "sku": "A-R-01", "name": "Isolate and drain existing system", "cost": 85, "hours": 1.5 },
-        { "sku": "A-R-02", "name": "Strip out boiler and F&E tanks", "cost": 120, "hours": 2 },
-        { "sku": "A-R-03", "name": "Cap redundant services", "cost": 45, "hours": 1 },
-        { "sku": "A-R-04", "name": "Disposal and making good", "cost": 65, "hours": 1 }
-      ]
-    },
-    {
-      "id": "packA-system",
-      "group": "A",
-      "name": "Base Pack A – System Boiler",
-      "summary": "Isolate and remove sealed system boiler and associated controls",
-      "hours": 4,
-      "parts": [
-        { "sku": "A-S-01", "name": "Isolate services", "cost": 60, "hours": 1 },
-        { "sku": "A-S-02", "name": "Remove boiler", "cost": 95, "hours": 1.5 },
-        { "sku": "A-S-03", "name": "Disconnect controls", "cost": 45, "hours": 0.75 },
-        { "sku": "A-S-04", "name": "Waste handling", "cost": 40, "hours": 0.75 }
-      ]
-    },
-    {
-      "id": "packA-combi",
-      "group": "A",
-      "name": "Base Pack A – Combi Boiler",
-      "summary": "Isolate and remove existing combi boiler installation",
-      "hours": 3.5,
-      "parts": [
-        { "sku": "A-C-01", "name": "Drain down system", "cost": 55, "hours": 1 },
-        { "sku": "A-C-02", "name": "Strip boiler and flue", "cost": 95, "hours": 1.5 },
-        { "sku": "A-C-03", "name": "Disconnect controls", "cost": 30, "hours": 0.5 },
-        { "sku": "A-C-04", "name": "Waste removal", "cost": 35, "hours": 0.5 }
-      ]
-    },
-    {
-      "id": "packA-warmair",
-      "group": "A",
-      "name": "Base Pack A – Warm Air",
-      "summary": "Remove warm air unit and ducts as required",
-      "hours": 6.5,
-      "parts": [
-        { "sku": "A-WA-01", "name": "Isolate warm air unit", "cost": 75, "hours": 1 },
-        { "sku": "A-WA-02", "name": "Remove ductwork", "cost": 130, "hours": 2.5 },
-        { "sku": "A-WA-03", "name": "Make good penetrations", "cost": 90, "hours": 1.5 },
-        { "sku": "A-WA-04", "name": "Disposal", "cost": 70, "hours": 1.5 }
-      ]
-    },
-    {
-      "id": "packA-storage",
-      "group": "A",
-      "name": "Base Pack A – Storage Combi",
-      "summary": "Remove existing storage combi and associated services",
-      "hours": 4.5,
-      "parts": [
-        { "sku": "A-SC-01", "name": "Drain and isolate", "cost": 70, "hours": 1 },
-        { "sku": "A-SC-02", "name": "Strip storage combi", "cost": 140, "hours": 2 },
-        { "sku": "A-SC-03", "name": "Remove flue", "cost": 50, "hours": 0.75 },
-        { "sku": "A-SC-04", "name": "Waste handling", "cost": 45, "hours": 0.75 }
-      ]
-    },
-    {
-      "id": "packA-empty",
-      "group": "A",
-      "name": "Base Pack A – New Build",
-      "summary": "Prepare location for new plant including services survey",
-      "hours": 2.5,
-      "parts": [
-        { "sku": "A-NB-01", "name": "Site survey and marking", "cost": 45, "hours": 0.75 },
-        { "sku": "A-NB-02", "name": "Set out connections", "cost": 65, "hours": 1 },
-        { "sku": "A-NB-03", "name": "Temporary supplies", "cost": 35, "hours": 0.75 }
-      ]
-    },
-    {
-      "id": "packB-combi",
-      "group": "B",
-      "name": "Pack B – New Combi System",
-      "summary": "Pipework and accessories for new combi system",
+      "id": "pack-strip-regular",
+      "name": "Strip-out pack · Regular",
+      "summary": "Drain and remove open-vented boiler and tanks",
       "hours": 6,
       "parts": [
-        { "sku": "B-C-01", "name": "New flow/return pipework", "cost": 180, "hours": 2 },
-        { "sku": "B-C-02", "name": "Domestic hot/cold alterations", "cost": 120, "hours": 1.5 },
-        { "sku": "B-C-03", "name": "Condensate provision", "cost": 55, "hours": 0.75 },
-        { "sku": "B-C-04", "name": "Controls and wiring", "cost": 95, "hours": 1.75 }
+        { "name": "Labour – strip boiler & cylinder", "cost": 0, "hours": 3.5 },
+        { "name": "Skip / disposal allowance", "cost": 95, "hours": 0 },
+        { "name": "Temporary heating provision", "cost": 45, "hours": 0.5 },
+        { "name": "Protective sheeting and floor protection", "cost": 24, "hours": 0.3 },
+        { "name": "Drain down chemical", "cost": 14, "hours": 0 }
       ]
     },
     {
-      "id": "packB-system",
-      "group": "B",
-      "name": "Pack B – New System Boiler",
-      "summary": "Pipework and controls for system boiler with cylinder",
-      "hours": 7,
+      "id": "pack-strip-system",
+      "name": "Strip-out pack · System",
+      "summary": "Decommission sealed system and remove unvented cylinder",
+      "hours": 5.5,
       "parts": [
-        { "sku": "B-S-01", "name": "Primary pipework", "cost": 210, "hours": 2.5 },
-        { "sku": "B-S-02", "name": "Cylinder connections", "cost": 140, "hours": 2 },
-        { "sku": "B-S-03", "name": "System wiring centre", "cost": 90, "hours": 1.5 },
-        { "sku": "B-S-04", "name": "Commissioning", "cost": 65, "hours": 1 }
+        { "name": "Labour – isolate services and strip plant", "cost": 0, "hours": 3 },
+        { "name": "Waste disposal", "cost": 85, "hours": 0 },
+        { "name": "Temporary immersion wiring", "cost": 18, "hours": 0.5 },
+        { "name": "Coverings and protection", "cost": 20, "hours": 0.25 }
       ]
     },
     {
-      "id": "packB-regular",
-      "group": "B",
-      "name": "Pack B – New Regular Boiler",
-      "summary": "Pipework and F&E tank provision for regular boiler",
+      "id": "pack-strip-combi",
+      "name": "Strip-out pack · Combi",
+      "summary": "Remove existing combination boiler and flush",
+      "hours": 4,
+      "parts": [
+        { "name": "Labour – drain and strip appliance", "cost": 0, "hours": 2.5 },
+        { "name": "Wall repair allowance", "cost": 40, "hours": 0.4 },
+        { "name": "Debris removal", "cost": 45, "hours": 0 },
+        { "name": "System cleaner", "cost": 22, "hours": 0 }
+      ]
+    },
+    {
+      "id": "pack-strip-storage-combi",
+      "name": "Strip-out pack · Storage combi",
+      "summary": "Remove storage combi and associated framework",
       "hours": 6.5,
       "parts": [
-        { "sku": "B-R-01", "name": "Connect feed and expansion", "cost": 110, "hours": 1.5 },
-        { "sku": "B-R-02", "name": "Cylinder alterations", "cost": 135, "hours": 2 },
-        { "sku": "B-R-03", "name": "Pump and valve wiring", "cost": 85, "hours": 1.5 },
-        { "sku": "B-R-04", "name": "System balancing", "cost": 55, "hours": 1.5 }
+        { "name": "Labour – dismantle storage combi", "cost": 0, "hours": 3.5 },
+        { "name": "Structural support removal", "cost": 55, "hours": 0.6 },
+        { "name": "Waste disposal", "cost": 110, "hours": 0 },
+        { "name": "Protective sheeting", "cost": 24, "hours": 0.3 }
       ]
     },
     {
-      "id": "packB-storage",
-      "group": "B",
-      "name": "Pack B – Storage combi",
-      "summary": "Pipework and controls for storage combi appliances",
-      "hours": 7.5,
+      "id": "pack-convert-openvent-to-combi",
+      "name": "Conversion pack · Open vent to combi",
+      "summary": "Convert gravity system to sealed combination",
+      "hours": 9,
       "parts": [
-        { "sku": "B-SC-01", "name": "Reconfigure primary pipework", "cost": 190, "hours": 2.25 },
-        { "sku": "B-SC-02", "name": "Cylinder charging connections", "cost": 155, "hours": 2 },
-        { "sku": "B-SC-03", "name": "DHW blending and valve set", "cost": 120, "hours": 1.5 },
-        { "sku": "B-SC-04", "name": "Commission storage combi", "cost": 95, "hours": 1.75 }
+        { "name": "Labour – pipework alterations", "cost": 0, "hours": 5.5 },
+        { "name": "Magnetic filter kit", "cost": 120, "hours": 0.3 },
+        { "name": "System filter chemicals", "cost": 32, "hours": 0 },
+        { "name": "Auto bypass valve", "cost": 38, "hours": 0.6 },
+        { "name": "Filling loop assembly", "cost": 28, "hours": 0.4 },
+        { "name": "Mini expansion vessel for cold main", "cost": 55, "hours": 0.5 }
       ]
     },
     {
-      "id": "packB-hybrid",
-      "group": "B",
-      "name": "Pack B – Hybrid ready system",
-      "summary": "Pre-plumb for hybrid interface and future heat pump",
+      "id": "pack-convert-regular-to-system",
+      "name": "Conversion pack · Regular to system",
+      "summary": "Upgrade open vent to sealed system with cylinder",
       "hours": 8,
       "parts": [
-        { "sku": "B-HR-01", "name": "Install low loss header set", "cost": 210, "hours": 2 },
-        { "sku": "B-HR-02", "name": "Fit plate heat exchanger", "cost": 185, "hours": 2 },
-        { "sku": "B-HR-03", "name": "Wire hybrid controller", "cost": 145, "hours": 1.75 },
-        { "sku": "B-HR-04", "name": "Flush and dose system", "cost": 125, "hours": 2.25 }
+        { "name": "Labour – convert to sealed system", "cost": 0, "hours": 4.5 },
+        { "name": "Expansion vessel kit", "cost": 145, "hours": 0.75 },
+        { "name": "System filter", "cost": 115, "hours": 0.35 },
+        { "name": "Zone valve set", "cost": 86, "hours": 0.5 },
+        { "name": "System pressurisation set", "cost": 64, "hours": 0.4 }
       ]
+    },
+    {
+      "id": "pack-convert-combi-to-storage",
+      "name": "Conversion pack · Combi to storage combi",
+      "summary": "Replace combi with high output storage solution",
+      "hours": 6.5,
+      "parts": [
+        { "name": "Labour – reconfigure pipework", "cost": 0, "hours": 3.25 },
+        { "name": "Secondary return kit", "cost": 130, "hours": 0.4 },
+        { "name": "Scale protection", "cost": 85, "hours": 0.4 },
+        { "name": "Wall reinforcement kit", "cost": 70, "hours": 0.45 }
+      ]
+    }
+  ],
+  "systemOptions": [
+    {
+      "id": "sys-like-regular",
+      "name": "Regular like-for-like",
+      "description": "Modern open-vented boiler retaining F&E tanks",
+      "boilerType": "regular",
+      "pack": null
+    },
+    {
+      "id": "sys-regular-to-system",
+      "name": "Convert to sealed system",
+      "description": "Swap gravity system for pressurised boiler & cylinder",
+      "boilerType": "system",
+      "pack": "pack-convert-regular-to-system"
+    },
+    {
+      "id": "sys-openvent-to-combi",
+      "name": "Open vent to combi",
+      "description": "Remove tanks and deliver combi hot water",
+      "boilerType": "combi",
+      "pack": "pack-convert-openvent-to-combi"
+    },
+    {
+      "id": "sys-combi-upgrade",
+      "name": "High demand combi upgrade",
+      "description": "Upgrade combi to storage or high output solution",
+      "boilerType": "storage-combi",
+      "pack": "pack-convert-combi-to-storage"
     }
   ],
   "boilers": [
     {
-      "id": "wb-greenstar-4000-25c",
-      "name": "Worcester Bosch Greenstar 4000 25kW Combi",
-      "type": "combi",
-      "output": "25 kW",
-      "cost": 1176.65,
-      "hours": 3,
-      "case": { "height": 724, "width": 400, "depth": 310 },
-      "requiredClearance": { "top": 170, "bottom": 186, "left": 5, "right": 5, "front": 600 },
-      "minSpace": { "height": 1060, "width": 410, "depth": 910 },
-      "heatLossRange": "Small to medium homes needing balanced hot water",
-      "flues": ["flue-hz-60", "flue-plume-kit", "flue-vertical-kit"],
-      "notes": "Fuel NG · SKU CBLR3600. Reduced front servicing to 450mm permitted if all listed conditions are met (see guide)."
-    },
-    {
-      "id": "wb-greenstar-4000-30c",
-      "name": "Worcester Bosch Greenstar 4000 30kW Combi",
-      "type": "combi",
-      "output": "30 kW",
-      "cost": 1392.66,
-      "hours": 3.2,
-      "case": { "height": 724, "width": 400, "depth": 310 },
-      "requiredClearance": { "top": 170, "bottom": 186, "left": 5, "right": 5, "front": 600 },
-      "minSpace": { "height": 1060, "width": 410, "depth": 910 },
-      "heatLossRange": "Higher demand combi installations requiring fast reheat",
-      "flues": ["flue-hz-60", "flue-plume-kit", "flue-vertical-kit"],
-      "notes": "Fuel NG · SKU CBLR3602. Reduced front servicing to 450mm permitted if all listed conditions are met (see guide)."
-    },
-    {
-      "id": "wb-greenstar-4000-24s",
-      "name": "Worcester Bosch Greenstar 4000 24kW System",
-      "type": "system",
-      "output": "24 kW",
-      "cost": 1354.04,
-      "hours": 2.75,
-      "case": { "height": 724, "width": 400, "depth": 310 },
-      "requiredClearance": { "top": 170, "bottom": 186, "left": 5, "right": 5, "front": 600 },
-      "minSpace": { "height": 1080, "width": 410, "depth": 910 },
-      "heatLossRange": "System swaps with stored hot water cylinders",
-      "flues": ["flue-hz-60", "flue-vertical-kit"],
-      "notes": "Fuel NG · SKU CBLR3612. Reduced front servicing to 450mm permitted if all listed conditions are met (see guide)."
-    },
-    {
-      "id": "wb-greenstar-ri-24",
-      "name": "Worcester Bosch Greenstar Ri 24kW Regular",
+      "id": "wb-greenstar-25r",
+      "name": "Worcester Bosch Greenstar 25R",
+      "manufacturer": "Worcester Bosch",
       "type": "regular",
-      "output": "24 kW",
-      "cost": 1100.4,
-      "hours": 2.9,
-      "case": { "height": 590, "width": 390, "depth": 270 },
-      "requiredClearance": { "top": 170, "bottom": 200, "left": 5, "right": 5, "front": 600 },
-      "minSpace": { "height": 960, "width": 400, "depth": 870 },
-      "heatLossRange": "Open vented systems retaining F&E tanks",
-      "flues": ["flue-hz-80", "flue-plume-kit"],
-      "notes": "Fuel NG · SKU CBLR3461. Alternate reduced front servicing option to 450mm applicable if all stated conditions are met (Ri only)."
+      "output": "25kW",
+      "cost": 1125,
+      "hours": 4.5,
+      "erp": "A (93%)",
+      "notes": "Includes comfort+ plug-in control terminals.",
+      "controls": "Compatible with Bosch EasyControl and third-party 230v programmers.",
+      "dimensions": { "height": 724, "width": 400, "depth": 310 },
+      "requiredClearance": { "top": 200, "bottom": 200, "left": 5, "right": 5, "front": 500 },
+      "flues": ["flue-wb-horizontal", "flue-universal-vertical"]
     },
     {
-      "id": "vaillant-ecofit-pure-625",
-      "name": "Vaillant ecoFIT pure 625 System",
+      "id": "vaillant-eco-fit-618",
+      "name": "Vaillant ecoFIT Pure 618",
+      "manufacturer": "Vaillant",
       "type": "system",
-      "output": "25 kW",
-      "cost": 1381.27,
-      "hours": 2.8,
-      "case": { "height": 700, "width": 390, "depth": 295 },
-      "requiredClearance": { "top": 150, "bottom": 150, "left": 5, "right": 5, "front": 500 },
-      "minSpace": { "height": 1000, "width": 400, "depth": 795 },
-      "heatLossRange": "Medium to large homes with system layouts",
-      "flues": ["flue-hz-80", "flue-vertical-kit"],
-      "notes": "Fuel NG · SKU CBLR3432. Service clearance can be reduced when rear flue is used; installation clearance can be reduced to the marked amount."
+      "output": "18kW",
+      "cost": 1240,
+      "hours": 4.25,
+      "erp": "A (94%)",
+      "notes": "Integrated filling loop; includes expansion vessel.",
+      "controls": "Use with sensoCOMFORT or VRT 350 set.",
+      "dimensions": { "height": 700, "width": 390, "depth": 295 },
+      "requiredClearance": { "top": 150, "bottom": 200, "left": 10, "right": 10, "front": 450 },
+      "flues": ["flue-vaillant-horizontal", "flue-universal-vertical"]
     },
     {
-      "id": "vaillant-ecofit-pure-412",
-      "name": "Vaillant ecoFIT pure 412 Regular",
-      "type": "regular",
-      "output": "12 kW",
-      "cost": 1043.46,
-      "hours": 2.7,
-      "case": { "height": 600, "width": 375, "depth": 295 },
-      "requiredClearance": { "top": 150, "bottom": 150, "left": 5, "right": 5, "front": 500 },
-      "minSpace": { "height": 900, "width": 385, "depth": 795 },
-      "heatLossRange": "Light-load regular installations",
-      "flues": ["flue-hz-80", "flue-plume-kit"],
-      "notes": "Fuel NG · SKU CBLR3423. Service clearance can be reduced when rear flue is used; check compartment guidance."
-    },
-    {
-      "id": "ideal-logic-system2-s24",
-      "name": "Ideal Logic System2 S24",
-      "type": "system",
-      "output": "24 kW",
-      "cost": 1363.13,
-      "hours": 2.75,
-      "heatLossRange": "Awaiting manufacturer clearance confirmation",
-      "flues": ["flue-hz-60", "flue-vertical-kit"],
-      "notes": "Fuel NG · SKU CBLR1917. Clearances not listed in DHG quick-reference extract provided. Refer to Ideal guide if available."
-    },
-    {
-      "id": "ideal-logic-combi2-c30",
-      "name": "Ideal Logic Combi2 C30",
+      "id": "ideal-logic-max-30",
+      "name": "Ideal Logic Max C30",
+      "manufacturer": "Ideal Heating",
       "type": "combi",
-      "output": "30 kW",
-      "cost": 1331.86,
-      "hours": 3.1,
-      "heatLossRange": "Popular retrofit combi option",
-      "flues": ["flue-hz-60", "flue-plume-kit", "flue-vertical-kit"],
-      "notes": "Fuel NG · SKU CBLR1913. Clearances not listed in DHG quick-reference extract provided. Refer to Ideal guide if available."
+      "output": "30kW",
+      "flowRate": 12.4,
+      "cost": 1185,
+      "hours": 4.75,
+      "erp": "A (94%)",
+      "notes": "Supplied with magnetic filter and 10-year warranty when registered.",
+      "controls": "Use with Halo wireless RF or Hive smart controls.",
+      "dimensions": { "height": 700, "width": 395, "depth": 278 },
+      "requiredClearance": { "top": 178, "bottom": 200, "left": 5, "right": 5, "front": 450 },
+      "flues": ["flue-ideal-horizontal", "flue-universal-vertical", "flue-plume-kit"]
     },
     {
-      "id": "viessmann-111w-26",
-      "name": "Viessmann Vitodens 111-W 26kW Storage Combi",
+      "id": "baxi-800-36",
+      "name": "Baxi 800 Platinum+ 36kW",
+      "manufacturer": "Baxi",
+      "type": "combi",
+      "output": "36kW",
+      "flowRate": 15,
+      "cost": 1320,
+      "hours": 5.1,
+      "erp": "A (93%)",
+      "notes": "Supplied with Adey Micro2 filter and roof terminal support kit.",
+      "controls": "Compatible with uSense and third-party smart controls via OpenTherm.",
+      "dimensions": { "height": 780, "width": 450, "depth": 345 },
+      "requiredClearance": { "top": 200, "bottom": 250, "left": 5, "right": 5, "front": 500 },
+      "flues": ["flue-baxi-horizontal", "flue-universal-vertical", "flue-plume-kit"]
+    },
+    {
+      "id": "navien-lcb700-blue-28",
+      "name": "Navien LCB700 Blue Flame 28kW",
+      "manufacturer": "Navien",
+      "type": "system",
+      "output": "28kW",
+      "cost": 2150,
+      "hours": 6.5,
+      "erp": "A (93%)",
+      "notes": "External oil system boiler with smart service interface.",
+      "controls": "Use with low-loss header and weather compensation kit.",
+      "dimensions": { "height": 1300, "width": 600, "depth": 600 },
+      "requiredClearance": { "top": 450, "bottom": 150, "left": 25, "right": 25, "front": 600 },
+      "flues": ["flue-oil-balanced", "flue-universal-vertical"]
+    },
+    {
+      "id": "wb-greenstar-8000-40l",
+      "name": "Worcester Bosch Greenstar 8000 Style 40kW",
+      "manufacturer": "Worcester Bosch",
       "type": "storage-combi",
-      "output": "26 kW",
-      "cost": 1965.4,
-      "hours": 3.6,
-      "case": { "height": 900, "width": 600, "depth": 500 },
-      "requiredClearance": { "top": 200, "bottom": 250, "left": 5, "right": 5, "front": 600 },
-      "minSpace": { "height": 1300, "width": 610, "depth": 1000 },
-      "heatLossRange": "Apartments and homes with simultaneous hot water demand",
-      "flues": ["flue-hz-60", "flue-plume-kit", "flue-vertical-kit"],
-      "notes": "Fuel NG · SKU CBLR5111. Integrated 46L store provides high peak flow capability."
-    },
-    {
-      "id": "navien-lcb700-28s",
-      "name": "Navien LCB700 28kW System (Hybrid Ready)",
-      "type": "system",
-      "output": "28 kW",
-      "cost": 1588.3,
-      "hours": 3,
-      "case": { "height": 695, "width": 440, "depth": 289 },
-      "requiredClearance": { "top": 150, "bottom": 200, "left": 5, "right": 5, "front": 600 },
-      "minSpace": { "height": 1050, "width": 450, "depth": 889 },
-      "heatLossRange": "Future-proof system with heat pump ready controls",
-      "flues": ["flue-hz-60", "flue-hybrid-concentric", "flue-vertical-kit"],
-      "notes": "Fuel NG · SKU CBLR5700. Supplied with hybrid-ready controller harness."
+      "output": "40kW",
+      "flowRate": 17.2,
+      "cost": 2260,
+      "hours": 5.75,
+      "erp": "A (94%)",
+      "notes": "Includes integral modulating pump and intelligent filling system.",
+      "controls": "Greenstar Sense II or third-party smart controls via EMS.",
+      "dimensions": { "height": 780, "width": 440, "depth": 365 },
+      "requiredClearance": { "top": 180, "bottom": 200, "left": 20, "right": 20, "front": 550 },
+      "flues": ["flue-wb-horizontal", "flue-universal-vertical", "flue-plume-kit"]
     }
   ],
   "flues": [
     {
-      "id": "flue-hz-60",
-      "name": "Horizontal 60/100 kit",
+      "id": "flue-wb-horizontal",
+      "name": "Worcester horizontal flue kit",
+      "type": "horizontal",
+      "cost": 145,
+      "hours": 1,
+      "compatible": ["wb-greenstar-25r", "wb-greenstar-8000-40l"],
+      "heatZones": ["gable", "rear-elevation", "side-elevation"],
+      "headroom": {
+        "base": 2150,
+        "reductions": [
+          { "id": "flue-extension", "label": "Each 1m extension", "value": 65 },
+          { "id": "flue-elbow", "label": "Each elbow", "value": 75 }
+        ]
+      },
+      "images": {
+        "horizontal": "assets/images/flues/wb-horizontal.png",
+        "vertical": "assets/images/flues/wb-vertical.png",
+        "plume": "assets/images/flues/plume-separation.png"
+      },
+      "variants": [
+        { "id": "std-685", "label": "Standard 685mm", "cost": 0, "hours": 0 },
+        { "id": "long-1100", "label": "Long 1100mm", "cost": 22, "hours": 0.15 }
+      ]
+    },
+    {
+      "id": "flue-vaillant-horizontal",
+      "name": "Vaillant horizontal concentric flue",
       "type": "horizontal",
       "cost": 155,
-      "hours": 0.75,
-      "compatible": [
-        "wb-greenstar-4000-25c",
-        "wb-greenstar-4000-30c",
-        "wb-greenstar-4000-24s",
-        "ideal-logic-system2-s24",
-        "ideal-logic-combi2-c30"
-      ],
-      "heatZones": ["rear-wall", "side-wall", "corner"],
+      "hours": 1,
+      "compatible": ["vaillant-eco-fit-618"],
+      "heatZones": ["rear-elevation", "side-elevation"],
+      "headroom": {
+        "base": 2200,
+        "reductions": [
+          { "id": "plume-deflector", "label": "Add plume deflector", "value": 40 },
+          { "id": "flue-bend", "label": "Each 87° bend", "value": 80 }
+        ]
+      },
+      "images": {
+        "horizontal": "assets/images/flues/vaillant-horizontal.png",
+        "vertical": "assets/images/flues/universal-vertical.png",
+        "plume": "assets/images/flues/plume-kit.png"
+      },
+      "variants": [
+        { "id": "std", "label": "Standard", "cost": 0, "hours": 0 },
+        { "id": "extended", "label": "Extended", "cost": 32, "hours": 0.2 }
+      ]
+    },
+    {
+      "id": "flue-ideal-horizontal",
+      "name": "Ideal horizontal flue kit",
+      "type": "horizontal",
+      "cost": 135,
+      "hours": 0.9,
+      "compatible": ["ideal-logic-max-30"],
+      "heatZones": ["gable", "rear-elevation"],
       "headroom": {
         "base": 2100,
         "reductions": [
-          { "id": "extension", "label": "Each 1m extension", "value": 45 },
-          { "id": "elbow", "label": "Each 45° elbow", "value": 60 }
+          { "id": "extension", "label": "Each 0.5m extension", "value": 50 },
+          { "id": "bend", "label": "Each 90° bend", "value": 70 }
         ]
       },
       "images": {
-        "horizontal": "Horizontal clearance bands",
-        "vertical": "Use with vertical adapter",
-        "plume": "Add plume kit if recirculation risk"
+        "horizontal": "assets/images/flues/ideal-horizontal.png",
+        "vertical": "assets/images/flues/universal-vertical.png",
+        "plume": "assets/images/flues/plume-kit.png"
       },
       "variants": [
-        { "id": "hz-short", "label": "Short (0.5m)", "cost": 0, "hours": 0 },
-        { "id": "hz-long", "label": "Extended (1.5m)", "cost": 45, "hours": 0.25 }
+        { "id": "short", "label": "Short 455mm", "cost": 0, "hours": 0 },
+        { "id": "long", "label": "Long 760mm", "cost": 18, "hours": 0.1 }
       ]
     },
     {
-      "id": "flue-hz-80",
-      "name": "Horizontal 80/125 kit",
+      "id": "flue-baxi-horizontal",
+      "name": "Baxi multi-fit horizontal kit",
       "type": "horizontal",
-      "cost": 210,
-      "hours": 0.9,
-      "compatible": [
-        "wb-greenstar-ri-24",
-        "vaillant-ecofit-pure-625",
-        "vaillant-ecofit-pure-412"
-      ],
-      "heatZones": ["rear-wall", "side-wall"],
+      "cost": 142,
+      "hours": 1,
+      "compatible": ["baxi-800-36"],
+      "heatZones": ["rear-elevation", "side-elevation", "roof-termination"],
       "headroom": {
         "base": 2250,
         "reductions": [
-          { "id": "extension", "label": "Each 1m extension", "value": 55 },
-          { "id": "bend", "label": "Each 90° bend", "value": 90 }
+          { "id": "plume-kit", "label": "Plume kit attached", "value": 60 },
+          { "id": "45-bend", "label": "Each 45° bend", "value": 55 }
         ]
       },
       "images": {
-        "horizontal": "See Vaillant spec for 80/125",
-        "vertical": "Requires 125mm core",
-        "plume": "Plume diverter option"
+        "horizontal": "assets/images/flues/baxi-horizontal.png",
+        "vertical": "assets/images/flues/universal-vertical.png",
+        "plume": "assets/images/flues/plume-kit.png"
       },
       "variants": [
-        { "id": "hz125-standard", "label": "Standard (1m)", "cost": 0, "hours": 0 },
-        { "id": "hz125-adapter", "label": "With terminal guard", "cost": 35, "hours": 0.1 }
+        { "id": "std", "label": "Standard 685mm", "cost": 0, "hours": 0 },
+        { "id": "tele", "label": "Telescopic", "cost": 48, "hours": 0.25 }
       ]
     },
     {
-      "id": "flue-vertical-kit",
-      "name": "Vertical roof kit",
-      "type": "vertical",
-      "cost": 260,
-      "hours": 1.25,
-      "compatible": [
-        "wb-greenstar-4000-25c",
-        "wb-greenstar-4000-30c",
-        "wb-greenstar-4000-24s",
-        "wb-greenstar-ri-24",
-        "vaillant-ecofit-pure-625",
-        "vaillant-ecofit-pure-412",
-        "ideal-logic-system2-s24",
-        "ideal-logic-combi2-c30"
-      ],
-      "heatZones": ["roof-near-ridge", "roof-valley", "flat-roof"],
+      "id": "flue-oil-balanced",
+      "name": "Balanced flue kit – Navien oil",
+      "type": "horizontal",
+      "cost": 265,
+      "hours": 1.4,
+      "compatible": ["navien-lcb700-blue-28"],
+      "heatZones": ["rear-elevation", "gable"],
       "headroom": {
-        "base": 2500,
+        "base": 2400,
         "reductions": [
-          { "id": "ceiling-void", "label": "Passing through ceiling void", "value": 120 },
-          { "id": "offset", "label": "Each offset pair", "value": 180 }
+          { "id": "extension", "label": "Each 1m extension", "value": 90 },
+          { "id": "elbow", "label": "Each 45° elbow", "value": 65 }
         ]
       },
       "images": {
-        "horizontal": "Check horizontal clearances prior to offset",
-        "vertical": "Vertical clearance cones",
-        "plume": "Consider plume deflection"
+        "horizontal": "assets/images/flues/navien-horizontal.png",
+        "vertical": "assets/images/flues/navien-vertical.png",
+        "plume": "assets/images/flues/oil-plume.png"
       },
       "variants": [
-        { "id": "vert-tiled", "label": "Pitched roof (tiled)", "cost": 0, "hours": 0 },
-        { "id": "vert-flat", "label": "Flat roof", "cost": 55, "hours": 0.4 }
+        { "id": "std", "label": "Standard", "cost": 0, "hours": 0 },
+        { "id": "long", "label": "Long reach", "cost": 58, "hours": 0.25 }
+      ]
+    },
+    {
+      "id": "flue-universal-vertical",
+      "name": "Universal vertical terminal",
+      "type": "vertical",
+      "cost": 235,
+      "hours": 1.6,
+      "compatible": [
+        "wb-greenstar-25r",
+        "wb-greenstar-8000-40l",
+        "vaillant-eco-fit-618",
+        "ideal-logic-max-30",
+        "baxi-800-36",
+        "navien-lcb700-blue-28"
+      ],
+      "heatZones": ["apex", "flat-roof", "valley"],
+      "headroom": {
+        "base": 2600,
+        "reductions": [
+          { "id": "offset", "label": "Each pair of offsets", "value": 160 },
+          { "id": "vertical-extension", "label": "Each 1m vertical extension", "value": 110 }
+        ]
+      },
+      "images": {
+        "horizontal": "assets/images/flues/universal-horizontal.png",
+        "vertical": "assets/images/flues/universal-vertical.png",
+        "plume": "assets/images/flues/plume-kit.png"
+      },
+      "variants": [
+        { "id": "pitched", "label": "Pitched roof", "cost": 0, "hours": 0 },
+        { "id": "flat", "label": "Flat roof", "cost": 68, "hours": 0.35 }
       ]
     },
     {
       "id": "flue-plume-kit",
       "name": "Plume management kit",
       "type": "plume",
-      "cost": 95,
+      "cost": 105,
       "hours": 0.5,
-      "compatible": [
-        "wb-greenstar-4000-25c",
-        "wb-greenstar-4000-30c",
-        "wb-greenstar-ri-24",
-        "vaillant-ecofit-pure-412",
-        "ideal-logic-combi2-c30",
-        "viessmann-111w-26"
-      ],
-      "heatZones": ["front-elevation", "adjacent-path", "boundary"],
+      "compatible": ["ideal-logic-max-30", "baxi-800-36", "wb-greenstar-8000-40l"],
+      "heatZones": ["boundary", "narrow-alley", "balcony"],
       "headroom": {
         "base": 2050,
         "reductions": [
-          { "id": "plume-extension", "label": "Each plume extension", "value": 40 }
+          { "id": "plume-extension", "label": "Each plume extension", "value": 35 }
         ]
       },
       "images": {
-        "horizontal": "Attach to horizontal terminals",
-        "vertical": "Convert plume to vertical rise",
-        "plume": "Plume heat map"
+        "horizontal": "assets/images/flues/plume-kit.png",
+        "vertical": "assets/images/flues/plume-vertical.png",
+        "plume": "assets/images/flues/plume-heatmap.png"
       },
       "variants": [
-        { "id": "plume-straight", "label": "Straight 1m", "cost": 0, "hours": 0 },
-        { "id": "plume-angled", "label": "Angled kit", "cost": 25, "hours": 0.2 }
-      ]
-    },
-    {
-      "id": "flue-hybrid-concentric",
-      "name": "Hybrid concentric flue kit",
-      "type": "horizontal",
-      "cost": 235,
-      "hours": 1,
-      "compatible": [
-        "navien-lcb700-28s"
-      ],
-      "heatZones": ["rear-wall", "side-wall", "roof-termination"],
-      "headroom": {
-        "base": 2300,
-        "reductions": [
-          { "id": "hybrid-elbow", "label": "Each hybrid elbow", "value": 70 },
-          { "id": "hybrid-extension", "label": "Each concentric extension", "value": 60 }
-        ]
-      },
-      "images": {
-        "horizontal": "Hybrid system concentric termination",
-        "vertical": "Use with hybrid vertical adapters",
-        "plume": "Requires plume kit when recirculation risk identified"
-      },
-      "variants": [
-        { "id": "hybrid-short", "label": "Standard (0.75m)", "cost": 0, "hours": 0 },
-        { "id": "hybrid-long", "label": "Extended (1.5m)", "cost": 65, "hours": 0.35 }
+        { "id": "straight", "label": "Straight kit", "cost": 0, "hours": 0 },
+        { "id": "angled", "label": "Angled termination", "cost": 32, "hours": 0.2 }
       ]
     }
   ],
   "gasOptions": [
-    { "id": "gas-upsize", "name": "Upsize gas run", "description": "Upgrade pipework to maintain ≤1mbar", "cost": 185, "hours": 1.25 },
-    { "id": "gas-test", "name": "Tightness test & rectify", "description": "Extended test on existing installation", "cost": 65, "hours": 0.5 },
-    { "id": "gas-meter-move", "name": "Relocate internal meter", "description": "Move meter within 1m", "cost": 140, "hours": 1 },
-    { "id": "gas-governor", "name": "Fit new governor", "description": "Replace low pressure governor at meter", "cost": 85, "hours": 0.4 },
-    { "id": "gas-sleeve", "name": "Sleeve wall penetration", "description": "Install new sleeving with firestop collar", "cost": 75, "hours": 0.6 }
+    {
+      "id": "gas-upgrade-main",
+      "name": "Upsize gas main",
+      "description": "Replace undersized section to maintain ≤1mbar drop",
+      "cost": 210,
+      "hours": 1.5
+    },
+    {
+      "id": "gas-meter-relocate",
+      "name": "Relocate internal meter",
+      "description": "Move meter within 2m with new sleeving and bonding",
+      "cost": 165,
+      "hours": 1.1
+    },
+    {
+      "id": "gas-tightness-extended",
+      "name": "Extended tightness test",
+      "description": "Carry out investigation and remedial works",
+      "cost": 80,
+      "hours": 0.75
+    },
+    {
+      "id": "gas-governor-replacement",
+      "name": "Replace medium pressure governor",
+      "description": "Supply and fit new regulator on meter outlet",
+      "cost": 95,
+      "hours": 0.6
+    }
   ],
   "condensateOptions": [
-    { "id": "cond-pump", "name": "Install condensate pump", "description": "Use pump where gravity run unavailable", "cost": 120, "hours": 0.75 },
-    { "id": "cond-freeze", "name": "External run frost protection", "description": "Trace heat and insulation", "cost": 85, "hours": 0.6 },
-    { "id": "cond-soil", "name": "Terminate to soil stack", "description": "Core and connect to soil", "cost": 95, "hours": 0.8 },
-    { "id": "cond-riser", "name": "Connect to internal riser", "description": "Link into shared riser with trap", "cost": 110, "hours": 0.9 }
+    {
+      "id": "condensate-pump",
+      "name": "Condensate pump",
+      "description": "Install pump where gravity run unavailable",
+      "cost": 135,
+      "hours": 0.8
+    },
+    {
+      "id": "condensate-soil",
+      "name": "Terminate to soil stack",
+      "description": "Core and connect to internal soil stack",
+      "cost": 105,
+      "hours": 0.9
+    },
+    {
+      "id": "condensate-freeze-protect",
+      "name": "External run freeze protection",
+      "description": "Trace heat cable and insulation to external run",
+      "cost": 95,
+      "hours": 0.65
+    },
+    {
+      "id": "condensate-riser",
+      "name": "Connect to shared riser",
+      "description": "Link to building condensate riser with trap",
+      "cost": 120,
+      "hours": 1
+    }
   ],
   "components": [
-    { "id": "comp-cylinder-180", "category": "cylinders", "name": "180L unvented cylinder", "cost": 625, "hours": 2.5 },
-    { "id": "comp-cylinder-210", "category": "cylinders", "name": "210L unvented cylinder", "cost": 690, "hours": 2.75 },
-    { "id": "comp-controls-smart", "category": "controls", "name": "Smart control (Hive)", "cost": 210, "hours": 0.75 },
-    { "id": "comp-controls-wired", "category": "controls", "name": "Wired 2-channel programmer", "cost": 95, "hours": 0.5 },
-    { "id": "comp-user-wc", "category": "user-controls", "name": "Wireless room stat", "cost": 85, "hours": 0.35 },
-    { "id": "comp-rads-five", "category": "rads", "name": "5x compact radiators pack", "cost": 450, "hours": 6 },
-    { "id": "comp-rads-flush", "category": "services", "name": "Powerflush", "cost": 390, "hours": 5 },
-    { "id": "comp-valves", "category": "valves", "name": "TRV upgrade pack (8)", "cost": 180, "hours": 2 },
-    { "id": "comp-tanks", "category": "tanks", "name": "F&E tank kit", "cost": 140, "hours": 1.5 },
-    { "id": "comp-addons-filter", "category": "add-ons", "name": "Magnetic filter", "cost": 115, "hours": 0.4 },
-    { "id": "comp-services-lagging", "category": "services", "name": "Pipe lagging and insulation", "cost": 75, "hours": 1.25 },
-    { "id": "comp-water-softener", "category": "water-treatment", "name": "Compact water softener", "cost": 540, "hours": 2.5 },
-    { "id": "comp-dirt-separator", "category": "water-treatment", "name": "Low loss dirt separator", "cost": 220, "hours": 1.25 },
-    { "id": "comp-plant-llh", "category": "plant-room", "name": "Low loss header set", "cost": 285, "hours": 1.5 },
-    { "id": "comp-electrical-board", "category": "electrical", "name": "Dedicated boiler consumer unit", "cost": 165, "hours": 1.2 },
-    { "id": "comp-civils-plinth", "category": "civils", "name": "External plant plinth", "cost": 310, "hours": 2.75 }
+    {
+      "id": "comp-cylinder-180",
+      "category": "cylinders",
+      "name": "180L unvented cylinder set",
+      "cost": 685,
+      "hours": 3.5
+    },
+    {
+      "id": "comp-cylinder-210",
+      "category": "cylinders",
+      "name": "210L unvented cylinder set",
+      "cost": 740,
+      "hours": 3.75
+    },
+    {
+      "id": "comp-controls-smart",
+      "category": "controls",
+      "name": "Smart control upgrade (Hive Active Heating)",
+      "cost": 225,
+      "hours": 0.8
+    },
+    {
+      "id": "comp-controls-opentherm",
+      "category": "controls",
+      "name": "OpenTherm room stat kit",
+      "cost": 140,
+      "hours": 0.5
+    },
+    {
+      "id": "comp-filter",
+      "category": "water-treatment",
+      "name": "Inline magnetic filter",
+      "cost": 125,
+      "hours": 0.4
+    },
+    {
+      "id": "comp-flush",
+      "category": "services",
+      "name": "System powerflush up to 10 rads",
+      "cost": 420,
+      "hours": 5.5
+    },
+    {
+      "id": "comp-trv-pack",
+      "category": "valves",
+      "name": "TRV and lockshield pack (8)",
+      "cost": 190,
+      "hours": 2.2
+    },
+    {
+      "id": "comp-llh",
+      "category": "plant-room",
+      "name": "Low loss header kit",
+      "cost": 315,
+      "hours": 1.5
+    },
+    {
+      "id": "comp-electrical-isolator",
+      "category": "electrical",
+      "name": "Fused spur and isolator",
+      "cost": 85,
+      "hours": 0.6
+    },
+    {
+      "id": "comp-condense-guard",
+      "category": "accessories",
+      "name": "Condensate termination guard",
+      "cost": 48,
+      "hours": 0.25
+    },
+    {
+      "id": "comp-water-softener",
+      "category": "water-treatment",
+      "name": "Compact water softener",
+      "cost": 560,
+      "hours": 2.6
+    },
+    {
+      "id": "comp-zone-pack",
+      "category": "controls",
+      "name": "Two-zone control pack",
+      "cost": 265,
+      "hours": 1.25
+    },
+    {
+      "id": "comp-rad-five",
+      "category": "rads",
+      "name": "5× compact radiators supply & fit",
+      "cost": 510,
+      "hours": 6.4
+    },
+    {
+      "id": "comp-lagging",
+      "category": "services",
+      "name": "Pipe lagging and insulation",
+      "cost": 80,
+      "hours": 1.4
+    }
   ]
 }
