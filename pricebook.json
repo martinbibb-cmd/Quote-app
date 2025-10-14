@@ -1,4 +1,7 @@
 {
+  "version": "2024.10",
+  "generatedAt": "2024-10-01T09:30:00Z",
+  "labourRate": 65,
   "customers": [
     {
       "id": "cust-nha",
@@ -27,6 +30,16 @@
       "email": "aisha.khan@citybuild.co.uk",
       "phone": "0121 311 8844"
     }
+  ],
+  "houseRooms": [
+    "Kitchen",
+    "Utility",
+    "Garage",
+    "Loft",
+    "Cupboard",
+    "Basement",
+    "Bedroom",
+    "Airing Cupboard"
   ],
   "boilerTypes": [
     {
@@ -175,10 +188,10 @@
       "summary": "Isolate, strip and dispose of regular boiler, cold tanks and controls",
       "hours": 5.5,
       "parts": [
-        {"sku": "A-R-01", "name": "Isolate and drain existing system", "cost": 85, "hours": 1.5},
-        {"sku": "A-R-02", "name": "Strip out boiler and F&E tanks", "cost": 120, "hours": 2},
-        {"sku": "A-R-03", "name": "Cap redundant services", "cost": 45, "hours": 1},
-        {"sku": "A-R-04", "name": "Disposal and making good", "cost": 65, "hours": 1}
+        { "sku": "A-R-01", "name": "Isolate and drain existing system", "cost": 85, "hours": 1.5 },
+        { "sku": "A-R-02", "name": "Strip out boiler and F&E tanks", "cost": 120, "hours": 2 },
+        { "sku": "A-R-03", "name": "Cap redundant services", "cost": 45, "hours": 1 },
+        { "sku": "A-R-04", "name": "Disposal and making good", "cost": 65, "hours": 1 }
       ]
     },
     {
@@ -188,10 +201,10 @@
       "summary": "Isolate and remove sealed system boiler and associated controls",
       "hours": 4,
       "parts": [
-        {"sku": "A-S-01", "name": "Isolate services", "cost": 60, "hours": 1},
-        {"sku": "A-S-02", "name": "Remove boiler", "cost": 95, "hours": 1.5},
-        {"sku": "A-S-03", "name": "Disconnect controls", "cost": 45, "hours": 0.75},
-        {"sku": "A-S-04", "name": "Waste handling", "cost": 40, "hours": 0.75}
+        { "sku": "A-S-01", "name": "Isolate services", "cost": 60, "hours": 1 },
+        { "sku": "A-S-02", "name": "Remove boiler", "cost": 95, "hours": 1.5 },
+        { "sku": "A-S-03", "name": "Disconnect controls", "cost": 45, "hours": 0.75 },
+        { "sku": "A-S-04", "name": "Waste handling", "cost": 40, "hours": 0.75 }
       ]
     },
     {
@@ -201,10 +214,10 @@
       "summary": "Isolate and remove existing combi boiler installation",
       "hours": 3.5,
       "parts": [
-        {"sku": "A-C-01", "name": "Drain down system", "cost": 55, "hours": 1},
-        {"sku": "A-C-02", "name": "Strip boiler and flue", "cost": 95, "hours": 1.5},
-        {"sku": "A-C-03", "name": "Disconnect controls", "cost": 30, "hours": 0.5},
-        {"sku": "A-C-04", "name": "Waste removal", "cost": 35, "hours": 0.5}
+        { "sku": "A-C-01", "name": "Drain down system", "cost": 55, "hours": 1 },
+        { "sku": "A-C-02", "name": "Strip boiler and flue", "cost": 95, "hours": 1.5 },
+        { "sku": "A-C-03", "name": "Disconnect controls", "cost": 30, "hours": 0.5 },
+        { "sku": "A-C-04", "name": "Waste removal", "cost": 35, "hours": 0.5 }
       ]
     },
     {
@@ -214,10 +227,10 @@
       "summary": "Remove warm air unit and ducts as required",
       "hours": 6.5,
       "parts": [
-        {"sku": "A-WA-01", "name": "Isolate warm air unit", "cost": 75, "hours": 1},
-        {"sku": "A-WA-02", "name": "Remove ductwork", "cost": 130, "hours": 2.5},
-        {"sku": "A-WA-03", "name": "Make good penetrations", "cost": 90, "hours": 1.5},
-        {"sku": "A-WA-04", "name": "Disposal", "cost": 70, "hours": 1.5}
+        { "sku": "A-WA-01", "name": "Isolate warm air unit", "cost": 75, "hours": 1 },
+        { "sku": "A-WA-02", "name": "Remove ductwork", "cost": 130, "hours": 2.5 },
+        { "sku": "A-WA-03", "name": "Make good penetrations", "cost": 90, "hours": 1.5 },
+        { "sku": "A-WA-04", "name": "Disposal", "cost": 70, "hours": 1.5 }
       ]
     },
     {
@@ -227,10 +240,10 @@
       "summary": "Remove existing storage combi and associated services",
       "hours": 4.5,
       "parts": [
-        {"sku": "A-SC-01", "name": "Drain and isolate", "cost": 70, "hours": 1},
-        {"sku": "A-SC-02", "name": "Strip storage combi", "cost": 140, "hours": 2},
-        {"sku": "A-SC-03", "name": "Remove flue", "cost": 50, "hours": 0.75},
-        {"sku": "A-SC-04", "name": "Waste handling", "cost": 45, "hours": 0.75}
+        { "sku": "A-SC-01", "name": "Drain and isolate", "cost": 70, "hours": 1 },
+        { "sku": "A-SC-02", "name": "Strip storage combi", "cost": 140, "hours": 2 },
+        { "sku": "A-SC-03", "name": "Remove flue", "cost": 50, "hours": 0.75 },
+        { "sku": "A-SC-04", "name": "Waste handling", "cost": 45, "hours": 0.75 }
       ]
     },
     {
@@ -240,9 +253,9 @@
       "summary": "Prepare location for new plant including services survey",
       "hours": 2.5,
       "parts": [
-        {"sku": "A-NB-01", "name": "Site survey and marking", "cost": 45, "hours": 0.75},
-        {"sku": "A-NB-02", "name": "Set out connections", "cost": 65, "hours": 1},
-        {"sku": "A-NB-03", "name": "Temporary supplies", "cost": 35, "hours": 0.75}
+        { "sku": "A-NB-01", "name": "Site survey and marking", "cost": 45, "hours": 0.75 },
+        { "sku": "A-NB-02", "name": "Set out connections", "cost": 65, "hours": 1 },
+        { "sku": "A-NB-03", "name": "Temporary supplies", "cost": 35, "hours": 0.75 }
       ]
     },
     {
@@ -252,10 +265,10 @@
       "summary": "Pipework and accessories for new combi system",
       "hours": 6,
       "parts": [
-        {"sku": "B-C-01", "name": "New flow/return pipework", "cost": 180, "hours": 2},
-        {"sku": "B-C-02", "name": "Domestic hot/cold alterations", "cost": 120, "hours": 1.5},
-        {"sku": "B-C-03", "name": "Condensate provision", "cost": 55, "hours": 0.75},
-        {"sku": "B-C-04", "name": "Controls and wiring", "cost": 95, "hours": 1.75}
+        { "sku": "B-C-01", "name": "New flow/return pipework", "cost": 180, "hours": 2 },
+        { "sku": "B-C-02", "name": "Domestic hot/cold alterations", "cost": 120, "hours": 1.5 },
+        { "sku": "B-C-03", "name": "Condensate provision", "cost": 55, "hours": 0.75 },
+        { "sku": "B-C-04", "name": "Controls and wiring", "cost": 95, "hours": 1.75 }
       ]
     },
     {
@@ -265,10 +278,10 @@
       "summary": "Pipework and controls for system boiler with cylinder",
       "hours": 7,
       "parts": [
-        {"sku": "B-S-01", "name": "Primary pipework", "cost": 210, "hours": 2.5},
-        {"sku": "B-S-02", "name": "Cylinder connections", "cost": 140, "hours": 2},
-        {"sku": "B-S-03", "name": "System wiring centre", "cost": 90, "hours": 1.5},
-        {"sku": "B-S-04", "name": "Commissioning", "cost": 65, "hours": 1}
+        { "sku": "B-S-01", "name": "Primary pipework", "cost": 210, "hours": 2.5 },
+        { "sku": "B-S-02", "name": "Cylinder connections", "cost": 140, "hours": 2 },
+        { "sku": "B-S-03", "name": "System wiring centre", "cost": 90, "hours": 1.5 },
+        { "sku": "B-S-04", "name": "Commissioning", "cost": 65, "hours": 1 }
       ]
     },
     {
@@ -278,10 +291,10 @@
       "summary": "Pipework and F&E tank provision for regular boiler",
       "hours": 6.5,
       "parts": [
-        {"sku": "B-R-01", "name": "Connect feed and expansion", "cost": 110, "hours": 1.5},
-        {"sku": "B-R-02", "name": "Cylinder alterations", "cost": 135, "hours": 2},
-        {"sku": "B-R-03", "name": "Pump and valve wiring", "cost": 85, "hours": 1.5},
-        {"sku": "B-R-04", "name": "System balancing", "cost": 55, "hours": 1.5}
+        { "sku": "B-R-01", "name": "Connect feed and expansion", "cost": 110, "hours": 1.5 },
+        { "sku": "B-R-02", "name": "Cylinder alterations", "cost": 135, "hours": 2 },
+        { "sku": "B-R-03", "name": "Pump and valve wiring", "cost": 85, "hours": 1.5 },
+        { "sku": "B-R-04", "name": "System balancing", "cost": 55, "hours": 1.5 }
       ]
     }
   ],
@@ -293,9 +306,10 @@
       "output": "30 kW",
       "cost": 1025,
       "hours": 3,
-      "case": {"height": 700, "width": 395, "depth": 278},
-      "requiredClearance": {"top": 165, "bottom": 100, "left": 5, "right": 5, "front": 450},
-      "minSpace": {"height": 965, "width": 405, "depth": 728},
+      "minFlowAt1Bar": 12,
+      "case": { "height": 700, "width": 395, "depth": 278 },
+      "requiredClearance": { "top": 165, "bottom": 100, "left": 5, "right": 5, "front": 450 },
+      "minSpace": { "height": 965, "width": 405, "depth": 728 },
       "heatLossRange": "Up to 12 radiators",
       "flues": ["flue-hz-60", "flue-plume-kit", "flue-vertical-kit"],
       "notes": "Integrated magnetic filter supplied"
@@ -307,9 +321,10 @@
       "output": "33 kW",
       "cost": 1095,
       "hours": 3.25,
-      "case": {"height": 700, "width": 390, "depth": 285},
-      "requiredClearance": {"top": 178, "bottom": 200, "left": 5, "right": 5, "front": 450},
-      "minSpace": {"height": 1078, "width": 400, "depth": 735},
+      "minFlowAt1Bar": 13,
+      "case": { "height": 700, "width": 390, "depth": 285 },
+      "requiredClearance": { "top": 178, "bottom": 200, "left": 5, "right": 5, "front": 450 },
+      "minSpace": { "height": 1078, "width": 400, "depth": 735 },
       "heatLossRange": "Medium homes with two bathrooms",
       "flues": ["flue-hz-60", "flue-plume-kit", "flue-vertical-kit"],
       "notes": "10-year warranty with Adey filter"
@@ -321,9 +336,10 @@
       "output": "32 kW",
       "cost": 1180,
       "hours": 3.5,
-      "case": {"height": 720, "width": 440, "depth": 338},
-      "requiredClearance": {"top": 200, "bottom": 200, "left": 25, "right": 25, "front": 500},
-      "minSpace": {"height": 1120, "width": 490, "depth": 838},
+      "minFlowAt1Bar": 12,
+      "case": { "height": 720, "width": 440, "depth": 338 },
+      "requiredClearance": { "top": 200, "bottom": 200, "left": 25, "right": 25, "front": 500 },
+      "minSpace": { "height": 1120, "width": 490, "depth": 838 },
       "heatLossRange": "Larger dwellings with higher DHW demand",
       "flues": ["flue-hz-80", "flue-plume-kit", "flue-vertical-kit"],
       "notes": "Stainless steel heat exchanger"
@@ -335,9 +351,9 @@
       "output": "18 kW",
       "cost": 980,
       "hours": 2.5,
-      "case": {"height": 724, "width": 400, "depth": 310},
-      "requiredClearance": {"top": 170, "bottom": 200, "left": 5, "right": 5, "front": 600},
-      "minSpace": {"height": 1094, "width": 410, "depth": 910},
+      "case": { "height": 724, "width": 400, "depth": 310 },
+      "requiredClearance": { "top": 170, "bottom": 200, "left": 5, "right": 5, "front": 600 },
+      "minSpace": { "height": 1094, "width": 410, "depth": 910 },
       "heatLossRange": "Properties up to 4 bedrooms",
       "flues": ["flue-hz-60", "flue-vertical-kit"],
       "notes": "Greenstar Comfort+ controls compatible"
@@ -349,9 +365,9 @@
       "output": "24 kW",
       "cost": 1035,
       "hours": 2.75,
-      "case": {"height": 700, "width": 395, "depth": 278},
-      "requiredClearance": {"top": 165, "bottom": 200, "left": 5, "right": 5, "front": 450},
-      "minSpace": {"height": 1065, "width": 405, "depth": 728},
+      "case": { "height": 700, "width": 395, "depth": 278 },
+      "requiredClearance": { "top": 165, "bottom": 200, "left": 5, "right": 5, "front": 450 },
+      "minSpace": { "height": 1065, "width": 405, "depth": 728 },
       "heatLossRange": "High demand with stored hot water",
       "flues": ["flue-hz-60", "flue-vertical-kit"],
       "notes": "Pre-wired pump and filling loop"
@@ -363,9 +379,9 @@
       "output": "18 kW",
       "cost": 1140,
       "hours": 2.9,
-      "case": {"height": 720, "width": 440, "depth": 338},
-      "requiredClearance": {"top": 200, "bottom": 200, "left": 25, "right": 25, "front": 500},
-      "minSpace": {"height": 1120, "width": 490, "depth": 838},
+      "case": { "height": 720, "width": 440, "depth": 338 },
+      "requiredClearance": { "top": 200, "bottom": 200, "left": 25, "right": 25, "front": 500 },
+      "minSpace": { "height": 1120, "width": 490, "depth": 838 },
       "heatLossRange": "Ideal for S-plan with unvented cylinder",
       "flues": ["flue-hz-80", "flue-vertical-kit"],
       "notes": "Modulating pump with eBUS"
@@ -377,9 +393,9 @@
       "output": "15 kW",
       "cost": 875,
       "hours": 2.75,
-      "case": {"height": 600, "width": 375, "depth": 320},
-      "requiredClearance": {"top": 150, "bottom": 150, "left": 5, "right": 5, "front": 500},
-      "minSpace": {"height": 900, "width": 385, "depth": 820},
+      "case": { "height": 600, "width": 375, "depth": 320 },
+      "requiredClearance": { "top": 150, "bottom": 150, "left": 5, "right": 5, "front": 500 },
+      "minSpace": { "height": 900, "width": 385, "depth": 820 },
       "heatLossRange": "Gravity or pumped systems",
       "flues": ["flue-hz-80", "flue-plume-kit"],
       "notes": "Open-vented compatible"
@@ -391,9 +407,9 @@
       "output": "18 kW",
       "cost": 910,
       "hours": 2.9,
-      "case": {"height": 600, "width": 390, "depth": 270},
-      "requiredClearance": {"top": 200, "bottom": 200, "left": 5, "right": 5, "front": 500},
-      "minSpace": {"height": 1000, "width": 400, "depth": 770},
+      "case": { "height": 600, "width": 390, "depth": 270 },
+      "requiredClearance": { "top": 200, "bottom": 200, "left": 5, "right": 5, "front": 500 },
+      "minSpace": { "height": 1000, "width": 400, "depth": 770 },
       "heatLossRange": "Suitable for Y-plan upgrades",
       "flues": ["flue-hz-80", "flue-plume-kit"],
       "notes": "Front access for servicing"
@@ -405,9 +421,9 @@
       "output": "30 kW",
       "cost": 1220,
       "hours": 3.25,
-      "case": {"height": 850, "width": 450, "depth": 600},
-      "requiredClearance": {"top": 150, "bottom": 0, "left": 10, "right": 10, "front": 600},
-      "minSpace": {"height": 1000, "width": 470, "depth": 1200},
+      "case": { "height": 850, "width": 450, "depth": 600 },
+      "requiredClearance": { "top": 150, "bottom": 0, "left": 10, "right": 10, "front": 600 },
+      "minSpace": { "height": 1000, "width": 470, "depth": 1200 },
       "heatLossRange": "Large properties retaining open vent systems",
       "flues": ["flue-hz-80"],
       "notes": "Floor standing footprint"
@@ -427,14 +443,21 @@
         "ideal-logic-max-s24"
       ],
       "heatZones": ["rear-wall", "side-wall", "corner"],
+      "headroom": {
+        "base": 2100,
+        "reductions": [
+          { "id": "extension", "label": "Each 1m extension", "value": 45 },
+          { "id": "elbow", "label": "Each 45° elbow", "value": 60 }
+        ]
+      },
       "images": {
         "horizontal": "Horizontal clearance bands",
         "vertical": "Use with vertical adapter",
         "plume": "Add plume kit if recirculation risk"
       },
       "variants": [
-        {"id": "hz-short", "label": "Short (0.5m)", "cost": 0, "hours": 0},
-        {"id": "hz-long", "label": "Extended (1.5m)", "cost": 45, "hours": 0.25}
+        { "id": "hz-short", "label": "Short (0.5m)", "cost": 0, "hours": 0 },
+        { "id": "hz-long", "label": "Extended (1.5m)", "cost": 45, "hours": 0.25 }
       ]
     },
     {
@@ -444,21 +467,28 @@
       "cost": 210,
       "hours": 0.9,
       "compatible": [
-        "vaillant-ecoTec-plus-832",
+        "vaillant-ecotec-plus-832",
         "vaillant-ecotec-plus-618",
-        "vaillant-ecoTec-plus-415",
+        "vaillant-ecotec-plus-415",
         "wb-ri-18",
         "ideal-mexico-he-30"
       ],
       "heatZones": ["rear-wall", "side-wall"],
+      "headroom": {
+        "base": 2250,
+        "reductions": [
+          { "id": "extension", "label": "Each 1m extension", "value": 55 },
+          { "id": "bend", "label": "Each 90° bend", "value": 90 }
+        ]
+      },
       "images": {
         "horizontal": "See Vaillant spec for 80/125",
         "vertical": "Requires 125mm core",
         "plume": "Plume diverter option"
       },
       "variants": [
-        {"id": "hz125-standard", "label": "Standard (1m)", "cost": 0, "hours": 0},
-        {"id": "hz125-adapter", "label": "With terminal guard", "cost": 35, "hours": 0.1}
+        { "id": "hz125-standard", "label": "Standard (1m)", "cost": 0, "hours": 0 },
+        { "id": "hz125-adapter", "label": "With terminal guard", "cost": 35, "hours": 0.1 }
       ]
     },
     {
@@ -476,14 +506,21 @@
         "vaillant-ecotec-plus-618"
       ],
       "heatZones": ["roof-near-ridge", "roof-valley", "flat-roof"],
+      "headroom": {
+        "base": 2500,
+        "reductions": [
+          { "id": "ceiling-void", "label": "Passing through ceiling void", "value": 120 },
+          { "id": "offset", "label": "Each offset pair", "value": 180 }
+        ]
+      },
       "images": {
         "horizontal": "Check horizontal clearances prior to offset",
         "vertical": "Vertical clearance cones",
         "plume": "Consider plume deflection"
       },
       "variants": [
-        {"id": "vert-tiled", "label": "Pitched roof (tiled)", "cost": 0, "hours": 0},
-        {"id": "vert-flat", "label": "Flat roof", "cost": 55, "hours": 0.4}
+        { "id": "vert-tiled", "label": "Pitched roof (tiled)", "cost": 0, "hours": 0 },
+        { "id": "vert-flat", "label": "Flat roof", "cost": 55, "hours": 0.4 }
       ]
     },
     {
@@ -496,44 +533,48 @@
         "ideal-logic-max-30",
         "baxi-800-33",
         "vaillant-ecotec-plus-832",
-        "vaillant-ecoTec-plus-415",
+        "vaillant-ecotec-plus-415",
         "wb-ri-18"
       ],
       "heatZones": ["front-elevation", "adjacent-path", "boundary"],
+      "headroom": {
+        "base": 2050,
+        "reductions": [
+          { "id": "plume-extension", "label": "Each plume extension", "value": 40 }
+        ]
+      },
       "images": {
         "horizontal": "Attach to horizontal terminals",
         "vertical": "Convert plume to vertical rise",
         "plume": "Plume heat map"
       },
       "variants": [
-        {"id": "plume-straight", "label": "Straight 1m", "cost": 0, "hours": 0},
-        {"id": "plume-angled", "label": "Angled kit", "cost": 25, "hours": 0.2}
+        { "id": "plume-straight", "label": "Straight 1m", "cost": 0, "hours": 0 },
+        { "id": "plume-angled", "label": "Angled kit", "cost": 25, "hours": 0.2 }
       ]
     }
   ],
   "gasOptions": [
-    {"id": "gas-upsize", "name": "Upsize gas run", "description": "Upgrade pipework to maintain ≤1mbar", "cost": 185, "hours": 1.25},
-    {"id": "gas-test", "name": "Tightness test & rectify", "description": "Extended test on existing installation", "cost": 65, "hours": 0.5},
-    {"id": "gas-meter-move", "name": "Relocate internal meter", "description": "Move meter within 1m", "cost": 140, "hours": 1}
+    { "id": "gas-upsize", "name": "Upsize gas run", "description": "Upgrade pipework to maintain ≤1mbar", "cost": 185, "hours": 1.25 },
+    { "id": "gas-test", "name": "Tightness test & rectify", "description": "Extended test on existing installation", "cost": 65, "hours": 0.5 },
+    { "id": "gas-meter-move", "name": "Relocate internal meter", "description": "Move meter within 1m", "cost": 140, "hours": 1 }
   ],
   "condensateOptions": [
-    {"id": "cond-pump", "name": "Install condensate pump", "description": "Use pump where gravity run unavailable", "cost": 120, "hours": 0.75},
-    {"id": "cond-freeze", "name": "External run frost protection", "description": "Trace heat and insulation", "cost": 85, "hours": 0.6},
-    {"id": "cond-soil", "name": "Terminate to soil stack", "description": "Core and connect to soil", "cost": 95, "hours": 0.8}
+    { "id": "cond-pump", "name": "Install condensate pump", "description": "Use pump where gravity run unavailable", "cost": 120, "hours": 0.75 },
+    { "id": "cond-freeze", "name": "External run frost protection", "description": "Trace heat and insulation", "cost": 85, "hours": 0.6 },
+    { "id": "cond-soil", "name": "Terminate to soil stack", "description": "Core and connect to soil", "cost": 95, "hours": 0.8 }
   ],
   "components": [
-    {"id": "comp-cylinder-180", "category": "cylinders", "name": "180L unvented cylinder", "cost": 625, "hours": 2.5},
-    {"id": "comp-cylinder-210", "category": "cylinders", "name": "210L unvented cylinder", "cost": 690, "hours": 2.75},
-    {"id": "comp-controls-smart", "category": "controls", "name": "Smart control (Hive)", "cost": 210, "hours": 0.75},
-    {"id": "comp-controls-wired", "category": "controls", "name": "Wired 2-channel programmer", "cost": 95, "hours": 0.5},
-    {"id": "comp-user-wc", "category": "user-controls", "name": "Wireless room stat", "cost": 85, "hours": 0.35},
-    {"id": "comp-rads-five", "category": "rads", "name": "5x compact radiators pack", "cost": 450, "hours": 6},
-    {"id": "comp-rads-flush", "category": "services", "name": "Powerflush", "cost": 390, "hours": 5},
-    {"id": "comp-valves", "category": "valves", "name": "TRV upgrade pack (8)", "cost": 180, "hours": 2},
-    {"id": "comp-tanks", "category": "tanks", "name": "F&E tank kit", "cost": 140, "hours": 1.5},
-    {"id": "comp-addons-filter", "category": "add-ons", "name": "Magnetic filter", "cost": 115, "hours": 0.4},
-    {"id": "comp-services-lagging", "category": "services", "name": "Pipe lagging and insulation", "cost": 75, "hours": 1.25}
-  ],
-  "houseRooms": ["Kitchen", "Utility", "Garage", "Loft", "Cupboard", "Basement", "Bedroom", "Airing Cupboard"],
-  "labourRate": 65
+    { "id": "comp-cylinder-180", "category": "cylinders", "name": "180L unvented cylinder", "cost": 625, "hours": 2.5 },
+    { "id": "comp-cylinder-210", "category": "cylinders", "name": "210L unvented cylinder", "cost": 690, "hours": 2.75 },
+    { "id": "comp-controls-smart", "category": "controls", "name": "Smart control (Hive)", "cost": 210, "hours": 0.75 },
+    { "id": "comp-controls-wired", "category": "controls", "name": "Wired 2-channel programmer", "cost": 95, "hours": 0.5 },
+    { "id": "comp-user-wc", "category": "user-controls", "name": "Wireless room stat", "cost": 85, "hours": 0.35 },
+    { "id": "comp-rads-five", "category": "rads", "name": "5x compact radiators pack", "cost": 450, "hours": 6 },
+    { "id": "comp-rads-flush", "category": "services", "name": "Powerflush", "cost": 390, "hours": 5 },
+    { "id": "comp-valves", "category": "valves", "name": "TRV upgrade pack (8)", "cost": 180, "hours": 2 },
+    { "id": "comp-tanks", "category": "tanks", "name": "F&E tank kit", "cost": 140, "hours": 1.5 },
+    { "id": "comp-addons-filter", "category": "add-ons", "name": "Magnetic filter", "cost": 115, "hours": 0.4 },
+    { "id": "comp-services-lagging", "category": "services", "name": "Pipe lagging and insulation", "cost": 75, "hours": 1.25 }
+  ]
 }
