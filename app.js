@@ -714,7 +714,11 @@ function getCategoryInfo(category) {
     valves: { label: 'Valves', icon: '🔧' },
     tanks: { label: 'Tanks', icon: '🛁' },
     'add-ons': { label: 'Add-ons', icon: '➕' },
-    services: { label: 'Services', icon: '🛠️' }
+    services: { label: 'Services', icon: '🛠️' },
+    'water-treatment': { label: 'Water treatment', icon: '💧' },
+    'plant-room': { label: 'Plant room', icon: '🏭' },
+    electrical: { label: 'Electrical', icon: '⚡' },
+    civils: { label: 'Civils', icon: '🚧' }
   };
   return info[category] || { label: category, icon: '⚙️' };
 }
