@@ -1,74 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Depot Replacement — Diary</title>
-<link rel="manifest" href="manifest.webmanifest">
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="manifest" href="../manifest.webmanifest">
+<title>Quote App — Home</title>
 <style>
-:root{--bg:#0b0d10;--panel:#151a1f;--ink:#e9eef5;--muted:#9fb0c2;--accent:#4aa3ff;--ok:#3ecf8e;--warn:#ffc247;--bad:#ff6b6b}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 ui-sans-serif,system-ui}
-header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#10151b;border-bottom:1px solid #1e2630}
-h1{font-size:16px;margin:0}.muted{color:var(--muted)}
-main{padding:16px;max-width:1100px;margin:auto}
-button{background:var(--accent);border:0;color:#fff;padding:9px 12px;border-radius:8px;cursor:pointer}
-button.secondary{background:#1f2833}
-.card{background:var(--panel);border:1px solid #1e2630;border-radius:12px;padding:12px;margin:8px 0}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
-.tile{background:#0f141a;border:1px solid #233041;border-radius:12px;padding:16px;cursor:pointer}
-.tile small{color:var(--muted)}
-footer.fab{position:fixed;right:16px;bottom:16px}
-footer.fab button{background:var(--warn);color:#000;font-weight:600}
-.dialog{position:fixed;inset:0;display:none;place-items:center;background:rgba(0,0,0,.5)}
-.dialog.show{display:grid}
-.dialog>div{background:var(--panel);border:1px solid #2a3442;border-radius:12px;padding:16px;min-width:320px}
-input,textarea,select{background:#0f141a;border:1px solid #233041;color:var(--ink);padding:8px;border-radius:8px;width:100%}
-label span{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}
+  :root{--bg:#0b0d10;--panel:#151a1f;--ink:#e9eef5;--muted:#9fb0c2;--accent:#4aa3ff}
+  *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 ui-sans-serif,system-ui}
+  header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#10151b;border-bottom:1px solid #1e2630}
+  h1{font-size:16px;margin:0}.muted{color:var(--muted)}
+  main{padding:16px;max-width:1100px;margin:auto}
+  .card{background:var(--panel);border:1px solid #1e2630;border-radius:12px;padding:12px;margin:8px 0}
+  button{background:var(--accent);border:0;color:#fff;padding:9px 12px;border-radius:8px;cursor:pointer}
 </style>
-</head>
-<body>
-<header><h1>Depot Replacement — <span class="muted" id="hdr">Diary</span></h1>
-<button id="add">+ Add</button></header>
-<main id="app"></main>
-<footer class="fab"><button id="safetyBtn">⚠️ Add Observation</button></footer>
-
-<div class="dialog" id="dlg"><div>
-  <h3>Add Appointment</h3>
-  <label><span>Start</span><input id="start" type="datetime-local"></label>
-  <label><span>End</span><input id="end" type="datetime-local"></label>
-  <label><span>Address</span><input id="addr"></label>
-  <label><span>Name</span><input id="name"></label>
-  <label><span>Phone</span><input id="phone"></label>
-  <label><span>Email</span><input id="email"></label>
-  <label><span>Tags</span><input id="tags" placeholder="survey,replacement"></label>
-  <div style="text-align:right;margin-top:10px"><button class="secondary" id="cancel">Cancel</button><button id="save">Save</button></div>
-</div></div>
-
-<div class="dialog" id="dlgSafety"><div>
-  <h3>Add Safety Observation</h3>
-  <label><span>Lead</span><select id="s_lead"></select></label>
-  <label><span>Category</span><select id="s_cat"><option>WAH</option><option>Gas</option><option>Asbestos</option><option>Electrical</option><option>Access</option><option>Customer</option></select></label>
-  <label><span>Observation</span><textarea id="s_text" rows="3"></textarea></label>
-  <div style="text-align:right;margin-top:10px"><button class="secondary" id="s_cancel">Cancel</button><button id="s_save">Save</button></div>
-</div></div>
-
-<script>
-const LS_APPTS='depot.appts',LS_SURVEY=id=>`depot.survey.${id}`;
-const $=q=>document.querySelector(q),app=$("#app");let appts=load();
-function load(){try{return JSON.parse(localStorage.getItem(LS_APPTS)||'[]')}catch(e){return[]}}
-function save(){localStorage.setItem(LS_APPTS,JSON.stringify(appts))}
-function ensureSurvey(id,addr){const k=LS_SURVEY(id);if(!localStorage.getItem(k)){localStorage.setItem(k,JSON.stringify({id,meta:{schema_version:"0.2.0"},site:{address:addr},rooms:[],heatloss:{},safety:[]}))}}
-function render(){app.innerHTML=appts.map(a=>`<div class=card data-id=${a.id}><b>${a.name||'Lead'}</b><br>${a.address}<br><small>${new Date(a.start).toLocaleString()}</small></div>`).join('')||'<p class=muted>No appointments</p>';app.querySelectorAll('.card').forEach(c=>c.onclick=()=>openLead(c.dataset.id))}
-function openLead(id){const a=appts.find(x=>x.id==id);ensureSurvey(id,a.address);$("#hdr").textContent=a.name||id;app.innerHTML=`<div class=card><b>${a.name||'Lead'}</b><br>${a.address}</div>
-<h3>Mini Apps</h3><div class=grid>
-${["heatloss_house","room_survey","water","flue","airing","heatloss_room","exports"].map(k=>`<div class=tile>${k.replace('_',' ')}</div>`).join('')}
-</div><button class=secondary id=back>← Back</button>`;$("#back").onclick=()=>location.reload()}
-$("#add").onclick=()=>$("#dlg").classList.add('show');$("#cancel").onclick=()=>$("#dlg").classList.remove('show');
-$("#save").onclick=()=>{const id=crypto.randomUUID();const a={id,start:$("#start").value,end:$("#end").value,address:$("#addr").value,name:$("#name").value,phone:$("#phone").value,email:$("#email").value,tags:$("#tags").value.split(',').filter(Boolean)};appts.push(a);save();ensureSurvey(id,a.address);$("#dlg").classList.remove('show');render()};
-$("#safetyBtn").onclick=()=>{const s=$("#s_lead");s.innerHTML=appts.map(a=>`<option value=${a.id}>${a.name||a.id}</option>`).join('');$("#dlgSafety").classList.add('show')}
-$("#s_cancel").onclick=()=>$("#dlgSafety").classList.remove('show');
-$("#s_save").onclick=()=>{const id=$("#s_lead").value,text=$("#s_text").value,cat=$("#s_cat").value;k=LS_SURVEY(id);let sv=JSON.parse(localStorage.getItem(k));sv.safety.push({when:new Date().toISOString(),cat,text});localStorage.setItem(k,JSON.stringify(sv));$("#dlgSafety").classList.remove('show');alert("Saved")}
-if(appts.length===0){const seed=crypto.randomUUID();appts=[{id:seed,start:new Date().toISOString(),end:new Date().toISOString(),address:"10 Example Rd, Portsmouth",name:"Example Lead",tags:["survey"]}];save();ensureSurvey(seed,"10 Example Rd, Portsmouth")}
-render();
-</script>
-</body></html>
+<header><h1>Quote App</h1><a href="../index.html" style="color:#9fb0c2;text-decoration:none">Root</a></header>
+<main id="app">
+  <div class="card">
+    <b>It works 🎉</b>
+    <p class="muted">This is <code>/app/index.html</code>. Replace this with your diary/launcher or quote UI.</p>
+  </div>
+</main>
