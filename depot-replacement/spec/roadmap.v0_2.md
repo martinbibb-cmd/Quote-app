@@ -1,0 +1,4 @@
+- Home = Diary of appointments; select lead → mini-apps.
+- Shared survey.json across modules.
+- Build whole-house heat-loss early to anchor LiDAR.
+- Track component positions via ENU coordinates.
