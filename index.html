@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Branching Grove UI</title>
+<style>
+  :root{
+    --bg:#0b0d10; --panel:#12161b; --ink:#eaf1f8; --muted:#a7b6c7; --accent:#4aa3ff;
+    --ok:#39d98a; --link:#8bd0ff; --line:#324252; --node:#1a2129; --nodeHover:#222a33;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial}
+  header{display:flex;align-items:center;gap:8px;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #18202a;background:linear-gradient(0deg,#0a0d12,#0f1318)}
+  header .actions{display:flex;gap:8px;align-items:center}
+  button, .btn{
+    appearance:none;border:1px solid #203040;background:#131921;color:var(--ink);
+    padding:8px 12px;border-radius:10px;font:600 14px/1 ui-sans-serif;cursor:pointer
+  }
+  button:hover{background:#17212a;border-color:#2a3b4d}
+  .btn-ghost{background:transparent;border-color:#223142;color:var(--muted)}
+  .btn-accent{border-color:#2a68b0;background:#0f1b28}
+  .btn-small{padding:6px 10px;font-size:13px;border-radius:9px}
+
+  .wrap{position:relative;height:calc(100vh - 56px);display:flex;flex-direction:column}
+  .hint{color:var(--muted);padding:8px 16px;border-bottom:1px solid #18202a}
+  .forest-scroll{
+    position:relative;flex:1;overflow:auto;padding:24px 24px 80px;
+    scrollbar-width:thin;scrollbar-color:#2a3b4d transparent;
+  }
+  .forest{
+    position:relative;display:flex;gap:40px;align-items:flex-start;
+    min-width:800px;
+  }
+
+  .node{
+    --scale:1;
+    position:relative; display:inline-flex; flex-direction:column; align-items:stretch;
+    background:var(--node); border:1px solid #223142; border-radius:12px; min-width:180px; max-width:260px;
+    box-shadow:0 6px 18px rgba(0,0,0,.25); transform:scale(var(--scale));
+    transition:transform .25s ease, background .2s ease, border-color .2s ease, opacity .25s ease;
+    opacity:1;
+  }
+  .node.hidden{opacity:0; pointer-events:none}
+  .node:hover{background:var(--nodeHover); border-color:#2a3b4d}
+  .node > .head{
+    padding:10px 12px 8px; display:flex; align-items:center; gap:8px; user-select:none;
+  }
+  .node .chev{
+    width:16px;height:16px;display:inline-grid;place-items:center;border-radius:7px;
+    border:1px solid #2a3b4d;color:var(--muted);flex:0 0 auto; font-size:12px;line-height:1
+  }
+  .node .title{font:600 14px/1.2 ui-sans-serif;letter-spacing:.2px}
+  .node .meta{color:var(--muted);font-size:12px;padding:0 12px 10px}
+  .node .tools{display:flex;gap:8px;flex-wrap:wrap;padding:0 12px 12px}
+  .chip{
+    font:600 11px/1 ui-sans-serif;padding:6px 8px;border-radius:999px;border:1px solid #2a3b4d;color:var(--muted)
+  }
+
+  .lane{display:flex; gap:24px; align-items:flex-start; margin-left:24px; margin-top:16px; padding-left:24px; border-left:2px dashed #223142}
+  .lane.collapsed{display:none}
+
+  svg.connect{position:absolute; inset:0; pointer-events:none}
+  .branch{stroke:var(--line); stroke-width:2; fill:none}
+
+  .fab{position:fixed; right:20px; bottom:20px; z-index:30; display:none;}
+  .fab.show{display:block}
+  .fab button{background:linear-gradient(180deg,#163451,#0f2436); border-color:#2c70c0}
+  .fab .sub{display:block;color:var(--muted);font-size:12px;margin-top:6px;text-align:center}
+
+  .overlay{position:absolute; inset:0; display:none; place-items:center; background:linear-gradient(0deg, rgba(10,13,16,.6), rgba(10,13,16,.6))}
+  .overlay.show{display:grid}
+  .overlay .card{
+    background:#10161d;border:1px solid #223142;border-radius:14px;padding:16px 18px;text-align:center;box-shadow:0 8px 28px rgba(0,0,0,.35)
+  }
+  .overlay .card h3{margin:0 0 8px;font-size:16px}
+  .overlay .card p{margin:0 0 12px;color:var(--muted)}
+</style>
+</head>
+<body>
+  <header>
+    <div style="font-weight:700;">🌳 Branching Grove</div>
+    <div class="actions">
+      <button id="reload" class="btn-accent">Reload (Grow Branches)</button>
+      <button id="expandAll" class="btn-ghost">Expand All</button>
+      <button id="collapseRoots" class="btn-ghost">Collapse to Roots</button>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="hint">Tip: Tap a node to expand / collapse. Use R to grow; E expand; C collapse.</div>
+    <div class="forest-scroll">
+      <svg class="connect" id="wires" aria-hidden="true"></svg>
+      <main class="forest" id="forest" aria-label="Grove of trees"></main>
+      <div class="overlay" id="overlay">
+        <div class="card">
+          <h3>Growing your grove…</h3>
+          <p>Branches will sprout level-by-level.</p>
+          <button id="cancelGrow" class="btn-small">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fab" id="fab">
+    <button id="done" class="btn">Done</button>
+    <span class="sub">Collapse all to roots</span>
+  </div>
+
+<script>
+const forestData = [
+  {
+    id:"root-scope", title:"System Scope", meta:"Choose conversion path",
+    chips:["Survey","Constraints"],
+    children:[
+      { id:"scope-regular", title:"Regular → Combi", meta:"Loft tanks → combi", children:[
+        { id:"gas", title:"Gas Route", meta:"Rule of thumb check", chips:["28mm?","6m run"], children:[] },
+        { id:"flue", title:"Flue Options", meta:"Horiz/Vert/Rear/Internal fix", children:[
+          { id:"plume", title:"Plume Kit?", meta:"Boundary/windows check", children:[] }
+        ]},
+        { id:"water", title:"Water Performance", meta:"≥10 lpm @ 1 bar for new installs", children:[] },
+      ]},
+      { id:"scope-system", title:"Regular → System", meta:"Seal the primaries", children:[
+        { id:"fne", title:"Remove F&E", meta:"Packs + hours", children:[] },
+        { id:"prv", title:"Remote PRV", meta:"Route up or out", children:[] },
+      ]},
+    ]
+  },
+  {
+    id:"root-location", title:"Location & Clearances", meta:"Cupboard / Loft / Kitchen",
+    chips:["Measure A/B","Front 450–600"],
+    children:[
+      { id:"cupboard", title:"Cupboard Fit", meta:"Meet install & service clearances", children:[] },
+      { id:"loft", title:"Loft Install", meta:"≤35kg; 1.5m boarded radius", children:[] },
+      { id:"bath", title:"Bathroom Zones", meta:"IP rating & RCD", children:[] },
+    ]
+  },
+  {
+    id:"root-wah", title:"Working at Height", meta:"Access & scaffolding",
+    chips:["Ladder 75°","6m max reach"],
+    children:[
+      { id:"pitched", title:"Pitched Roof", meta:">45° needs scaffold", children:[] },
+      { id:"flat", title:"Flat Roof", meta:"10° max; 2m edge zone", children:[] },
+    ]
+  }
+];
+
+const forestEl = document.getElementById('forest');
+const wiresEl  = document.getElementById('wires');
+const fabEl    = document.getElementById('fab');
+const overlay  = document.getElementById('overlay');
+let cancelGrowFlag = false;
+
+function renderForest(data){
+  forestEl.innerHTML = '';
+  wiresEl.innerHTML  = '';
+  const roots = data.map(tree => renderTree(tree));
+  roots.forEach(r => forestEl.appendChild(r.container));
+  queueMicrotask(drawAllWires);
+}
+
+function renderTree(tree){
+  const container = document.createElement('section');
+  container.className = 'tree';
+  container.style.display = 'flex';
+  container.style.flexDirection = 'column';
+  container.style.alignItems = 'flex-start';
+  const rootNode = renderNode(tree, 0);
+  container.appendChild(rootNode.nodeEl);
+  if (tree.children?.length){
+    const lane = document.createElement('div');
+    lane.className = 'lane';
+    lane.dataset.parent = tree.id;
+    rootNode.lane = lane;
+    container.appendChild(lane);
+    for(const child of tree.children){
+      const childTree = renderSubtree(child, 1);
+      lane.appendChild(childTree.nodeEl);
+      if (childTree.lane) lane.appendChild(childTree.lane);
+    }
+  }
+  return {container};
+}
+
+function renderSubtree(nodeData, depth){
+  const {nodeEl, lane} = renderNode(nodeData, depth);
+  if (nodeData.children?.length){
+    for(const child of nodeData.children){
+      const childTree = renderSubtree(child, depth+1);
+      lane.appendChild(childTree.nodeEl);
+      if (childTree.lane) lane.appendChild(childTree.lane);
+    }
+  }
+  return {nodeEl, lane};
+}
+
+function renderNode(data, depth){
+  const node = document.createElement('article');
+  node.className = 'node';
+  node.id = `node-${data.id}`;
+  node.dataset.nodeId = data.id;
+  node.dataset.depth = depth;
+
+  const head = document.createElement('div');
+  head.className = 'head';
+  const chev = document.createElement('span');
+  chev.className = 'chev';
+  chev.textContent = '↘';
+  const title = document.createElement('div');
+  title.className = 'title';
+  title.textContent = data.title;
+  head.appendChild(chev);
+  head.appendChild(title);
+  node.appendChild(head);
+
+  if (data.meta){
+    const meta = document.createElement('div');
+    meta.className = 'meta';
+    meta.textContent = data.meta;
+    node.appendChild(meta);
+  }
+  if (data.chips?.length){
+    const tools = document.createElement('div');
+    tools.className = 'tools';
+    for(const c of data.chips) {
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.textContent = c;
+      tools.appendChild(chip);
+    }
+    node.appendChild(tools);
+  }
+
+  let lane = null;
+  if (data.children?.length){
+    lane = document.createElement('div');
+    lane.className = 'lane';
+    lane.dataset.parent = data.id;
+  }
+
+  node.dataset.state = data.children?.length ? 'expanded' : 'leaf';
+  head.tabIndex = 0;
+  head.setAttribute('role','button');
+  head.setAttribute('aria-expanded', data.children?.length ? 'true':'false');
+  head.setAttribute('aria-controls', lane ? `lane-${data.id}` : '');
+  if (lane) lane.id = `lane-${data.id}`;
+
+  function toggle(){
+    if (!lane) return;
+    const collapsed = lane.classList.toggle('collapsed');
+    head.setAttribute('aria-expanded', String(!collapsed));
+    chev.textContent = collapsed ? '↗' : '↘';
+    drawAllWires();
+  }
+  head.addEventListener('click', toggle);
+  head.addEventListener('keydown', (e)=>{ if (e.key==='Enter' || e.key===' ') { e.preventDefault(); toggle(); }});
+
+  return {nodeEl:node, lane};
+}
+
+function drawAllWires(){
+  wiresEl.setAttribute('width', forestEl.scrollWidth);
+  wiresEl.setAttribute('height', forestEl.scrollHeight);
+  wiresEl.innerHTML='';
+  const lanes = [...document.querySelectorAll('.lane:not(.collapsed)')];
+  for(const lane of lanes){
+    const parentId = lane.dataset.parent;
+    const parentNode = document.getElementById(`node-${parentId}`);
+    if (!parentNode) continue;
+    const parentBox = parentNode.getBoundingClientRect();
+    const laneBox   = lane.getBoundingClientRect();
+    const scrollBox = wiresEl.getBoundingClientRect();
+
+    const x1 = parentBox.right - scrollBox.left;
+    const y1 = parentBox.top + parentBox.height/2 - scrollBox.top;
+
+    const kids = [...lane.children].filter(el=>el.classList.contains('node'));
+    for(const kid of kids){
+      const kb = kid.getBoundingClientRect();
+      const x2 = kb.left - scrollBox.left;
+      const y2 = kb.top + kb.height/2 - scrollBox.top;
+      const dx = Math.max(24, Math.min(120, (x2 - x1)/2));
+      const d = `M ${x1} ${y1} C ${x1+dx} ${y1}, ${x2-dx} ${y2}, ${x2} ${y2}`;
+      const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+      path.setAttribute('d', d);
+      path.setAttribute('class','branch');
+      wiresEl.appendChild(path);
+    }
+  }
+}
+
+function collapseAllToRoots(){
+  document.querySelectorAll('.lane').forEach((lane)=>{
+    const parentDepth = +document.getElementById(`node-${lane.dataset.parent}`)?.dataset.depth || 0;
+    if (parentDepth >= 0) lane.classList.add('collapsed');
+  });
+  document.querySelectorAll('.head[aria-expanded="true"]').forEach(h=>h.setAttribute('aria-expanded','false'));
+  document.querySelectorAll('.node .chev').forEach(c=>c.textContent='↗');
+  fabEl.classList.remove('show');
+  drawAllWires();
+}
+function expandAll(){
+  document.querySelectorAll('.lane').forEach(l=>l.classList.remove('collapsed'));
+  document.querySelectorAll('.head').forEach(h=>h.setAttribute('aria-expanded','true'));
+  document.querySelectorAll('.node .chev').forEach(c=>c.textContent='↘');
+  drawAllWires();
+}
+
+function getDepthMap(){
+  const map = new Map();
+  document.querySelectorAll('.node').forEach(n=>{
+    const d = +n.dataset.depth;
+    if (!map.has(d)) map.set(d, []);
+    map.get(d).push(n);
+  });
+  return [...map.entries()].sort((a,b)=>a[0]-b[0]).map(([depth, nodes])=>({depth,nodes}));
+}
+
+async function growForest(){
+  cancelGrowFlag = false;
+  overlay.classList.add('show');
+  fabEl.classList.remove('show');
+
+  const allNodes = [...document.querySelectorAll('.node')];
+  const depthMap = getDepthMap();
+  allNodes.forEach(n=>{
+    const d = +n.dataset.depth;
+    if (d>0) n.classList.add('hidden');
+  });
+  document.querySelectorAll('.lane').forEach(l=>l.classList.add('collapsed'));
+  drawAllWires();
+
+  for (const {depth, nodes} of depthMap){
+    if (cancelGrowFlag) break;
+    await wait(220);
+    for(const n of nodes){ if (depth>0) n.classList.remove('hidden'); }
+    const toOpen = [...document.querySelectorAll(`.lane`)].filter(l=>{
+      const p = document.getElementById(`node-${l.dataset.parent}`);
+      return p && +p.dataset.depth === depth-1;
+    });
+    toOpen.forEach(l=>l.classList.remove('collapsed'));
+
+    scalePulse(nodes, 1.03);
+    drawAllWires();
+  }
+
+  overlay.classList.remove('show');
+  fabEl.classList.add('show');
+}
+
+function scalePulse(nodes, peak){
+  nodes.forEach(n=>n.style.setProperty('--scale','1'));
+  setTimeout(()=> nodes.forEach(n=>n.style.setProperty('--scale', String(peak))), 10);
+  setTimeout(()=> nodes.forEach(n=>n.style.setProperty('--scale','1')), 210);
+}
+
+function wait(ms){ return new Promise(r=>setTimeout(r, ms)); }
+
+renderForest(forestData);
+
+document.getElementById('reload').addEventListener('click', growForest);
+document.getElementById('expandAll').addEventListener('click', expandAll);
+document.getElementById('collapseRoots').addEventListener('click', collapseAllToRoots);
+document.getElementById('done').addEventListener('click', collapseAllToRoots);
+document.getElementById('cancelGrow').addEventListener('click', ()=>{ cancelGrowFlag=true; overlay.classList.remove('show'); });
+
+window.addEventListener('keydown', (e)=>{
+  if (e.key==='r' || e.key==='R') growForest();
+  if (e.key==='e' || e.key==='E') expandAll();
+  if (e.key==='c' || e.key==='C') collapseAllToRoots();
+});
+
+new ResizeObserver(drawAllWires).observe(document.body);
+document.querySelector('.forest-scroll').addEventListener('scroll', ()=>{ requestAnimationFrame(drawAllWires); }, {passive:true});
+window.addEventListener('resize', ()=>requestAnimationFrame(drawAllWires));
+</script>
+</body>
+</html>
