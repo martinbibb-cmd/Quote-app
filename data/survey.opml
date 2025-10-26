@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<opml version="1.0">
+    <head>
+        <title>Current boiler</title>
+    </head>
+    <body>
+        <outline text="Current boiler (A pack)">
+            <outline text="Regular (1)"/>
+            <outline text="System (2)"/>
+            <outline text="Combi (3)"/>
+            <outline text="Warm air (4)"/>
+            <outline text="None (5)"/>
+            <outline text="Storage combi (6)"/>
+        </outline>
+        <outline text="Flue(a)">
+            <outline text="Horizontal (1)"/>
+            <outline text="Direct rear (2)"/>
+            <outline text="Balanced (3)"/>
+            <outline text="Vertical (4)">
+                <outline text="Pitched roof (1)"/>
+                <outline text="Flat roof (2)"/>
+            </outline>
+        </outline>
+        <outline text="New boiler (B pack)">
+            <outline text="Regular (1)"/>
+            <outline text="System (2)"/>
+            <outline text="Combi (3)"/>
+        </outline>
+        <outline text="New flue (b)">
+            <outline text="Turret (1)">
+                <outline text="Right(a)"/>
+                <outline text="Left (b)"/>
+                <outline text="Rear (c)"/>
+            </outline>
+            <outline text="Rear (2)"/>
+            <outline text="Vertical (3)">
+                <outline text="Length plus 45 (a)"/>
+                <outline text="Lengths plus 90s (b)"/>
+            </outline>
+            <outline text="Extended (4)">
+                <outline text="Define"/>
+            </outline>
+        </outline>
+        <outline text="Terminal ">
+            <outline text="Standard - wall 1"/>
+            <outline text="Plume kit 2 "/>
+            <outline text="Vertical flat 3 "/>
+            <outline text="Vertical flat 4"/>
+        </outline>
+        <outline text="Cylinder a">
+            <outline text="Open vented 1"/>
+            <outline text="Unvented 2"/>
+            <outline text="Combi 3"/>
+            <outline text="Thermal store 4"/>
+            <outline text="NA"/>
+        </outline>
+        <outline text="Cylinder b">
+            <outline text="Use existing 1"/>
+            <outline text="Replace open vented 2">
+                <outline text="Open vented same size 1"/>
+                <outline text="Open vented different size 2"/>
+                <outline text="Open vented Mixergy 3"/>
+                <outline text="Unvented 4"/>
+                <outline text="Unvented Mixergy 5"/>
+            </outline>
+            <outline text="Replace unvented 3">
+                <outline text="Unvented "/>
+                <outline text="Mixergy"/>
+            </outline>
+            <outline text="NA"/>
+        </outline>
+        <outline text="Controls a ">
+            <outline text="Simple"/>
+            <outline text="Smart"/>
+            <outline text="Boiler plus"/>
+        </outline>
+        <outline text="Controls b">
+            <outline text="Simple"/>
+            <outline text="Hive"/>
+            <outline text="Boiler plus"/>
+        </outline>
+        <outline text="Condensate a">
+            <outline text="None"/>
+            <outline text="Compliant "/>
+            <outline text="Not compliant"/>
+        </outline>
+        <outline text="Condensate b">
+            <outline text="Internal ">
+                <outline text="Under sink"/>
+                <outline text="Soil"/>
+                <outline text="Appliance"/>
+                <outline text="Pump">
+                    <outline text="Under sink"/>
+                    <outline text="Soil"/>
+                </outline>
+            </outline>
+            <outline text="External">
+                <outline text="Pump">
+                    <outline text="Soil"/>
+                    <outline text="Gully"/>
+                    <outline text="Hopper"/>
+                </outline>
+                <outline text="Soil"/>
+                <outline text="Gully"/>
+                <outline text="Hopper"/>
+                <outline text="Soak away">
+                    <outline text="Engineer installed"/>
+                    <outline text="Specialist builder"/>
+                </outline>
+            </outline>
+        </outline>
+        <outline text="Powerflush ">
+            <outline text="Customer reports no issues with dirt and sludge - customer also reports rads heat all over"/>
+            <outline text="Powerflush required"/>
+        </outline>
+        <outline text="Filter">
+            <outline text="Fernox tf1 fitted "/>
+            <outline text="Filter other than Fernox tf-1 to be replaced"/>
+            <outline text="No space"/>
+            <outline text="Customer declined"/>
+        </outline>
+        <outline text="System controls">
+            <outline text="Combi only"/>
+            <outline text="S plan">
+                <outline text="Use existing controls"/>
+                <outline text="Reconfigure ">
+                    <outline text="Existing controls "/>
+                    <outline text="Replace ">
+                        <outline text="2 port"/>
+                        <outline text="Pump"/>
+                        <outline text="Wiring centre"/>
+                    </outline>
+                </outline>
+                <outline text="Replace components ">
+                    <outline text="2 port"/>
+                    <outline text="Pump"/>
+                    <outline text="Wiring"/>
+                </outline>
+            </outline>
+            <outline text="Y plan">
+                <outline text="Existing controls "/>
+                <outline text="Reconfigure ">
+                    <outline text="Y plan">
+                        <outline text="New valve"/>
+                        <outline text="Existing valve"/>
+                    </outline>
+                    <outline text="S plan">
+                        <outline text="New valves and wiring centre"/>
+                        <outline text="New pump"/>
+                    </outline>
+                </outline>
+            </outline>
+            <outline text="S plan additional zone(s)">
+                <outline text="Retain "/>
+                <outline text="Replace">
+                    <outline text="Pump"/>
+                    <outline text="Valves"/>
+                </outline>
+            </outline>
+        </outline>
+    </body>
+</opml>
