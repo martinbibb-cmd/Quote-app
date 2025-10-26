@@ -80,7 +80,7 @@
 </head>
 <body>
   <header>
-    <div style="font-weight:700;">🌳 Branching Grove</div>
+    <div id="appTitle" style="font-weight:700;">🌳 Branching Grove</div>
     <div class="actions">
       <button id="reload" class="btn-accent">Reload (Grow Branches)</button>
       <button id="expandAll" class="btn-ghost">Expand All</button>
@@ -109,48 +109,81 @@
   </div>
 
 <script>
-const forestData = [
-  {
-    id:"root-scope", title:"System Scope", meta:"Choose conversion path",
-    chips:["Survey","Constraints"],
-    children:[
-      { id:"scope-regular", title:"Regular → Combi", meta:"Loft tanks → combi", children:[
-        { id:"gas", title:"Gas Route", meta:"Rule of thumb check", chips:["28mm?","6m run"], children:[] },
-        { id:"flue", title:"Flue Options", meta:"Horiz/Vert/Rear/Internal fix", children:[
-          { id:"plume", title:"Plume Kit?", meta:"Boundary/windows check", children:[] }
-        ]},
-        { id:"water", title:"Water Performance", meta:"≥10 lpm @ 1 bar for new installs", children:[] },
-      ]},
-      { id:"scope-system", title:"Regular → System", meta:"Seal the primaries", children:[
-        { id:"fne", title:"Remove F&E", meta:"Packs + hours", children:[] },
-        { id:"prv", title:"Remote PRV", meta:"Route up or out", children:[] },
-      ]},
-    ]
-  },
-  {
-    id:"root-location", title:"Location & Clearances", meta:"Cupboard / Loft / Kitchen",
-    chips:["Measure A/B","Front 450–600"],
-    children:[
-      { id:"cupboard", title:"Cupboard Fit", meta:"Meet install & service clearances", children:[] },
-      { id:"loft", title:"Loft Install", meta:"≤35kg; 1.5m boarded radius", children:[] },
-      { id:"bath", title:"Bathroom Zones", meta:"IP rating & RCD", children:[] },
-    ]
-  },
-  {
-    id:"root-wah", title:"Working at Height", meta:"Access & scaffolding",
-    chips:["Ladder 75°","6m max reach"],
-    children:[
-      { id:"pitched", title:"Pitched Roof", meta:">45° needs scaffold", children:[] },
-      { id:"flat", title:"Flat Roof", meta:"10° max; 2m edge zone", children:[] },
-    ]
-  }
-];
-
 const forestEl = document.getElementById('forest');
 const wiresEl  = document.getElementById('wires');
 const fabEl    = document.getElementById('fab');
 const overlay  = document.getElementById('overlay');
 let cancelGrowFlag = false;
+
+const _SLUGS = new Set();
+
+async function loadOPML(){
+  const res = await fetch('data/survey.opml');
+  if (!res.ok) throw new Error(`Failed to fetch OPML (status ${res.status})`);
+  const text = await res.text();
+  const xml = new DOMParser().parseFromString(text, 'text/xml');
+  _SLUGS.clear();
+  const outlines = [...xml.querySelectorAll('body > outline')];
+  const sections = outlines.map(o => convertOutline(o));
+  const title = (xml.querySelector('head>title')?.textContent || 'Branching Grove').trim();
+  return { sections, title };
+}
+
+function convertOutline(outEl){
+  const title = (outEl.getAttribute('text')||'').trim() || 'Untitled';
+  const nodes = [...outEl.children]
+    .filter(isOutline)
+    .map(n => convertNode(n));
+  return { title, id: slug(title), nodes };
+}
+
+function convertNode(nodeEl){
+  const title = (nodeEl.getAttribute('text')||'').trim() || 'Untitled';
+  const id = slug(title);
+  const children = [...nodeEl.children]
+    .filter(isOutline)
+    .map(n => convertNode(n));
+  return { id, title, children };
+}
+
+function isOutline(node){
+  return node.tagName && node.tagName.toLowerCase() === 'outline';
+}
+
+function slug(raw){
+  const base = (raw||'')
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g,' ')
+    .replace(/[^\w]+/g,'_')
+    .replace(/^_+|_+$/g,'')
+    .slice(0, 60) || 'item';
+  let s = base;
+  let i = 2;
+  while (_SLUGS.has(s)) s = `${base}-${i++}`;
+  _SLUGS.add(s);
+  return s;
+}
+
+function toForest(sections){
+  return sections.map(section => ({
+    id: section.id,
+    title: section.title,
+    meta: '',
+    chips: [],
+    children: normalizeNodes(section.nodes)
+  }));
+}
+
+function normalizeNodes(nodes){
+  return (nodes || []).map(node => ({
+    id: node.id,
+    title: node.title,
+    meta: '',
+    chips: [],
+    children: normalizeNodes(node.children)
+  }));
+}
 
 function renderForest(data){
   forestEl.innerHTML = '';
@@ -357,8 +390,6 @@ function scalePulse(nodes, peak){
 
 function wait(ms){ return new Promise(r=>setTimeout(r, ms)); }
 
-renderForest(forestData);
-
 document.getElementById('reload').addEventListener('click', growForest);
 document.getElementById('expandAll').addEventListener('click', expandAll);
 document.getElementById('collapseRoots').addEventListener('click', collapseAllToRoots);
@@ -374,6 +405,20 @@ window.addEventListener('keydown', (e)=>{
 new ResizeObserver(drawAllWires).observe(document.body);
 document.querySelector('.forest-scroll').addEventListener('scroll', ()=>{ requestAnimationFrame(drawAllWires); }, {passive:true});
 window.addEventListener('resize', ()=>requestAnimationFrame(drawAllWires));
+
+(async function boot(){
+  try {
+    const { sections, title } = await loadOPML();
+    const appTitle = document.getElementById('appTitle');
+    if (appTitle) appTitle.textContent = `🌳 ${title}`;
+    document.title = `${title} – Branching Grove`;
+    const forestData = toForest(sections);
+    renderForest(forestData);
+  } catch (err) {
+    console.error('Failed to load OPML data', err);
+    forestEl.innerHTML = '<p style="padding:24px;">Unable to load survey data.</p>';
+  }
+})();
 </script>
 </body>
 </html>
