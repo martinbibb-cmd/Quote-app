@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Quote App – Grove</title>
+<link rel="stylesheet" href="assets/grove.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="left">
+    <div>🌳 Quote App – Grove</div>
+    <span id="meta" class="small"></span>
+  </div>
+  <div class="filter">
+    <a class="back" href="index.html">← Back</a>
+    <label>Section:</label>
+    <select id="section"></select>
+    <button id="expand">Expand</button>
+    <button id="collapse">Collapse</button>
+    <button id="resetAll" title="Clear saved picks">Reset All</button>
+  </div>
+</header>
+
+<div class="main">
+  <div class="stage">
+    <svg class="connect" id="wires" aria-hidden="true"></svg>
+    <section id="forest"></section>
+  </div>
+  <aside class="aside" id="aside">
+    <h3>Summary</h3>
+    <div class="small">Prune each section until you have a single path A→B. “System controls” allows multiples.</div>
+    <div id="summary"></div>
+    <div class="row">
+      <button id="copyPicks">Copy Picks</button>
+      <button id="copySummary">Copy Summary</button>
+    </div>
+  </aside>
+</div>
+
+<script>
+/* ========= config ========= */
+const MULTI_SECTIONS = new Set(['system controls']); // lowercased names that allow multiple
+
+/* ========= state & utils ========= */
+const wiresEl = document.getElementById('wires');
+const forestEl = document.getElementById('forest');
+const sectionSel = document.getElementById('section');
+const metaEl = document.getElementById('meta');
+const summaryEl = document.getElementById('summary');
+
+const _SLUGS = new Set();
+const QS = new URLSearchParams(location.search);
+const requestedSection = QS.get('section'); // optional exact Title
+
+const STORE_KEY = 'quoteapp:grove:picks';
+let picks = loadPicks(); // { [sectionTitle]: Set(nodeIds) }
+
+function isMultiSection(title){ return MULTI_SECTIONS.has((title||'').toLowerCase()); }
+
+/* ========= OPML parse ========= */
+async function loadOPML(){
+  const res = await fetch('data/survey.opml');
+  const text = await res.text();
+  const xml = new DOMParser().parseFromString(text, 'text/xml');
+  _SLUGS.clear();
+  const outlines = [...xml.querySelectorAll('body > outline')];
+  const sections = outlines.map(o => convertOutline(o));
+  const title = (xml.querySelector('head>title')?.textContent || 'Survey Trees').trim();
+  return { sections, title };
+}
+function convertOutline(outEl){
+  const title = (outEl.getAttribute('text')||'').trim() || 'Untitled';
+  const nodes = [...outEl.children].filter(n=>n.tagName.toLowerCase()==='outline').map(n => convertNode(n));
+  return { title, id: slug(title), nodes };
+}
+function convertNode(nodeEl){
+  const title = (nodeEl.getAttribute('text')||'').trim() || 'Untitled';
+  const id = slug(title);
+  const kids = [...nodeEl.children].filter(n=>n.tagName.toLowerCase()==='outline').map(n => convertNode(n));
+  return { id, title, children: kids };
+}
+function slug(raw){
+  const base = (raw||'').toLowerCase().trim().replace(/\s+/g,' ').replace(/[^\w]+/g,'_').replace(/^_+|_+$/g,'').slice(0,60) || 'item';
+  let s = base, i = 2; while (_SLUGS.has(s)) s = `${base}-${i++}`; _SLUGS.add(s); return s;
+}
+
+/* ========= render ========= */
+function renderSections(sections, filterTitle=null){
+  forestEl.innerHTML=''; wiresEl.innerHTML='';
+  // dropdown
+  sectionSel.innerHTML='';
+  const optAll = document.createElement('option'); optAll.value=''; optAll.textContent='(All sections)'; sectionSel.appendChild(optAll);
+  sections.forEach(s=>{ const o=document.createElement('option'); o.value=s.title; o.textContent=s.title; if (s.title===filterTitle) o.selected=true; sectionSel.appendChild(o); });
+
+  const usable = filterTitle ? sections.filter(s => s.title === filterTitle) : sections;
+
+  for(const sec of usable){
+    const col = document.createElement('div'); col.className='tree-col'; col.setAttribute('aria-label', sec.title);
+
+    const label = document.createElement('div'); label.className='section-label';
+    label.textContent = sec.title + (isMultiSection(sec.title) ? ' (multi-select)' : ' (single-select)');
+    col.appendChild(label);
+
+    // section controls
+    const ctrl = document.createElement('div'); ctrl.className='controls-row';
+    const btnClear = document.createElement('button'); btnClear.textContent='Clear section';
+    btnClear.onclick = ()=>{ picks[sec.title] = new Set(); savePicks(); refreshAll(); };
+    ctrl.appendChild(btnClear);
+    col.appendChild(ctrl);
+
+    // fake root which contains the section nodes
+    const root = { id: sec.id, title: sec.title, children: sec.nodes };
+    const rendered = renderTree(root, 0, sec.title);
+    col.appendChild(rendered.nodeEl);
+    if (rendered.lane) col.appendChild(rendered.lane);
+
+    forestEl.appendChild(col);
+  }
+  drawAllWires();
+  renderSummary();
+}
+function renderTree(tree, depth, sectionTitle){
+  const root = renderNode(tree, depth, sectionTitle, true); // label-only
+  if (tree.children?.length){
+    const lane = document.createElement('div'); lane.className='lane'; lane.dataset.parent = tree.id;
+    for(const child of tree.children){
+      const c = renderSubtree(child, depth+1, sectionTitle);
+      lane.appendChild(c.nodeEl);
+      if (c.lane) lane.appendChild(c.lane);
+    }
+    return { nodeEl: root.nodeEl, lane };
+  }
+  return { nodeEl: root.nodeEl, lane: null };
+}
+function renderSubtree(node, depth, sectionTitle){
+  const n = renderNode(node, depth, sectionTitle, false);
+  if (node.children?.length){
+    const lane = document.createElement('div'); lane.className = 'lane'; lane.dataset.parent = node.id;
+    for(const ch of node.children){
+      const c = renderSubtree(ch, depth+1, sectionTitle);
+      lane.appendChild(c.nodeEl);
+      if (c.lane) lane.appendChild(c.lane);
+    }
+    return { nodeEl: n.nodeEl, lane };
+  }
+  return { nodeEl: n.nodeEl, lane: null };
+}
+function renderNode(data, depth, sectionTitle, isLabel){
+  const node = document.createElement('article'); node.className='node'; node.id=`node-${data.id}`; node.dataset.depth=depth; node.dataset.section=sectionTitle;
+  const head = document.createElement('div'); head.className='head';
+  const chev = document.createElement('span'); chev.className='chev'; chev.textContent='↘';
+  const title = document.createElement('div'); title.className='title'; title.textContent=data.title;
+  const mark = document.createElement('span'); mark.className='mark'; mark.textContent='pick';
+  head.appendChild(chev); head.appendChild(title); head.appendChild(mark); node.appendChild(head);
+
+  let lane=null;
+  const hasKids = !!(data.children?.length);
+  if (hasKids){ lane=document.createElement('div'); lane.className='lane'; lane.dataset.parent=data.id; }
+
+  applyNodeState(node, hasKids);
+
+  head.onclick = ()=>{
+    if (isLabel) {
+      if (!lane) return;
+      lane.classList.toggle('collapsed');
+      chev.textContent = lane.classList.contains('collapsed') ? '↗' : '↘';
+      drawAllWires(); return;
+    }
+    if (hasKids){
+      lane.classList.toggle('collapsed');
+      chev.textContent = lane.classList.contains('collapsed') ? '↗' : '↘';
+      drawAllWires();
+    } else {
+      togglePick(sectionTitle, data.id);
+      if (!isMultiSection(sectionTitle)){ pruneSiblings(node); }
+      refreshAll();
+    }
+  };
+  return { nodeEl: node, lane };
+}
+
+/* ========= selection, pruning, summary ========= */
+function ensureSectionSet(section){
+  if (!picks[section]) picks[section] = new Set();
+  return picks[section];
+}
+function togglePick(section, nodeId){
+  const set = ensureSectionSet(section);
+  if (isMultiSection(section)){
+    if (set.has(nodeId)) set.delete(nodeId); else set.add(nodeId);
+  } else {
+    set.clear(); set.add(nodeId);
+  }
+  savePicks();
+}
+function pruneSiblings(nodeEl){
+  const parentLane = nodeEl.parentElement?.parentElement;
+  if (!parentLane || !parentLane.classList.contains('lane')) return;
+  [...parentLane.children].forEach(el=>{
+    if (!el.classList?.contains('node')) return;
+    if (el === nodeEl) el.classList.add('selected');
+    else el.classList.add('pruned');
+  });
+}
+function applyNodeState(nodeEl, hasKids){
+  const section = nodeEl.dataset.section;
+  const id = nodeEl.id.replace(/^node-/, '');
+  const set = ensureSectionSet(section);
+  const selected = set.has(id);
+  const mark = nodeEl.querySelector('.mark');
+  if (selected){ nodeEl.classList.add('selected'); mark.classList.add('on'); mark.textContent='✓'; }
+  else { nodeEl.classList.remove('selected'); mark.classList.remove('on'); mark.textContent=isMultiSection(section)?'pick +':'pick'; }
+
+  if (!isMultiSection(section)){
+    const parentLane = nodeEl.parentElement?.parentElement;
+    if (parentLane && parentLane.classList.contains('lane')){
+      const anySelected = [...parentLane.children].some(el=>el.classList?.contains('node') && el.classList.contains('selected'));
+      if (anySelected && !selected) nodeEl.classList.add('pruned');
+    }
+  }
+  if (+nodeEl.dataset.depth === 0) nodeEl.classList.add('disabled');
+  if (hasKids) nodeEl.querySelector('.mark').textContent = 'open';
+}
+function renderSummary(){
+  const out = [];
+  Object.entries(picks).forEach(([section, set])=>{
+    if (!set || set.size===0) return;
+    const pills = [...set].map(id=>{
+      const title = document.querySelector(`#node-${id} .title`)?.textContent || id;
+      return `<span class="pill">${title}</span>`;
+    }).join(' ');
+    out.push(`<div class="row"><div><strong>${section}</strong><div>${pills}</div></div><button data-sec="${section}" class="secReset">Clear</button></div>`);
+  });
+  summaryEl.innerHTML = out.length ? out.join('') : '<div class="small">No picks yet.</div>';
+  summaryEl.querySelectorAll('.secReset').forEach(btn=>{
+    btn.onclick = ()=>{ picks[btn.dataset.sec] = new Set(); savePicks(); refreshAll(); };
+  });
+}
+
+/* ========= wiring ========= */
+function drawAllWires(){
+  const r = forestEl.getBoundingClientRect();
+  wiresEl.setAttribute('width', r.width);
+  wiresEl.setAttribute('height', r.height);
+  wiresEl.innerHTML='';
+  const lanes = [...forestEl.querySelectorAll('.lane:not(.collapsed)')];
+  for(const lane of lanes){
+    const parentId = lane.dataset.parent;
+    const parent = forestEl.querySelector(`#node-${parentId}`);
+    if (!parent) continue;
+    const p = parent.getBoundingClientRect();
+    const base = wiresEl.getBoundingClientRect();
+    const x1 = p.right - base.left, y1 = p.top + p.height/2 - base.top;
+    const kids = [...lane.children].filter(el=>el.classList?.contains('node'));
+    for(const kid of kids){
+      const kb = kid.getBoundingClientRect();
+      const x2 = kb.left - base.left, y2 = kb.top + kb.height/2 - base.top;
+      const dx = Math.max(24, Math.min(120, (x2 - x1)/2));
+      const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+      const d = `M ${x1} ${y1} C ${x1+dx} ${y1}, ${x2-dx} ${y2}, ${x2} ${y2}`;
+      path.setAttribute('d', d); path.setAttribute('stroke','#324252'); path.setAttribute('fill','none'); path.setAttribute('stroke-width','2');
+      wiresEl.appendChild(path);
+    }
+  }
+}
+function refreshAll(){
+  forestEl.querySelectorAll('.node').forEach(n=>{
+    const hasKids = !!forestEl.querySelector(`#lane-${n.id}`) || n.nextSibling?.classList?.contains('lane');
+    n.classList.remove('pruned','selected');
+    applyNodeState(n, hasKids);
+  });
+  drawAllWires();
+  renderSummary();
+}
+function loadPicks(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if (!raw) return {};
+    const obj = JSON.parse(raw);
+    const out = {};
+    Object.entries(obj).forEach(([k,v])=> out[k] = new Set(v));
+    return out;
+  }catch{ return {}; }
+}
+function savePicks(){
+  const plain = {};
+  Object.entries(picks).forEach(([k,v])=> plain[k] = [...v]);
+  localStorage.setItem(STORE_KEY, JSON.stringify(plain));
+}
+
+/* -------- Boot -------- */
+(async function(){
+  const {sections, title} = await loadOPML();
+  document.title = `Quote App – ${title}`;
+  metaEl.textContent = `${sections.length} section(s)`;
+
+  document.getElementById('expand').onclick = ()=>{ document.querySelectorAll('.lane').forEach(l=>l.classList.remove('collapsed')); drawAllWires(); };
+  document.getElementById('collapse').onclick = ()=>{ document.querySelectorAll('.lane').forEach(l=>l.classList.add('collapsed')); drawAllWires(); };
+  document.getElementById('resetAll').onclick = ()=>{ localStorage.removeItem(STORE_KEY); picks={}; refreshAll(); };
+
+  sectionSel.onchange = ()=> {
+    const v = sectionSel.value;
+    const url = new URL(location.href);
+    if (v) url.searchParams.set('section', v); else url.searchParams.delete('section');
+    history.replaceState(null,'',url.toString());
+    renderSections(sections, v || null);
+  };
+
+  renderSections(sections, requestedSection || null);
+
+  document.getElementById('copyPicks').onclick = ()=>{
+    const plain = {};
+    Object.entries(picks).forEach(([k,v])=>{ if (v && v.size) plain[k]=[...v]; });
+    navigator.clipboard.writeText(JSON.stringify(plain, null, 2)).catch(()=>{});
+  };
+  document.getElementById('copySummary').onclick = ()=>{
+    const lines = [];
+    Object.entries(picks).forEach(([section, set])=>{
+      if (!set || !set.size) return;
+      const titles = [...set].map(id=>document.querySelector(`#node-${id} .title`)?.textContent || id).join(', ');
+      lines.push(`${section}: ${titles}`);
+    });
+    navigator.clipboard.writeText(lines.join('\n')).catch(()=>{});
+  };
+
+  window.addEventListener('resize', ()=> requestAnimationFrame(drawAllWires));
+  document.querySelector('.stage').addEventListener('scroll', ()=> requestAnimationFrame(drawAllWires), {passive:true});
+})();
+</script>
+</body>
+</html>
